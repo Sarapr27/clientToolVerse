@@ -10,7 +10,7 @@ import Landing from "./components/views/Landing/landing";
 function App() {
   return (
     <div className="App">
-      <h1>ToolVerse</h1>
+    
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />

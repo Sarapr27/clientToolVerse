@@ -1,0 +1,12 @@
+.saw {
+    height: 350px;
+    width: 350px;
+    justify-content: center;
+}
+.text {
+    height: 350px;
+    width: 350px;
+}
+.button {
+    background-color: rgb(255, 208, 0);
+}
