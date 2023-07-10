@@ -14,12 +14,10 @@ function App() {
 
   return (
     <div className="App">
-<<<<<<< Updated upstream
+
       <h1>ToolVerse</h1>
-=======
-    
+   
       {location.pathname !== '/' && <NavBar />}
->>>>>>> Stashed changes
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
