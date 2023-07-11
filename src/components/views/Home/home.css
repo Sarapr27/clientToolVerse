@@ -81,3 +81,17 @@
     border-bottom-left-radius: 1rem;
     border-top-right-radius: 1rem;
 }
+
+@media (max-width: 480px) {
+
+    .carrImg,
+    .enunciadoCarrusel {
+        width: 100%
+    }
+
+    .cards {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

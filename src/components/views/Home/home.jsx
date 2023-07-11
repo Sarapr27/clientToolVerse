@@ -6,7 +6,7 @@ import trimmer from '../img/hedgetrimmer.png';
 
 function Home() {
     return (
-        <div>
+        <div className='homeDiv'>
             <div className="carrusel">
                 <img src={carrImg} alt="carrusel trial" className="carrImg" />
                 <h3 className='enunciadoCarrusel'>Espacio designado para el Carrusel</h3>

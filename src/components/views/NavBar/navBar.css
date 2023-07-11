@@ -37,3 +37,36 @@
     background-color: transparent;
     height: 6rem;
 }
+
+@media (max-width: 480px) {
+    .navBar {
+        margin-top: 4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 4rem;
+    }
+
+    .toHome {
+        height: 6rem;
+        margin-bottom: 1rem;
+    }
+
+    .searchBar {
+        margin-right: 2rem;
+    }
+
+    .logOn {
+        width: 7rem;
+    }
+
+    .logOnCart {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+
+    .cartBtn {
+        height: 4rem;
+    }
+}

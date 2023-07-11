@@ -28,3 +28,14 @@
 .ex {
     margin-left: -0.8rem;
 }
+
+/* @media (max-width: 480px) {
+
+    .searchBar {
+        width: 20rem;
+    }
+
+    .input {
+        width: 16.5rem;
+    }
+} */
