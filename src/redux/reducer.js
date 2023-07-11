@@ -1,5 +1,5 @@
 import {
-  CREATE_TOOLS,
+  CREATE_USER,
   GET_TOOLS,
   GET_TOOLS_BY_ID,
   GET_TOOLS_BY_NAME,
@@ -9,7 +9,7 @@ const initialState = {
   allTools: [], // guardamos aquí TODAS LAS TOOLS
   toolsShown: [], // éstas son las tools que van a renderizarse
   toolsDetail: {}, // Tendra la informacion detallada de cada tools.
-  createTools: [], // Aca guardaremos nuestras Tools Creadas del FORM. npmbre del array MODIFICABLE
+  createUser: [], // Aca guardaremos nuestras Tools Creadas del FORM. npmbre del array MODIFICABLE
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -29,10 +29,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         toolsDetail: payload,
       };
-    case CREATE_TOOLS:
+    case CREATE_USER:
       return {
         ...state,
-        createTools: payload,
+        createUser: payload,
       };
     default:
       return {

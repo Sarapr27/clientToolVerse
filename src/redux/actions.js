@@ -4,7 +4,7 @@ import {
   GET_TOOLS,
   GET_TOOLS_BY_NAME,
   GET_TOOLS_BY_ID,
-  CREATE_TOOLS,
+  CREATE_USER,
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -36,10 +36,10 @@ export const getToolById = (id) => {
   };
 };
 
-export const createTools = () => {
+export const createUser = () => {
   return async function (dispatch) {
     const create = { data: "Peticion que te traera las Tools Creadas en Form" };
     // const create = await axios.post(`http://localhost:3001/"NOMBRE CREADO EN BACK"`)
-    dispatch({ type: CREATE_TOOLS, payload: create });
+    dispatch({ type: CREATE_USER, payload: create });
   };
 };
