@@ -14,6 +14,9 @@ function App() {
 
   return (
     <div className="App">
+
+      <h1>ToolVerse</h1>
+   
       {location.pathname !== '/' && <NavBar />}
       <Routes>
         <Route path="/" element={<Landing />} />
