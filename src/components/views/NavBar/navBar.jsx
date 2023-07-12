@@ -14,6 +14,7 @@ export default function Nav() {
             <button className="toHome" onClick={() => navigate('/home')}> <img src={logoHome} alt="logoHome" className="toHome" /> </button>
             <SearchBar className="searchBar" />
             <div className="logOnCart">
+                <button className="logOn" onClick={() => navigate('/form')}> Registro </button>
                 <button className="logOn" onClick={() => navigate('/form')}> Inicia Sesión </button>
                 <button className="cartBtn" onClick={() => navigate('/cart')}> <img src={logoCart} alt="logoCart" className="cartBtn" /> </button>
             </div>
