@@ -1,0 +1,72 @@
+.navBar {
+    background-color: var(--primary);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 9.7rem;
+}
+
+.toHome,
+.logOn,
+.cartBtn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.toHome {
+    height: 9.7rem;
+    width: auto;
+}
+
+.logOnCart {
+    display: flex;
+    align-items: center;
+}
+
+.logOn {
+    border: 0.1rem solid var(--secondary);
+    border-radius: 1rem;
+    height: 4rem;
+    width: 15rem;
+    margin-right: 2rem;
+    text-transform: uppercase;
+}
+
+.cartBtn {
+    background-color: transparent;
+    height: 6rem;
+}
+
+@media (max-width: 480px) {
+    .navBar {
+        margin-top: 4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 4rem;
+    }
+
+    .toHome {
+        height: 6rem;
+        margin-bottom: 1rem;
+    }
+
+    .searchBar {
+        margin-right: 2rem;
+    }
+
+    .logOn {
+        width: 7rem;
+    }
+
+    .logOnCart {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+
+    .cartBtn {
+        height: 4rem;
+    }
+}
