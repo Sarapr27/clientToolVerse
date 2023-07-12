@@ -5,6 +5,8 @@ import {
   GET_TOOLS_BY_NAME,
   GET_TOOLS_BY_ID,
   CREATE_USER,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -41,5 +43,19 @@ export const createUser = () => {
     const create = { data: "Peticion que te traera las Tools Creadas en Form" };
     // const create = await axios.post(`http://localhost:3001/"NOMBRE CREADO EN BACK"`)
     dispatch({ type: CREATE_USER, payload: create });
+  };
+};
+
+export const addToCart = (item) => {
+  return {
+    type: ADD_TO_CART,
+    payload: item,
+  };
+};
+
+export const removeFromCart = (itemId) => {
+  return {
+    type: REMOVE_FROM_CART,
+    payload: itemId,
   };
 };
