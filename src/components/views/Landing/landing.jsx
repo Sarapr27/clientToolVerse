@@ -23,5 +23,5 @@ export default function Landing() {
                 <button className={style.button} onClick={getStarted}>GO</button>
             </div>
         </div>
-    )
-}
+      );
+    }
