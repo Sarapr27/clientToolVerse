@@ -1,0 +1,23 @@
+.emptyTrolley {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.emptyTrolleyImg {
+    height: 25rem;
+}
+
+.goShopping {
+    background-color: var(--primary);
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 1rem;
+    height: 4rem;
+    width: 15rem;
+    border: 0.1rem solid var(--secondary);
+}
+
+.goShopping:hover {
+    border: 0.2rem solid var(--buttons);
+}
