@@ -1,64 +1,129 @@
-import React from "react";
-import styles from "../Form/form.module.css"
+import React, { useState } from "react";
+import styles from "../Form/form.module.css";
 
 function Form() {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleFirstNameChange = (event) => {
+        setFirstName(event.target.value);
+    };
+
+    const handleLastNameChange = (event) => {
+        setLastName(event.target.value);
+    };
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+
+    const handlePhoneChange = (event) => {
+        setPhone(event.target.value);
+    };
+
+    const handleUsernameChange = (event) => {
+        setUsername(event.target.value);
+    };
+
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        if (!firstName || !lastName || !email || !phone || !username || !password) {
+            setError("Todos los campos son obligatorios. Por favor, completa todos los campos.");
+        } else if (!/(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=.*[a-z]).{8,}/.test(password)) {
+            setError("La contraseña debe contener al menos una mayúscula, un carácter especial y tener una longitud mínima de 8 caracteres.");
+        } else {
+            setError("");
+
+        }
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.title}>Registro</div>
             <div className={styles.content}>
-                <form action="#">
-                    <div className={styles['user-details']}>
-                        <div className={styles['input-box']}>
+                <form onSubmit={handleSubmit}>
+                    <div className={styles["user-details"]}>
+                        <div className={styles["input-box"]}>
                             <span className={styles.details}>Nombre</span>
-                            <input type="text" placeholder="Ingresa tu nombre" required />
-                        </div>
-                        <div className={styles['input-box']}>
-                            <span className={styles.details}>Apellido</span>
-                            <input type="text" placeholder="Ingresa tu apellido" required />
-                        </div>
-                        <div className={styles['input-box']}>
-                            <span className={styles.details}>Email</span>
-                            <input type="text" placeholder="Ingresa tu email" required />
-                        </div>
-                        <div className={styles['input-box']}>
-                            <span className={styles.details}>Número de Teléfono</span>
-                            <input type="number" placeholder="Ingresa tu número de teléfono" required />
-                        </div>
-                        <div className={styles['input-box']}>
-                            <span className={styles.details}>Nombre de Usuario</span>
-                            <input type="text" placeholder="Ingresa tu nombre de usuario" required />
-                        </div>
-                        <div className={styles['input-box']}>
-                            <span className={styles.details}>Contraseña</span>
                             <input
                                 type="text"
+                                placeholder="Ingresa tu nombre"
+                                value={firstName}
+                                onChange={handleFirstNameChange}
+
+                            />
+                        </div>
+                        <div className={styles["input-box"]}>
+                            <span className={styles.details}>Apellido</span>
+                            <input
+                                type="text"
+                                placeholder="Ingresa tu apellido"
+                                value={lastName}
+                                onChange={handleLastNameChange}
+
+                            />
+                        </div>
+                        <div className={styles["input-box"]}>
+                            <span className={styles.details}>Email</span>
+                            <input
+                                type="text"
+                                placeholder="Ingresa tu email"
+                                value={email}
+                                onChange={handleEmailChange}
+
+                            />
+                        </div>
+                        <div className={styles["input-box"]}>
+                            <span className={styles.details}>Número de Teléfono</span>
+                            <input
+                                type="number"
+                                placeholder="Ingresa tu número de teléfono"
+                                value={phone}
+                                onChange={handlePhoneChange}
+
+                            />
+                        </div>
+                        <div className={styles["input-box"]}>
+                            <span className={styles.details}>Nombre de Usuario</span>
+                            <input
+                                type="text"
+                                placeholder="Ingresa tu nombre de usuario"
+                                value={username}
+                                onChange={handleUsernameChange}
+
+                            />
+                        </div>
+                        <div className={styles["input-box"]}>
+                            <span className={styles.details}>Contraseña</span>
+                            <input
+                                type="password"
                                 placeholder="Ingresa tu contraseña"
-                                required
+                                value={password}
+                                onChange={handlePasswordChange}
+
                             />
                         </div>
                     </div>
-                    <div className={styles['rol-details']}>
-                        <input type="radio" name="rol" id={styles['dot-1']} />
-                        <input type="radio" name="rol" id={styles['dot-2']} />
 
-                        <span className={styles['rol-title']}>Rol</span>
-                        <div className={styles.category}>
-                            <label htmlFor={styles['dot-1']}>
-                                <span className={`${styles.dot} ${styles.one}`}></span>
-                                <span className={styles.rol}>Hogar</span>
-                            </label>
-                            <label htmlFor={styles['dot-2']}>
-                                <span className={`${styles.dot} ${styles.two}`}></span>
-                                <span className={styles.rol}>Empresa</span>
-                            </label>
-                        </div>
-                    </div>
                     <div className={styles.button}>
                         <input type="submit" value="Registrate" />
                     </div>
                 </form>
+
+                {error && <div className={styles.error}>{error}</div>}
             </div>
         </div>
     );
-};
+}
+
 export default Form;
