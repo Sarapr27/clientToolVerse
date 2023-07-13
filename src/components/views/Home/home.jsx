@@ -6,7 +6,7 @@ import trimmer from '../img/hedgetrimmer.png';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../redux/actions'
-
+import ProductCards from '../ProductCards/ProductCards';
 function Home() {
     // de momento no estamos conectados -> se dejan los puertos tendidos para cuando estemos listos
     const dispatch = useDispatch();
@@ -28,7 +28,7 @@ function Home() {
                 <hr />
                 <h3>También podría ir aquí un paginado </h3>
                 <hr />
-                Esto está hardcodeado a la espera de la creación de las Cards y la Api
+                <ProductCards/>
             </div>
 
             {/* La información que viene desde la api va a ser:
