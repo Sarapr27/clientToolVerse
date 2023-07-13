@@ -9,6 +9,7 @@ import Landing from "./components/views/Landing/landing";
 import NavBar from "./components/views/NavBar/navBar";
 import Cart from "./components/views/Cart/cart";
 import ProductCard from "./components/views/ProductCard/ProductCard";
+import Error404 from "./components/Error404/Error404";
 
 function App() {
   const location = useLocation();
@@ -25,6 +26,7 @@ function App() {
         <Route path="/form" element={<Form />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/tools" element={<ProductCard/>} />
+        <Route path="/error" element={<Error404/>}/>
       </Routes>
     </div>
   );
