@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-//import styles from "./Detail.css"
+import style from './Detail.module.css'
 const Detail = () => {
   const [products, setProducts] = useState(null);
   const {id} = useParams();
@@ -10,7 +10,7 @@ const Detail = () => {
     const fetchProduc = async () => {
       try {
         //`${process.env.API_TOOLS_URL}/${id}`
-        const response = await axios.get(`http://localhost:3001/products/5`);
+        const response = await axios.get(`http://localhost:3001/products/${id}`);
   
         setProducts(response.data);
       } catch (error) {
@@ -24,13 +24,19 @@ const Detail = () => {
   if (!products) return <div>Esperando carga del producto...</div>;
 
   return (
-    <div>
+    <div className={style.detailContainer}>
+      <div>
+
       <img src={products.image} alt={products.name} />
+      </div>
+      <div>
+
       <h1>{products.name}</h1>
       <p>Modelo: {products.model}</p>
       <h3>Marca: {products.brand}</h3>
       <h4>Precio ${products.price}</h4>
       <button>Add Cart</button>
+      </div>
     </div>
   );
 };

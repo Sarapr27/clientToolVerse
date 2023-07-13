@@ -1,0 +1,10 @@
+.detailContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .detailContainer img {
+    max-width: 50%;
+    border:5px solid black;
+  }
