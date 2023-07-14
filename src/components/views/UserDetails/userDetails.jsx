@@ -1,4 +1,4 @@
-import './userDetails.css'
+import style from './userDetails.module.css'
 
 export default function UserDetails() {
 
@@ -7,7 +7,7 @@ export default function UserDetails() {
     // si el usuario es nuevo permite que coloque sus datos y pueda crear un usuario nuevo
 
     return (
-        <div className="overallUser">
+        <div className={style.overallUser}>
             Soy los Detalles del User
         </div>
     )

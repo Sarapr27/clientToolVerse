@@ -1,4 +1,4 @@
-import './searchBar.css';
+import style from './searchBar.module.css';
 import { useState } from 'react';
 import lupa from './search.png';
 import { useDispatch } from 'react-redux';
@@ -20,9 +20,9 @@ export default function SearchBar() {
     }
 
     return (
-        <div className='searchBar'>
-            <input type='search' className="input" value={input.name} onChange={handleSearch} placeholder=' Busca una herramienta por nombre' />
-            <button className="onSearch" onClick={() => onSearch(input)}> <img className='lupa' src={lupa} alt="lupa" /> </button>
+        <div className={style.searchBar}>
+            <input type='search' className={style.input} value={input.name} onChange={handleSearch} placeholder=' Busca una herramienta por nombre' />
+            <button className={style.onSearch} onClick={() => onSearch(input)}> <img className={style.lupa} src={lupa} alt="lupa" /> </button>
             <span> </span>
         </div>
     )

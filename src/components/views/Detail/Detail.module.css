@@ -1,10 +1,22 @@
 .detailContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
-  .detailContainer img {
-    max-width: 50%;
-    border:5px solid black;
-  }
+.detailContainer img {
+  max-width: 50%;
+  border: 5px solid black;
+}
+
+.addToCart {
+  cursor: pointer;
+  font-weight: 600;
+  background-color: var(--buttons);
+  margin-bottom: 1rem;
+  border: none
+}
+
+.addToCart:hover {
+  background-color: var(--secondary);
+}

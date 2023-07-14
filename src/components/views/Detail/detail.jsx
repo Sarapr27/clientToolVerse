@@ -29,7 +29,7 @@ const Detail = () => {
         <p>Modelo: {products.model}</p>
         <h3>Marca: {products.brand}</h3>
         <h4>Precio ${products.price}</h4>
-        <button>Add Cart</button>
+        <button className={style.addToCart}>Add Cart</button>
       </div>
     </div>
   );
