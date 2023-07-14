@@ -2,7 +2,7 @@ import { React } from "react";
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
 import About from "./components/views/About/about";
-import Detail from "./components/views/Detail/Detail"; //ruta temporal para ver como se renderiza
+import Detail from "./components/views/Detail/detail"; //ruta temporal para ver como se renderiza
 import Form from "./components/views/Form/form";
 import Home from "./components/views/Home/home";
 import Landing from "./components/views/Landing/landing";
