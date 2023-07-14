@@ -5,6 +5,8 @@ import {
   GET_TOOLS,
   GET_TOOLS_BY_ID,
   GET_TOOLS_BY_NAME,
+  ORDER_BY_NAME,
+  ORDER_BY_PRICE,
   REMOVE_FROM_CART,
 } from "./type";
 
@@ -54,6 +56,34 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         error404: true,
       };
+    case ORDER_BY_NAME:
+      const productsName = [...state.toolsShown];
+      const sortProductsName = productsName.sort((a, b) => {
+        if(a.name > b.name) {
+          return payload === "A-Z" ? 1 : -1;
+        }
+        if(a.name < b.name) {
+          return payload === "A-Z" ? -1 : 1;
+        } else return 0;
+      });
+    return {
+      ...state,
+      toolsShown: sortProductsName
+    }
+    case ORDER_BY_PRICE:
+      const productsPrice = [...state.toolsShown];
+      const sortProductsPrice = productsPrice.sort((a, b) => {
+        if(a.price > b.price) {
+          return payload === "Mayor precio" ? -1 : 1;
+        }
+        if(a.price < b.price) {
+          return payload === "Mayor precio" ? 1 : -1;
+        } else return 0;
+      });
+      return {
+        ...state,
+        toolsShown: sortProductsPrice
+      }
     default:
       return {
         ...state,
