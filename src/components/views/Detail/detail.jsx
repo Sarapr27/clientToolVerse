@@ -1,73 +1,37 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import style from './Detail.module.css'
+import { useDispatch, useSelector } from "react-redux";
+import style from "./Detail.module.css";
+import { getToolById } from "../../../redux/actions";
 const Detail = () => {
-  const [products, setProducts] = useState(null);
-  const {id} = useParams();
+  const products = useSelector((state) => state.toolsDetail);
+  const dispatch = useDispatch();
+  const { id } = useParams();
 
   useEffect(() => {
-    const fetchProduc = async () => {
-      try {
-        //`${process.env.API_TOOLS_URL}/${id}`
-        const response = await axios.get(`http://localhost:3001/products/${id}`);
-  
-        setProducts(response.data);
-      } catch (error) {
-        console.log("Error al obtener los datos del producto:", error);
-      }
-    };
-  
-    fetchProduc();
-  }, [id]);
-  
+    try {
+      dispatch(getToolById(id));
+    } catch (error) {
+      console.log("Error al obtener los datos del producto:", error);
+    }
+  }, [dispatch, id]);
+
   if (!products) return <div>Esperando carga del producto...</div>;
 
   return (
     <div className={style.detailContainer}>
       <div>
-
-      <img src={products.image} alt={products.name} />
+        <img src={products.image} alt={products.name} />
       </div>
       <div>
-
-      <h1>{products.name}</h1>
-      <p>Modelo: {products.model}</p>
-      <h3>Marca: {products.brand}</h3>
-      <h4>Precio ${products.price}</h4>
-      <button>Add Cart</button>
+        <h1>{products.name}</h1>
+        <p>Modelo: {products.model}</p>
+        <h3>Marca: {products.brand}</h3>
+        <h4>Precio ${products.price}</h4>
+        <button>Add Cart</button>
       </div>
     </div>
   );
 };
 
 export default Detail;
-
-
-
-//!En teoria esto tendria que funcionar, con el metodo "find" se busca el producto unitario dentro del un array de productos
-/* import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-
-const Detail = () => {
-  const products = useSelector((state) => state.products);
-  const { productId } = useParams();
-  const product = products.find((item) => String(item.id) === productId);
-
-  if (!product) {
-    return <div>Producto no encontrado</div>;
-  }
-
-  return (
-    <div>
-      <img src={product.image} alt={product.name} />
-      <h1>{product.name}</h1>
-      <p>Modelo: {product.model}</p>
-      <h3>Marca: {product.brand}</h3>
-      <h4>Precio ${product.price}</h4>
-      <button>Add Cart</button>
-    </div>
-  );
-};
-
-export default Detail; */
