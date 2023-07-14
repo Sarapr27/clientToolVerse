@@ -1,4 +1,4 @@
-import './navBar.css';
+import style from './navBar.module.css';
 import { useNavigate } from 'react-router-dom';
 import logoHome from './logoTry.png';
 import logoCart from './logoCart.png';
@@ -7,16 +7,14 @@ import SearchBar from '../SearchBar/searchBar';
 export default function Nav() {
     const navigate = useNavigate();
 
-    // testeando commit y push
-
     return (
-        <div className="navBar">
-            <button className="toHome" onClick={() => navigate('/home')}> <img src={logoHome} alt="logoHome" className="toHome" /> </button>
-            <SearchBar className="searchBar" />
-            <div className="logOnCart">
-                <button className="logOn" onClick={() => navigate('/form')}> Registro </button>
-                <button className="logOn" onClick={() => navigate('/form')}> Inicia Sesión </button>
-                <button className="cartBtn" onClick={() => navigate('/cart')}> <img src={logoCart} alt="logoCart" className="cartBtnImg" /> </button>
+        <div className={style.navBar}>
+            <button className={style.toHome} onClick={() => navigate('/home')}> <img src={logoHome} alt="logoHome" className={style.toHome} /> </button>
+            <SearchBar className={style.searchBar} />
+            <div className={style.logOnCart}>
+                <button className={style.logOn} onClick={() => navigate('/form')}> Registro </button>
+                <button className={style.logOn} onClick={() => navigate('/form')}> Inicia Sesión </button>
+                <button className={style.cartBtn} onClick={() => navigate('/cart')}> <img src={logoCart} alt="logoCart" className={style.cartBtnImg} /> </button>
             </div>
         </div>
     )

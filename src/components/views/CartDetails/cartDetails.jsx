@@ -1,4 +1,4 @@
-import './cartDetails.css';
+import style from './cartDetails.module.css';
 import empty from '../img/emptyTrolley.gif';
 import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -12,12 +12,12 @@ export default function CartDetails() {
     return (
         <div className="overallDetail">
             {
-                (!trolley) ? <div className='emptyTrolley'>
+                (!trolley) ? <div className={style.emptyTrolley}>
                     <h3>Parece que aún no has colocado nada en la cesta</h3>
-                    <img src={empty} alt='The trolley is empty' className='emptyTrolleyImg' />
-                    <button className="goShopping" onClick={() => navigate('/home')}>Go Shopping</button>
+                    <img src={empty} alt='The trolley is empty' className={style.emptyTrolleyImg} />
+                    <button className={style.goShopping} onClick={() => navigate('/home')}>Go Shopping</button>
                 </div>
-                    : <div className="trolleyFull">
+                    : <div className={style.trolleyFull}>
                         El carrito está lleno
                     </div>
             }
