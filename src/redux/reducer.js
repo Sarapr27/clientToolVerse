@@ -1,6 +1,7 @@
 import {
   ADD_TO_CART,
   CREATE_USER,
+  ERROR_404,
   GET_TOOLS,
   GET_TOOLS_BY_ID,
   GET_TOOLS_BY_NAME,
@@ -13,6 +14,7 @@ const initialState = {
   toolsDetail: {}, // Tendra la informacion detallada de cada tools.
   createUser: [], // Aca guardaremos nuestras Tools Creadas del FORM. npmbre del array MODIFICABLE
   itemCart: [], // Aca almacenaremos todos los productos cargados en el carrito
+  error404: false,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -46,6 +48,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         itemCart: state.itemCart.filter((item) => item.id === payload),
+      };
+    case ERROR_404:
+      return {// analizar si usaremos Esta logica en un componente si no se borra
+        ...state,
+        error404: true,
       };
     default:
       return {
