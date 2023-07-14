@@ -22,9 +22,39 @@ function Home() {
 
                 <h3>También podría ir aquí un paginado </h3>
                 <hr />
+            
+            </div>
+
+            <div classname='container-filtros'>
+            <h5>Filtrar Categoria</h5>
+                <select>
+                    <option value='Eléctricos'>Eléctricos</option>
+                    <option value='Manuales'>Manuales</option>
+                    <option value='Inalámbricos'>Inalámbricos</option>
+                    <option value='Neumáticos'>Neumáticos</option>
+                    <option value='Hogar'>Hogar</option>
+                    
+                </select>
+
+                <h5>Filtrar por Marca</h5>
+                <select >
+                     <option value ='MAKITA'>Makita</option>
+                     <option value='EINHELL'>Einhell</option>
+                     <option value='DEWALT'>Dewalt</option>
+                     <option value='TRUPER'>Truper</option>
+                     <option value='STANLEY'>Stanley</option>
+                     <option value='IRWIN'>Irwin</option>
+                     <option value='BOSCH'>Bosh</option>
+                </select>
+            
+                
             </div>
             <ProductCards />
             <hr />
+
+            
+
+            
         </div>
     )
 }
