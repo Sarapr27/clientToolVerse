@@ -8,6 +8,8 @@ import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
   ERROR_404,
+  ORDER_BY_NAME,
+  ORDER_BY_PRICE
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -61,3 +63,16 @@ export const errorNotFound404 = () => { // analizar si usaremos Esta logica en u
   }
 }
 
+export const orderByName = (name) => {
+  return {
+    type: ORDER_BY_NAME,
+    payload: name,
+  }
+}
+
+export const orderByPrice = (price) => {
+  return {
+    type: ORDER_BY_PRICE,
+    payload: price,
+  }
+}

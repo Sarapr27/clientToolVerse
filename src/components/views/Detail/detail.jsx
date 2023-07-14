@@ -8,6 +8,7 @@ const Detail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
+  //!algo le hicieron en el Back que ya no se renderiza por "id"
   useEffect(() => {
     try {
       dispatch(getToolById(id));
