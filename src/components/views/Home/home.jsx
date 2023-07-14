@@ -1,5 +1,4 @@
 import './home.css';
-import carrImg from '../img/carruselTry.png';
 import saw from '../img/chainsaw.png';
 import pruner from '../img/pruners.png';
 import trimmer from '../img/hedgetrimmer.png';
@@ -7,6 +6,9 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../redux/actions'
 import ProductCards from '../ProductCards/ProductCards';
+import  {Carousel} from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
 function Home() {
     // de momento no estamos conectados -> se dejan los puertos tendidos para cuando estemos listos
     const dispatch = useDispatch();
@@ -19,16 +21,17 @@ function Home() {
 
     return (
         <div className='homeDiv'>
-            <div className="carrusel">
-                <img src={carrImg} alt="carrusel trial" className="carrImg" />
-                <h3 className='enunciadoCarrusel'>Espacio designado para el Carrusel</h3>
-            </div>
+            <Carousel showThumbs={false} autoPlay={true} interval={3000}>
+                <img src="https://belltec.com.co/modules/angarslider/views/img/images/79f2d78b09ec9efa0cb71b14a6136ed979781ce7_bannerofertasJULIO%202023%20BELLTEC.jpg" alt="img" />
+                <img src="https://belltec.com.co/modules/angarslider/views/img/images/1c2616dc4c86eccdcd219d50eeb50fb9f68ce4ae_bannerinalambricos%202022.jpg" alt="img" />
+                <img src="https://belltec.com.co/modules/angarslider/views/img/images/564b42ff1301a72d87cb01b6ad9ab40628597c14_748fe41843339635df928ce00affab834a8b249e_katcher.jpg" alt="img" />
+                    
+            </Carousel>
             <div className="highlights">
                 <h3>Estos son los productos destacados -- queremos productos detacados? los ponemos arriba en el carrusel? </h3>
+                
                 <hr />
-                <h3>También podría ir aquí un paginado </h3>
-                <hr />
-                <ProductCards/>
+                
             </div>
 
             {/* La información que viene desde la api va a ser:
@@ -99,8 +102,13 @@ function Home() {
                             <div className="divDesc"><span className='block'>Description:  </span> Useful </div>
                         </div>
                     </div>
+                    
                 </div>
+                
             </div>
+            <ProductCards/>
+            <hr />
+                <h3>También podría ir aquí un paginado </h3>
             {/* aquí termina el div.cards */}
         </div>
     )
