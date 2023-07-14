@@ -27,8 +27,8 @@ function App() {
         <Route path="/form" element={<Form />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/tools" element={<ProductCards/>} />
-        <Route path="/error" element={<Error404/>}/>
         <Route path="/card" element={<Card/>} />
+        <Route path="*" element={<Error404/>}/>
       </Routes>
     </div>
   );
