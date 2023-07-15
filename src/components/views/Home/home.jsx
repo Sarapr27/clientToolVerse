@@ -16,11 +16,7 @@ function Home() {
 
             </Carousel>
             <div className={style.highlights}>
-                <h3>Estos son los productos destacados -- queremos productos detacados? los ponemos arriba en el carrusel? </h3>
-
-                <hr />
-
-                <h3>También podría ir aquí un paginado </h3>
+                <h3>Paginado </h3>
                 <hr />
             
             </div>

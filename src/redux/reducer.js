@@ -43,14 +43,24 @@ const rootReducer = (state = initialState, { type, payload }) => {
         createUser: payload,
       };
     case ADD_TO_CART:
+      let trolleyProds = []
+      if (state.itemCart.length === 0) {
+        trolleyProds = payload
+      }
+      else {
+        trolleyProds = [state.itemCart, ...payload]
+      }
       return {
         ...state,
-        itemCart: payload,
+        itemCart: trolleyProds,
       };
     case REMOVE_FROM_CART:
+      console.log('estoy en el REMOVE_FROM_CART', state)
+      let filtrado = state.itemCart.filter((item) => item.id !== payload);
+      console.log('el filtrado en REMOVE_FROM_CART', filtrado)
       return {
         ...state,
-        itemCart: state.itemCart.filter((item) => item.id === payload),
+        itemCart: filtrado
       };
     case ERROR_404:
       return {// analizar si usaremos Esta logica en un componente si no se borra
@@ -60,24 +70,26 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case ORDER_BY_NAME:
       const productsName = [...state.toolsShown];
       const sortProductsName = productsName.sort((a, b) => {
-        if(a.name > b.name) {
+        if (a.name > b.name) {
           return payload === "A-Z" ? 1 : -1;
         }
-        if(a.name < b.name) {
+        if (a.name < b.name) {
           return payload === "A-Z" ? -1 : 1;
         } else return 0;
       });
-    return {
-      ...state,
-      toolsShown: sortProductsName,
-    }
+
+      return {
+        ...state,
+        toolsShown: sortProductsName
+      }
+
     case ORDER_BY_PRICE:
       const productsPrice = [...state.toolsShown];
       const sortProductsPrice = productsPrice.sort((a, b) => {
-        if(a.price > b.price) {
+        if (a.price > b.price) {
           return payload === "Mayor precio" ? -1 : 1;
         }
-        if(a.price < b.price) {
+        if (a.price < b.price) {
           return payload === "Mayor precio" ? 1 : -1;
         } else return 0;
       });
