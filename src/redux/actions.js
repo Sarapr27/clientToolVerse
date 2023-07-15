@@ -9,7 +9,9 @@ import {
   REMOVE_FROM_CART,
   ERROR_404,
   ORDER_BY_NAME,
-  ORDER_BY_PRICE
+  ORDER_BY_PRICE,
+  SET_CURRRENT_PAGE,
+  CLEAN_BDD
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -74,5 +76,18 @@ export const orderByPrice = (price) => {
   return {
     type: ORDER_BY_PRICE,
     payload: price,
+  }
+}
+
+export const setCurrentPage = (page) => {
+  return {
+    type: SET_CURRRENT_PAGE,
+    payload: page
+  }
+}
+
+export const cleanBdd = () => {
+  return {
+    type: CLEAN_BDD
   }
 }

@@ -1,5 +1,6 @@
 import {
   ADD_TO_CART,
+  CLEAN_BDD,
   CREATE_USER,
   ERROR_404,
   GET_TOOLS,
@@ -8,15 +9,17 @@ import {
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
   REMOVE_FROM_CART,
+  SET_CURRRENT_PAGE,
 } from "./type";
 
 const initialState = {
   allTools: [], // guardamos aquí TODAS LAS TOOLS
   toolsShown: [], // éstas son las tools que van a renderizarse
   toolsDetail: {}, // Tendra la informacion detallada de cada tools.
-  createUser: [], // Aca guardaremos nuestras Tools Creadas del FORM. npmbre del array MODIFICABLE
+  createUser: [], // Aca guardaremos nuestras User Creadas del FORM. npmbre del array MODIFICABLE
   itemCart: [], // Aca almacenaremos todos los productos cargados en el carrito
   error404: false,
+  currentPage: 1,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -25,7 +28,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allTools: payload,
-        toolsShown: payload
+        toolsShown: payload,
       };
     case GET_TOOLS_BY_NAME:
       return {
@@ -43,27 +46,27 @@ const rootReducer = (state = initialState, { type, payload }) => {
         createUser: payload,
       };
     case ADD_TO_CART:
-      let trolleyProds = []
+      let trolleyProds = [];
       if (state.itemCart.length === 0) {
-        trolleyProds = payload
-      }
-      else {
-        trolleyProds = [state.itemCart, ...payload]
+        trolleyProds = payload;
+      } else {
+        trolleyProds = [state.itemCart, ...payload];
       }
       return {
         ...state,
         itemCart: trolleyProds,
       };
     case REMOVE_FROM_CART:
-      console.log('estoy en el REMOVE_FROM_CART', state)
+      console.log("estoy en el REMOVE_FROM_CART", state);
       let filtrado = state.itemCart.filter((item) => item.id !== payload);
-      console.log('el filtrado en REMOVE_FROM_CART', filtrado)
+      console.log("el filtrado en REMOVE_FROM_CART", filtrado);
       return {
         ...state,
-        itemCart: filtrado
+        itemCart: filtrado,
       };
     case ERROR_404:
-      return {// analizar si usaremos Esta logica en un componente si no se borra
+      return {
+        // analizar si usaremos Esta logica en un componente si no se borra
         ...state,
         error404: true,
       };
@@ -80,8 +83,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
       return {
         ...state,
-        toolsShown: sortProductsName
-      }
+        toolsShown: sortProductsName,
+      };
 
     case ORDER_BY_PRICE:
       const productsPrice = [...state.toolsShown];
@@ -96,6 +99,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         toolsShown: sortProductsPrice,
+      };
+    case SET_CURRRENT_PAGE:
+      return {
+        ...state,
+        currentPage: payload,
+      };
+    case CLEAN_BDD:
+      return {
+        ...state,
+        toolsShown: []
       }
     default:
       return {

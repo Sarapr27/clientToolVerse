@@ -15,12 +15,7 @@ function Home() {
                 <img src="https://belltec.com.co/modules/angarslider/views/img/images/564b42ff1301a72d87cb01b6ad9ab40628597c14_748fe41843339635df928ce00affab834a8b249e_katcher.jpg" alt="img" />
 
             </Carousel>
-            <div className={style.highlights}>
-                <h3>Paginado </h3>
-                <hr />
             
-            </div>
-
             <div classname='container-filtros'>
             <h5>Filtrar Categoria</h5>
                 <select>
