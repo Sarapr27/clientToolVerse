@@ -29,13 +29,13 @@
     margin-left: -0.8rem;
 }
 
-/* @media (max-width: 480px) {
+@media (max-width: 480px) {
 
     .searchBar {
-        width: 20rem;
+        width: 23rem;
     }
 
     .input {
-        width: 16.5rem;
+        width: 19.4rem;
     }
-} */
+}

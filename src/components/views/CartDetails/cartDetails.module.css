@@ -21,3 +21,13 @@
 .goShopping:hover {
     border: 0.2rem solid var(--buttons);
 }
+
+.calculate {
+    margin-top: 2rem;
+}
+
+.total {
+    font-size: medium;
+    margin-top: 2rem;
+    color: var(--warnings);
+}
