@@ -16,7 +16,6 @@
   position: relative;
 }
 
-
 .content form .user-details {
   display: flex;
   flex-wrap: wrap;
@@ -57,8 +56,9 @@
   font-size: 20px;
   font-weight: 500;
 }
+
 .rol {
-    font-size: medium;
+  font-size: medium;
 }
 
 .category {
@@ -115,6 +115,10 @@ input[type="radio"] {
 
 .button input:hover {
   background: linear-gradient(-135deg, #acadad, #515755);
+}
+
+.error {
+  color: red;
 }
 
 @media (max-width: 584px) {

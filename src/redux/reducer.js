@@ -25,6 +25,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         allTools: payload,
+        toolsShown: payload
       };
     case GET_TOOLS_BY_NAME:
       return {
@@ -76,10 +77,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
           return payload === "A-Z" ? -1 : 1;
         } else return 0;
       });
+
       return {
         ...state,
         toolsShown: sortProductsName
       }
+
     case ORDER_BY_PRICE:
       const productsPrice = [...state.toolsShown];
       const sortProductsPrice = productsPrice.sort((a, b) => {
@@ -92,7 +95,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       });
       return {
         ...state,
-        toolsShown: sortProductsPrice
+        toolsShown: sortProductsPrice,
       }
     default:
       return {

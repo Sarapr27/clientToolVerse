@@ -12,9 +12,10 @@ export default function Nav() {
             <button className={style.toHome} onClick={() => navigate('/home')}> <img src={logoHome} alt="logoHome" className={style.toHome} /> </button>
             <SearchBar className={style.searchBar} />
             <div className={style.logOnCart}>
+
                 <div className={style.registerLogOn}>
                     <button className={style.register} onClick={() => navigate('/form')}> Registro </button>
-                    <button className={style.logOn} onClick={() => navigate('/form')}> Inicia Sesión </button>
+                    <button className={style.logOn} onClick={() => navigate('/login')}> Inicia Sesión </button>
                 </div>
                 <button className={style.cartBtn} onClick={() => navigate('/cart')}> <img src={logoCart} alt="logoCart" className={style.cartBtnImg} /> </button>
             </div>
