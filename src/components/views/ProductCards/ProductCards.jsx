@@ -6,7 +6,7 @@ import { getTools } from "../../../redux/actions";
 import Pagination from "../../Pagination/Pagination";
 
 const ProductCards = () => {
-  const allTools = useSelector((state) => state.allTools);
+  const allTools = useSelector((state) => state.toolsShown);
   const currentPage = useSelector((state) => state.currentPage);
   const itemsPerPage = 12;
 
