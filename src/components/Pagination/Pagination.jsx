@@ -18,16 +18,16 @@ export default function Pagination() {
 
   return (
     <nav>
-      <button
+      <button 
         disabled={currentPage === 1}
         onClick={() => handleClick(currentPage - 1)}
       >
-        Previous
+        Anterior
       </button>
       {renderPageNumbers.map((number) => (
-        <button
+        <button 
           key={number}
-          className={currentPage === number ? style : ""}
+          className={currentPage === number ? style.button : ""}
           onClick={() => handleClick(number)}
         >
           {number}
@@ -37,7 +37,7 @@ export default function Pagination() {
         disabled={currentPage === pageNumbers}
         onClick={() => handleClick(currentPage + 1)}
       >
-        Next
+        Siguiente
       </button>
     </nav>
   );
