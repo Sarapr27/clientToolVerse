@@ -31,3 +31,10 @@
     margin-top: 2rem;
     color: var(--warnings);
 }
+
+.toPagos {
+    margin-top: 2rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid var(--highlights);
+}

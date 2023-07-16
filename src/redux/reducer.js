@@ -46,15 +46,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
         createUser: payload,
       };
     case ADD_TO_CART:
-      let trolleyProds = [];
-      if (state.itemCart.length === 0) {
-        trolleyProds = payload;
-      } else {
-        trolleyProds = [state.itemCart, ...payload];
-      }
       return {
         ...state,
-        itemCart: trolleyProds,
+        itemCart: [...state.itemCart, payload]
       };
     case REMOVE_FROM_CART:
       console.log("estoy en el REMOVE_FROM_CART", state);
