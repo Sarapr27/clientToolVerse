@@ -1,8 +1,8 @@
 import { React } from "react";
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
-import About from "./components/views/About/about";
-import Detail from "./components/views/Detail/detail"; //ruta temporal para ver como se renderiza
+import About from "./components/views/Footer/About/About";
+import Detail from "./components/views/Detail/detail";
 import Form from "./components/views/Form/form";
 import Login from "./components/views/Login/login"
 import Home from "./components/views/Home/home";
@@ -11,8 +11,7 @@ import NavBar from "./components/views/NavBar/navBar";
 import Cart from "./components/views/Cart/cart";
 import ProductCards from "./components/views/ProductCards/ProductCards";
 import Error404 from "./components/Error404/Error404";
-import Card from "./components/views/Card/Card"; //ruta temporal para ver como se renderiza
-
+import Footer from "./components/views/Footer/Footer";
 function App() {
   const location = useLocation();
 
@@ -29,7 +28,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/tools" element={<ProductCards/>} />
-        <Route path="/card" element={<Card/>} />
+        <Route path="/footer" element={<Footer/>} />
         <Route path="*" element={<Error404/>}/>
       </Routes>
     </div>
