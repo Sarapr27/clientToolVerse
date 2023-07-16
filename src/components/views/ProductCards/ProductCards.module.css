@@ -5,23 +5,10 @@
   gap: 1em;
   justify-content: space-around;
 }
-
 .button {
   display: inline-block;
-  padding: 8px 16px;
-  background-color: #f7ff18;
-  color: #fff;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.button:hover {
-  background-color: #dbed10;
-}
-
-.button:disabled {
-  background-color: #ddd;
-  cursor: not-allowed;
+  padding: 1px 5px;
+  background-color: #e0e1cb;
+  border: 0.5px solid #cccccc;
+  border-radius: 20px;
 }
