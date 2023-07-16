@@ -2,6 +2,7 @@
 import style from './home.module.css'
 import React from 'react';
 import ProductCards from '../ProductCards/ProductCards';
+import Ordering from '../../Ordering/Ordering';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
@@ -15,7 +16,7 @@ function Home() {
                 <img src="https://belltec.com.co/modules/angarslider/views/img/images/564b42ff1301a72d87cb01b6ad9ab40628597c14_748fe41843339635df928ce00affab834a8b249e_katcher.jpg" alt="img" />
 
             </Carousel>
-            
+            <Ordering/>
             <div classname='container-filtros'>
             <h5>Filtrar Categoria</h5>
                 <select>
