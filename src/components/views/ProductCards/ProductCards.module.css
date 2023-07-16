@@ -1,27 +1,27 @@
 .container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1em;
-    justify-content: space-around;
-  }
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1em;
+  justify-content: space-around;
+}
 
 .button {
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #f7ff18;
-    color: #fff;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #dbed10;
-  }
-  
-  button:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-  }
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #f7ff18;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #dbed10;
+}
+
+.button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}

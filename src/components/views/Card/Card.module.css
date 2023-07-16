@@ -80,7 +80,9 @@
     font-weight: 600;
     background-color: var(--buttons);
     margin-bottom: 1rem;
-    border: none
+    border: 5px solid white;
+    position: relative;
+    bottom: -0.5rem
 }
 
 .addToCart:hover {

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import MiniProduct from '../MiniProduct/miniProduct';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../../redux/actions';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function CartDetails() {
     const trolley = useSelector(state => state.itemCart)
@@ -20,16 +20,19 @@ export default function CartDetails() {
 
     const calculateTotal = () => {
         let suma = 0;
-        if (trolley.length === 1) {
-            return setTotal(trolley[0].price)
-        }
         trolley.forEach((product) => {
-            console.log('calculando el precio', product[0])
-            console.log('el precio de cada producto', product[0].price)
-            suma = suma + product[0].price
+            suma = suma + product.price
         })
         return setTotal(suma)
     }
+
+    useEffect(() => {
+        try {
+            calculateTotal()
+        } catch (error) {
+            console.log("Error al calcular el total", error);
+        }
+    },);
 
     return (
         <div className={style.overallDetail}>
@@ -42,7 +45,6 @@ export default function CartDetails() {
                     : <div className={style.trolleyFull}>
                         {
                             trolley.map((product) => {
-                                console.log('esto es el product en el map', product)
                                 return <MiniProduct key={product.id}
                                     id={product.id}
                                     name={product.name}
@@ -56,8 +58,8 @@ export default function CartDetails() {
                     </div>
             }
             <div className={style.summingTotal}>
-                <button className={style.calculate} onClick={() => calculateTotal()}> Calcula </button>
                 <div className={style.total}> Monto total ${total} </div>
+                <button className={style.toPagos}>Elige to Método de Pago</button>
             </div>
         </div>
     )

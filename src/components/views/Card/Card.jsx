@@ -9,9 +9,9 @@ const Card = ({ id, image, name, model, brand, feature, price }) => {
   const dispatch = useDispatch();
 
   const handleAdd = (id, image, name, model, brand, feature, price) => {
-    let product = [{
+    let product = {
       id, image, name, model, brand, feature, price
-    }]
+    }
     dispatch(actions.addToCart(product))
   }
 
@@ -27,7 +27,6 @@ const Card = ({ id, image, name, model, brand, feature, price }) => {
         <div className={style.extra}>
           <p className={style.model}> <span className={style.block}>Modelo:  </span> {model}</p>
           <div className={style.description}><span className={style.block}>Características:</span> {feature}</div>
-          <hr />
           <button className={style.addToCart} onClick={() => handleAdd(id, image, name, model, brand, feature, price)}>
             Add to Cart
           </button>
