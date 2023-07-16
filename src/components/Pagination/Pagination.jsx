@@ -14,18 +14,21 @@ export default function Pagination() {
     dispatch(setCurrentPage(page));
   };
 
-  const renderPageNumbers = Array.from({ length: pageNumbers }, (_, index) => index + 1);
+  const renderPageNumbers = [];
+  for (let i = 1; i <= pageNumbers; i++) {
+    renderPageNumbers.push(i);
+  }
 
   return (
     <nav>
-      <button 
+      <button
         disabled={currentPage === 1}
         onClick={() => handleClick(currentPage - 1)}
       >
         Anterior
       </button>
       {renderPageNumbers.map((number) => (
-        <button 
+        <button
           key={number}
           className={currentPage === number ? style.button : ""}
           onClick={() => handleClick(number)}
