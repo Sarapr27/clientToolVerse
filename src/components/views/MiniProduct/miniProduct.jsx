@@ -3,8 +3,6 @@ import bin from '../img/bin.png'
 
 const MiniProduct = ({ id, image, name, model, brand, price, handleDelete }) => {
 
-    console.log('recibo los productos en el MiniProduct', id, image, name, model, brand, price, handleDelete)
-
     return (
         <div className={style.divMiniProd} key={id} >
             <div className={style.nameImgMini}>
