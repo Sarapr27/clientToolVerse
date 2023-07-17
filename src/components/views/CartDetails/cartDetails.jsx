@@ -6,6 +6,7 @@ import MiniProduct from '../MiniProduct/miniProduct';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../../redux/actions';
 import React, { useEffect, useState } from "react";
+import {convertirNumero} from "../../utils"
 
 export default function CartDetails() {
     const trolley = useSelector(state => state.itemCart)
@@ -58,7 +59,8 @@ export default function CartDetails() {
                     </div>
             }
             <div className={style.summingTotal}>
-                <div className={style.total}> Monto total ${total} </div>
+
+                <div className={style.total}> Monto total ${convertirNumero(Math.round(total))} </div>
                 <div className={style.button}>
                     <input type="submit" value="Elige tu Método de Pago" />
                 </div>
