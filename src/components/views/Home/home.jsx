@@ -7,13 +7,7 @@ import Filters from '../../Filters/Filters'
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
-import { useDispatch, useSelector } from "react-redux";
-
 function Home() {
-
-
-    const dispatch = useDispatch();
-    const AllTools= useSelector((state)=>state.tools)
 
     return (
         <div className={style.homeDiv}>
@@ -23,8 +17,10 @@ function Home() {
                 <img src="https://belltec.com.co/modules/angarslider/views/img/images/564b42ff1301a72d87cb01b6ad9ab40628597c14_748fe41843339635df928ce00affab834a8b249e_katcher.jpg" alt="img" />
 
             </Carousel>
-            <Ordering/>
-            <Filters/>
+            <div className={style.filtOrd}>
+                <Ordering/>
+                <Filters/>
+            </div>
             <ProductCards />
             <hr />
 

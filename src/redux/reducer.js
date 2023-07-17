@@ -107,15 +107,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
         toolsShown: []
       };
     case CHANGE_FILTER_CATEGORY:
-        const cat=[...state.toolsShown]
+        const cat=[...state.allTools]
         return{
           ...state,
-          toolsShown:cat.filter(e=>e.category===payload)
+          toolsShown:cat.filter(e=>e.category.includes(payload))
         };
     case CHANGE_FILTER_BRAND:
+      const brn=[...state.allTools]
         return{
             ...state,
-            toolsShown:state.toolsShown.filter(e=>e.brand===payload)
+            toolsShown:brn.filter(e=>e.brand===payload)
           };  
     default:
       return {

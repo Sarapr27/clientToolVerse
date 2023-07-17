@@ -94,4 +94,10 @@
         flex-direction: column;
         align-items: center;
     }
+
+    .filtOrd {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
 }
