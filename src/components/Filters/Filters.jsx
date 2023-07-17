@@ -1,33 +1,33 @@
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import {
   changeFilterCategory,
   changeFilterBrand,
   setCurrentPage,
-  getTools,
-  
+//   getTools,  
 } from "../../redux/actions";
- const Filters= ()=>{const dispatch=useDispatch()
 
-    useEffect(() => {
-        dispatch(getTools())
-        
-    }, [dispatch])
+ const Filters= ()=>{
+    const dispatch=useDispatch()
+
+    // useEffect(() => {
+    //     dispatch(getTools())        
+    // }, [dispatch])
+
     return (
-        <div classname='container-filtros'>
+        <div className='container-filtros'>
                 <h5>Filtrar por Categoria</h5>
-                    <select onchange={(e)=>{dispatch(changeFilterCategory(e.target.value))
+                    <select onChange={(e)=>{dispatch(changeFilterCategory(e.target.value))
                         dispatch(setCurrentPage(1))}}>
                         <option value='Eléctricos'>Eléctricos</option>
                         <option value='Manuales'>Manuales</option>
                         <option value='Inalámbricos'>Inalámbricos</option>
                         <option value='Neumáticos'>Neumáticos</option>
-                        <option value='Hogar'>Hogar</option>
-                        
+                        <option value='Hogar'>Hogar</option>                        
                     </select>
     
-                    <h5>Filtrar por Marca</h5>
-                    <select onchange={(e)=>{dispatch(changeFilterBrand(e.target.value))
+                <h5>Filtrar por Marca</h5>
+                    <select onChange={(e)=>{dispatch(changeFilterBrand(e.target.value))
                         dispatch(setCurrentPage(1))}}> 
                          <option value ='MAKITA'>Makita</option>
                          <option value='EINHELL'>Einhell</option>
