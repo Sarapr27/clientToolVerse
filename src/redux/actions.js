@@ -11,7 +11,10 @@ import {
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
   SET_CURRRENT_PAGE,
-  CLEAN_BDD
+  CLEAN_BDD,
+  CHANGE_FILTER_CATEGORY,
+  CHANGE_FILTER_BRAND
+
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -89,5 +92,19 @@ export const setCurrentPage = (page) => {
 export const cleanBdd = () => {
   return {
     type: CLEAN_BDD
+  }
+}
+
+export const changeFilterCategory = (category) => {
+  return {
+      type: CHANGE_FILTER_CATEGORY,
+      payload: category
+  }
+}
+
+export const changeFilterBrand = (brand) => {
+  return {
+      type: CHANGE_FILTER_BRAND,
+      payload: brand
   }
 }

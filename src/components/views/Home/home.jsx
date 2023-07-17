@@ -3,10 +3,17 @@ import style from './home.module.css'
 import React from 'react';
 import ProductCards from '../ProductCards/ProductCards';
 import Ordering from '../../Ordering/Ordering';
+import Filters from '../../Filters/Filters'
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
+import { useDispatch, useSelector } from "react-redux";
+
 function Home() {
+
+
+    const dispatch = useDispatch();
+    const AllTools= useSelector((state)=>state.tools)
 
     return (
         <div className={style.homeDiv}>
@@ -17,30 +24,7 @@ function Home() {
 
             </Carousel>
             <Ordering/>
-            <div classname='container-filtros'>
-            <h5>Filtrar Categoria</h5>
-                <select>
-                    <option value='Eléctricos'>Eléctricos</option>
-                    <option value='Manuales'>Manuales</option>
-                    <option value='Inalámbricos'>Inalámbricos</option>
-                    <option value='Neumáticos'>Neumáticos</option>
-                    <option value='Hogar'>Hogar</option>
-                    
-                </select>
-
-                <h5>Filtrar por Marca</h5>
-                <select >
-                     <option value ='MAKITA'>Makita</option>
-                     <option value='EINHELL'>Einhell</option>
-                     <option value='DEWALT'>Dewalt</option>
-                     <option value='TRUPER'>Truper</option>
-                     <option value='STANLEY'>Stanley</option>
-                     <option value='IRWIN'>Irwin</option>
-                     <option value='BOSCH'>Bosh</option>
-                </select>
-            
-                
-            </div>
+            <Filters/>
             <ProductCards />
             <hr />
 
