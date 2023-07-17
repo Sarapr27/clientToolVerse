@@ -20,10 +20,15 @@ export default function SearchBar() {
         dispatch(actions.setCurrentPage(1));
         setInput("");
     }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+          onSearch(input);
+        }
+      };
 
     return (
         <div className={style.searchBar}>
-            <input type='search' className={style.input} value={input} onChange={handleSearch} placeholder=' Busca una herramienta por nombre' />
+            <input type='search' className={style.input} value={input} onChange={handleSearch} placeholder=' Busca una herramienta por nombre' onKeyDown={handleKeyDown}/>
             <button className={style.onSearch} onClick={() => onSearch(input)}> <img className={style.lupa} src={lupa} alt="lupa" /> </button>
             <span> </span>
         </div>
