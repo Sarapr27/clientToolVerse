@@ -1,49 +1,61 @@
-import style from './Ordering.module.css'
-import {orderByName, orderByPrice} from '../../redux/actions'
-import { useDispatch } from 'react-redux';
+import style from "./Ordering.module.css";
+import {
+  getTools,
+  orderByName,
+  orderByPrice,
+  setCurrentPage,
+} from "../../redux/actions";
+import { useDispatch } from "react-redux";
 
 const Ordering = () => {
   const dispatch = useDispatch();
 
-    return (
-        <div className={style.orderingContainer}>
-            <div className={style.ordenAlpha}>
-          <select
-            name="orderByName"
-            onChange={(e) => {
-              dispatch(orderByName(e.target.value));
-            }}
-          >
-            <option value="" key="first" hidden>
-              Orden alfabético
+  return (
+    <div className={style.orderingContainer}>
+      <div>
+        <button
+          onClick={() => {
+            dispatch(getTools());
+            dispatch(setCurrentPage(1));
+          }}
+        >
+          Todos los productos
+        </button>
+      </div>
+      <div className={style.alphabeticalOrder}>
+        <span>Ordenar de</span>
+        <select
+          name="orderByName"
+          onChange={(e) => {
+            dispatch(orderByName(e.target.value));
+            dispatch(setCurrentPage(1));
+          }}
+        >
+          {["A-Z", "Z-A"].map((e, i) => (
+            <option value={e} key={i}>
+              {e}
             </option>
-            {["A-Z", "Z-A"].map((e, i) => (
-              <option value={e} key={i}>
-                {e}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className={style.ordenPop}>
-          <select
-            name="orderByPrice"
-            onChange={(e) => {
-              dispatch(orderByPrice(e.target.value));
-            }}
-          >
-            <option value="" key="first" hidden>
-              Orden por precio
+          ))}
+        </select>
+      </div>
+      <div className={style.orderByPrice}>
+        <span>Ordenar por</span>
+        <select
+          name="orderByPrice"
+          onChange={(e) => {
+            dispatch(orderByPrice(e.target.value));
+            dispatch(setCurrentPage(1));
+          }}
+        >
+          {["Mayor precio", "Menor precio"].map((e, i) => (
+            <option value={e} key={i}>
+              {e}
             </option>
-
-            {["Mayor precio", "Menor precio"].map((e, i) => (
-              <option value={e} key={i}>
-                {e}
-              </option>
-            ))}
-          </select>
-        </div>
-        </div>
-    )
-}
+          ))}
+        </select>
+      </div>
+    </div>
+  );
+};
 
 export default Ordering;

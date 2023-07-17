@@ -1,49 +1,62 @@
 import React, { useState } from "react";
 import styles from "../Form/form.module.css";
+import { useDispatch } from "react-redux";
+import { createUser } from "../../../redux/actions";
 import { validateForm } from "./validation";
 
 function Form() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const dispatch = useDispatch();
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+    role: "client",
+  });
+
   const [error, setError] = useState("");
 
-  const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value);
-  };
-
-  const handleLastNameChange = (event) => {
-    setLastName(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePhoneChange = (event) => {
-    setPhone(event.target.value);
-  };
-
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleConfirmPasswordChange = (event) => {
-    setConfirmPassword(event.target.value);
+  const handleChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const validationError = validateForm(firstName, lastName, email, phone, username, password, confirmPassword);
+
+    const validationError = validateForm(
+      formData.firstName,
+      formData.lastName,
+      formData.email,
+      formData.phone,
+      formData.password,
+      formData.confirmPassword
+    );
     setError(validationError);
+
+    if (!validationError) {
+      dispatch(createUser(formData))
+        .then(() => {
+          console.log("Registro exitoso");
+          setFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            password: "",
+            confirmPassword: "",
+            role: "client",
+          });
+          setError("");
+          alert("¡Registro exitoso!");
+        })
+        .catch(() => {
+          console.log("Error en el registro");
+          setError("Error en el registro. Inténtalo nuevamente.");
+        });
+    }
   };
 
   return (
@@ -56,64 +69,72 @@ function Form() {
               <span className={styles.details}>Nombre</span>
               <input
                 type="text"
+                name="firstName"
                 placeholder="Ingresa tu nombre"
-                value={firstName}
-                onChange={handleFirstNameChange}
+                value={formData.firstName}
+                onChange={handleChange}
               />
             </div>
             <div className={styles["input-box"]}>
               <span className={styles.details}>Apellido</span>
               <input
                 type="text"
+                name="lastName"
                 placeholder="Ingresa tu apellido"
-                value={lastName}
-                onChange={handleLastNameChange}
+                value={formData.lastName}
+                onChange={handleChange}
               />
             </div>
             <div className={styles["input-box"]}>
               <span className={styles.details}>Email</span>
               <input
                 type="text"
+                name="email"
                 placeholder="Ingresa tu email"
-                value={email}
-                onChange={handleEmailChange}
+                value={formData.email}
+                onChange={handleChange}
               />
             </div>
             <div className={styles["input-box"]}>
               <span className={styles.details}>Número de Teléfono</span>
               <input
-                type="number"
-                placeholder="Ingresa tu número de teléfono"
-                value={phone}
-                onChange={handlePhoneChange}
-              />
-            </div>
-            <div className={styles["input-box"]}>
-              <span className={styles.details}>Nombre de Usuario</span>
-              <input
                 type="text"
-                placeholder="Ingresa tu nombre de usuario"
-                value={username}
-                onChange={handleUsernameChange}
+                name="phone"
+                placeholder="Ingresa tu número de teléfono"
+                value={formData.phone}
+                onChange={handleChange}
               />
             </div>
             <div className={styles["input-box"]}>
               <span className={styles.details}>Contraseña</span>
               <input
                 type="password"
+                name="password"
                 placeholder="Ingresa tu contraseña"
-                value={password}
-                onChange={handlePasswordChange}
+                value={formData.password}
+                onChange={handleChange}
               />
             </div>
             <div className={styles["input-box"]}>
               <span className={styles.details}>Confirmar Contraseña</span>
               <input
                 type="password"
+                name="confirmPassword"
                 placeholder="Confirma tu contraseña"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
+                value={formData.confirmPassword}
+                onChange={handleChange}
               />
+            </div>
+            <div className={styles["input-box"]}>
+              <span className={styles.details}>Rol</span>
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+              >
+                <option value="admin">Admin</option>
+                <option value="client">Cliente</option>
+              </select>
             </div>
           </div>
 

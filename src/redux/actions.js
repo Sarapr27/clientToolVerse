@@ -12,7 +12,10 @@ import {
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
   SET_CURRRENT_PAGE,
-  CLEAN_BDD
+  CLEAN_BDD,
+  CHANGE_FILTER_CATEGORY,
+  CHANGE_FILTER_BRAND
+
 } from "./type";
 
 
@@ -41,10 +44,16 @@ export const getToolById = (id) => {
   };
 };
 
-export const createUser = () => {
+export const createUser = (character) => {
   return async function (dispatch) {
-    const create = await axios.post(`http://localhost:3001/user`);
-    dispatch({ type: CREATE_USER, payload: create });
+    try {
+      const {data} = await axios.post(`http://localhost:3001/register`,character,{withCredentials:true});
+      if(data){
+        dispatch({ type: CREATE_USER, payload: data });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
@@ -100,5 +109,19 @@ export const setCurrentPage = (page) => {
 export const cleanBdd = () => {
   return {
     type: CLEAN_BDD
+  }
+}
+
+export const changeFilterCategory = (category) => {
+  return {
+      type: CHANGE_FILTER_CATEGORY,
+      payload: category
+  }
+}
+
+export const changeFilterBrand = (brand) => {
+  return {
+      type: CHANGE_FILTER_BRAND,
+      payload: brand
   }
 }

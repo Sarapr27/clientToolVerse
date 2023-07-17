@@ -11,6 +11,8 @@ import {
   ORDER_BY_PRICE,
   REMOVE_FROM_CART,
   SET_CURRRENT_PAGE,
+  CHANGE_FILTER_CATEGORY,
+  CHANGE_FILTER_BRAND
 } from "./type";
 
 const initialState = {
@@ -117,7 +119,19 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         toolsShown: []
-      }
+      };
+    case CHANGE_FILTER_CATEGORY:
+        const cat=[...state.allTools]
+        return{
+          ...state,
+          toolsShown:cat.filter(e=>e.category.includes(payload))
+        };
+    case CHANGE_FILTER_BRAND:
+      const brn=[...state.allTools]
+        return{
+            ...state,
+            toolsShown:brn.filter(e=>e.brand===payload)
+          };  
     default:
       return {
         ...state,
