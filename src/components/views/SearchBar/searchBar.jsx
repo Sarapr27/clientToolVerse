@@ -17,11 +17,13 @@ export default function SearchBar() {
         if (!name) return;
         console.log('el name en onSearch', name);
         dispatch(actions.getToolsByName(name));
+        dispatch(actions.setCurrentPage(1));
+        setInput("");
     }
 
     return (
         <div className={style.searchBar}>
-            <input type='search' className={style.input} value={input.name} onChange={handleSearch} placeholder=' Busca una herramienta por nombre' />
+            <input type='search' className={style.input} value={input} onChange={handleSearch} placeholder=' Busca una herramienta por nombre' />
             <button className={style.onSearch} onClick={() => onSearch(input)}> <img className={style.lupa} src={lupa} alt="lupa" /> </button>
             <span> </span>
         </div>

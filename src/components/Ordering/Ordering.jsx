@@ -1,5 +1,10 @@
 import style from "./Ordering.module.css";
-import { orderByName, orderByPrice } from "../../redux/actions";
+import {
+  getTools,
+  orderByName,
+  orderByPrice,
+  setCurrentPage,
+} from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
 const Ordering = () => {
@@ -7,16 +12,25 @@ const Ordering = () => {
 
   return (
     <div className={style.orderingContainer}>
+      <div>
+        <button
+          onClick={() => {
+            dispatch(getTools());
+            dispatch(setCurrentPage(1));
+          }}
+        >
+          Todos los productos
+        </button>
+      </div>
       <div className={style.alphabeticalOrder}>
+        <span>Ordenar de</span>
         <select
           name="orderByName"
           onChange={(e) => {
             dispatch(orderByName(e.target.value));
+            dispatch(setCurrentPage(1));
           }}
         >
-          <option value="" key="first" hidden>
-            Orden alfabético
-          </option>
           {["A-Z", "Z-A"].map((e, i) => (
             <option value={e} key={i}>
               {e}
@@ -25,16 +39,14 @@ const Ordering = () => {
         </select>
       </div>
       <div className={style.orderByPrice}>
+        <span>Ordenar por</span>
         <select
           name="orderByPrice"
           onChange={(e) => {
             dispatch(orderByPrice(e.target.value));
+            dispatch(setCurrentPage(1));
           }}
         >
-          <option value="" key="first" hidden>
-            Orden por precio
-          </option>
-
           {["Mayor precio", "Menor precio"].map((e, i) => (
             <option value={e} key={i}>
               {e}
