@@ -2,6 +2,7 @@ import {
   ADD_TO_CART,
   CLEAN_BDD,
   CREATE_USER,
+  GET_USER,
   ERROR_404,
   GET_TOOLS,
   GET_TOOLS_BY_ID,
@@ -16,7 +17,16 @@ const initialState = {
   allTools: [], // guardamos aquí TODAS LAS TOOLS
   toolsShown: [], // éstas son las tools que van a renderizarse
   toolsDetail: {}, // Tendra la informacion detallada de cada tools.
-  createUser: [], // Aca guardaremos nuestras User Creadas del FORM. npmbre del array MODIFICABLE
+  usersCreated: [], // Aca guardaremos nuestras User Creadas del FORM. npmbre del array MODIFICABLE
+  actualUser: {}, // aquí veremos el user una vez que haga hecho logIn
+  // actualUser: {
+  //   id: 99,
+  //   firstName: "Testing",
+  //   lastName: "User",
+  //   email: "iamatest@averquesale.com",
+  //   phone: 1234567890,
+  //   address: "Una calle 99, Centro, Cba, Arg. 5000"
+  // }, // esto es nada más para verlo renderizado en el carrito 
   itemCart: [], // Aca almacenaremos todos los productos cargados en el carrito
   error404: false,
   currentPage: 1,
@@ -41,22 +51,26 @@ const rootReducer = (state = initialState, { type, payload }) => {
         toolsDetail: payload,
       };
     case CREATE_USER:
+      // debería haber una comprobación para que no hayan dos usuarios con el mismo nombre (?)
+      // no he chequeado aún si eso existe en el back
       return {
         ...state,
-        createUser: payload,
+        usersCreated: [...state.usersCreated, payload],
       };
+    case GET_USER:
+      return {
+        ...state,
+        actualUser: payload
+      }
     case ADD_TO_CART:
       return {
         ...state,
         itemCart: [...state.itemCart, payload]
       };
     case REMOVE_FROM_CART:
-      console.log("estoy en el REMOVE_FROM_CART", state);
-      let filtrado = state.itemCart.filter((item) => item.id !== payload);
-      console.log("el filtrado en REMOVE_FROM_CART", filtrado);
       return {
         ...state,
-        itemCart: filtrado,
+        itemCart: state.itemCart.filter((item) => item.id !== payload)
       };
     case ERROR_404:
       return {

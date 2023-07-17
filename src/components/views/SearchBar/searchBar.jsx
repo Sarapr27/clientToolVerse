@@ -15,7 +15,6 @@ export default function SearchBar() {
 
     const onSearch = (name) => {
         if (!name) return;
-        console.log('el name en onSearch', name);
         dispatch(actions.getToolsByName(name));
     }
 

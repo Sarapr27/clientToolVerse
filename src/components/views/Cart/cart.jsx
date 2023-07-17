@@ -1,6 +1,5 @@
 import style from './cart.module.css';
 import CartDetails from '../CartDetails/cartDetails';
-import userDetails from '../UserDetails/userDetails';
 import UserDetails from '../UserDetails/userDetails';
 
 // este componente debería tener:
@@ -11,7 +10,6 @@ import UserDetails from '../UserDetails/userDetails';
 export default function Cart() {
     return (
         <div>
-            <h1>Soy el Carrito de Compras</h1>
             <div className={style.userDetails}>
                 <UserDetails />
                 <CartDetails />

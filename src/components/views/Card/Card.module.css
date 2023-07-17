@@ -63,7 +63,6 @@
 
 .upperDiv:hover .extra {
     display: block;
-    margin-top: -1rem;
     color: var(--buttons);
     background-color: var(--highlights);
     border-bottom-left-radius: 1rem;
@@ -75,18 +74,41 @@
     margin-bottom: 0%;
 }
 
-.addToCart {
+/* .addToCart {
     cursor: pointer;
     font-weight: 600;
     background-color: var(--buttons);
     margin-bottom: 1rem;
     border: 5px solid white;
     position: relative;
-    bottom: -0.5rem
+
 }
 
 .addToCart:hover {
     background-color: var(--secondary);
+} */
+
+.button {
+    height: 45px;
+    margin: 1rem;
+}
+
+.button input {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #acadad, #515755);
+}
+
+.button input:hover {
+    background: linear-gradient(-135deg, #acadad, #515755);
 }
 
 @media (max-width: 480px) {

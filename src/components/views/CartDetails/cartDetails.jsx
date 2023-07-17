@@ -59,7 +59,9 @@ export default function CartDetails() {
             }
             <div className={style.summingTotal}>
                 <div className={style.total}> Monto total ${total} </div>
-                <button className={style.toPagos}>Elige to Método de Pago</button>
+                <div className={style.button}>
+                    <input type="submit" value="Elige tu Método de Pago" />
+                </div>
             </div>
         </div>
     )
