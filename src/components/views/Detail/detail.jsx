@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Detail.module.css";
-import { getToolById } from "../../../redux/actions";
+import { addToCart, getToolById } from "../../../redux/actions";
 const Detail = () => {
   const products = useSelector((state) => state.toolsDetail);
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  //!algo le hicieron en el Back que ya no se renderiza por "id"
   useEffect(() => {
     try {
       dispatch(getToolById(id));
@@ -29,7 +28,7 @@ const Detail = () => {
         <p>Modelo: {products.model}</p>
         <h3>Marca: {products.brand}</h3>
         <h4>Precio ${products.price}</h4>
-        <button className={style.addToCart}>Add Cart</button>
+        <button className={style.addToCart} onClick={() => dispatch(addToCart(products))}>Add To Cart</button>
       </div>
     </div>
   );
