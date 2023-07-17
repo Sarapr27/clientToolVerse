@@ -1,6 +1,5 @@
 import style from './cart.module.css';
 import CartDetails from '../CartDetails/cartDetails';
-import userDetails from '../UserDetails/userDetails';
 import UserDetails from '../UserDetails/userDetails';
 
 // este componente debería tener:
