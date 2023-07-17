@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import style from "./Card.module.css";
 import { useDispatch } from 'react-redux';
 import * as actions from '../../../redux/actions';
-import { convertirNumero } from '../../utils';
 
 const Card = ({ id, image, name, model, brand, feature, price }) => {
   const navigate = useNavigate()
@@ -23,7 +22,7 @@ const Card = ({ id, image, name, model, brand, feature, price }) => {
         <img src={image} alt={image} className={style.image} onClick={() => navigate(`/detail/${id}`)} />
         <div className={style.brandPrice}>
           <h3 className={style.brand}>{brand}</h3>
-          <h3 className={style.price}>${convertirNumero(price)}</h3>
+          <h3 className={style.price}>${price}</h3>
         </div>
         <div className={style.extra}>
           <p className={style.model}> <span className={style.block}>Modelo:  </span> {model}</p>
