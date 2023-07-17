@@ -22,15 +22,18 @@ const Detail = () => {
 
   return (
     <div className={style.detailContainer}>
-      <div>
+      <div className={style.imageContainer}>
         <img src={products.image} alt={products.name} />
       </div>
-      <div>
+      <div className={style.infoContainer}>
         <h1>{products.name}</h1>
-        <p>Modelo: {products.model}</p>
+        <br></br>
         <h3>Marca: {products.brand}</h3>
+
+        <p>Modelo: {products.model}</p>
         <h4>Precio ${convertirNumero(products.price)}</h4>
-        <button className={style.addToCart} onClick={() => dispatch(addToCart(products))}>Add To Cart</button>
+       <br></br>
+        <button className={style.addToCart} onClick={() => dispatch(addToCart(products))}><b>Add To Cart</b></button>
       </div>
     </div>
   );

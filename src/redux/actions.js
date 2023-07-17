@@ -5,6 +5,7 @@ import {
   GET_TOOLS_BY_NAME,
   GET_TOOLS_BY_ID,
   CREATE_USER,
+  GET_USER,
   ADD_TO_CART,
   REMOVE_FROM_CART,
   ERROR_404,
@@ -16,6 +17,8 @@ import {
   CHANGE_FILTER_BRAND
 
 } from "./type";
+
+
 
 export const getToolsByName = (tool) => {
   return async function (dispatch) {
@@ -52,6 +55,14 @@ export const createUser = (character) => {
       console.log(error);
     }
   };
+};
+
+export const getUser = (name) => {
+  return async function (dispatch) {
+    let response = await axios.get(`http://localhost:3001/user/${name}`);
+    console.log('esta es la response en actions.getUser', response)
+    dispatch({ type: GET_USER, payload: response })
+  }
 };
 
 export const addToCart = (item) => {
