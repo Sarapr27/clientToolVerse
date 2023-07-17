@@ -36,10 +36,16 @@ export const getToolById = (id) => {
   };
 };
 
-export const createUser = () => {
+export const createUser = (character) => {
   return async function (dispatch) {
-    const create = await axios.post(`http://localhost:3001/user`);
-    dispatch({ type: CREATE_USER, payload: create });
+    try {
+      const {data} = await axios.post(`http://localhost:3001/register`,character,{withCredentials:true});
+      if(data){
+        dispatch({ type: CREATE_USER, payload: data });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
