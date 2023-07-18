@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./About.module.css";
-
+import Footer from "../Footer";
 
 const About = () => {
   const teamMembers = [
@@ -103,6 +103,7 @@ const About = () => {
           </div>
         ))}
       </div>
+      <Footer/>
     </div>
   );
 };
