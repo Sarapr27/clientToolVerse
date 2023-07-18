@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from "../NavBar/logoTry.png"
-import styles from "./Footer.scss";
+import styles from "./Footer.module.scss";
 import {Link} from "react-router-dom";
 
 
@@ -11,15 +11,15 @@ const  Footer = () => {
         <footer className={styles.footer}>
         <section>
             <div className={styles['logo-container']}>
-                {/* <Link to="/home">
+                <Link to="/home">
                 <img src={logo} alt="logo"/>
-                </Link> */}
+                </Link> 
             </div>
             <div className={styles['links']}>
-                <Link to="/about"><p>About Us</p></Link>
+                <Link to="/about"><p>Nuestro Equipo</p></Link>
                 
                 <div className={styles['contact-us']}>
-                <Link to="contactus">Contact Us</Link>
+                <Link to="contactus">Contactanos</Link>
                 </div>
                 
             </div>
