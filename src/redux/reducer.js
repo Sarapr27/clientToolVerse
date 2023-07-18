@@ -25,7 +25,7 @@ const initialState = {
   //   id: 99,
   //   firstName: "Testing",
   //   lastName: "User",
-  //   email: "iamatest@averquesale.com",
+  //   email: "iamatest@soyunaprueba.com",
   //   phone: 1234567890,
   //   address: "Una calle 99, Centro, Cba, Arg. 5000"
   // }, // esto es nada más para verlo renderizado en el carrito 
@@ -121,17 +121,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
         toolsShown: []
       };
     case CHANGE_FILTER_CATEGORY:
-        const cat=[...state.allTools]
-        return{
-          ...state,
-          toolsShown:cat.filter(e=>e.category.includes(payload))
-        };
+      const cat = [...state.allTools]
+      return {
+        ...state,
+        toolsShown: cat.filter(e => e.category.includes(payload))
+      };
     case CHANGE_FILTER_BRAND:
-      const brn=[...state.allTools]
-        return{
-            ...state,
-            toolsShown:brn.filter(e=>e.brand===payload)
-          };  
+      const brn = [...state.allTools]
+      return {
+        ...state,
+        toolsShown: brn.filter(e => e.brand === payload)
+      };
     default:
       return {
         ...state,

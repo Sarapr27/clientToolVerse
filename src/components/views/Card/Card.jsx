@@ -26,13 +26,9 @@ const Card = ({ id, image, name, model, brand, feature, price }) => {
         </div>
         <div className={style.extra}>
           <p className={style.model}> <span className={style.block}>Modelo:  </span> {model}</p>
-          <div className={style.description}><span className={style.block}>Características:</span> {feature}</div>
           <div className={style.button}>
             <input type="submit" value="AGREGA AL CARRITO" onClick={() => handleAdd(id, image, name, model, brand, feature, price)} />
           </div>
-          {/* <button className={style.addToCart} onClick={() => handleAdd(id, image, name, model, brand, feature, price)}>
-            Add to Cart
-          </button> */}
         </div>
       </div>
     </div>

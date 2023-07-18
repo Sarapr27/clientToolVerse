@@ -39,6 +39,8 @@
 }
 
 .price {
+    margin: 1rem;
+    background-color: var(--primary);
     color: var(--warnings);
 }
 
@@ -70,23 +72,10 @@
 }
 
 .model {
+    margin-top: 1rem;
     font-size: smaller;
     margin-bottom: 0%;
 }
-
-/* .addToCart {
-    cursor: pointer;
-    font-weight: 600;
-    background-color: var(--buttons);
-    margin-bottom: 1rem;
-    border: 5px solid white;
-    position: relative;
-
-}
-
-.addToCart:hover {
-    background-color: var(--secondary);
-} */
 
 .button {
     height: 45px;
@@ -109,6 +98,10 @@
 
 .button input:hover {
     background: linear-gradient(-135deg, #acadad, #515755);
+}
+
+.button input:focus {
+    background: var(--buttons);
 }
 
 @media (max-width: 480px) {
