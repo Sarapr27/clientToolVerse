@@ -30,8 +30,10 @@ const Detail = () => {
         <h3>Marca: {products.brand}</h3>
 
         <p>Modelo: {products.model}</p>
+
+        <div><span className={style.block}>Características:</span> {products.feature}</div>
         <h4>Precio ${products.price}</h4>
-       <br></br>
+        <br></br>
         <button className={style.addToCart} onClick={() => dispatch(addToCart(products))}><b>Add To Cart</b></button>
       </div>
     </div>
