@@ -10,14 +10,14 @@ export function validateForm(firstName, lastName, email, phone, password, confir
     error = "El nombre debe tener entre 2 y 50 caracteres.";
   } else if (lastName.length < 2 || lastName.length > 50) {
     error = "El apellido debe tener entre 2 y 50 caracteres.";
+  } else if (!/^[a-zA-Z\s]+$/.test(firstName) || !/^[a-zA-Z\s]+$/.test(lastName)) {
+    error = "El nombre y el apellido solo deben contener letras y espacios.";
   } else if (!emailRegex.test(email)) {
     error = "Ingresa una dirección de correo electrónico válida.";
   } else if (!phoneRegex.test(phone)) {
     error = "Ingresa un número de teléfono válido (10 dígitos sin espacios ni caracteres especiales).";
-  // } else if (password !== confirmPassword) {
-  //   error = "Las contraseñas no coinciden.";
-  // } else if (!/(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=.*[a-z]).{8,}/.test(password)) {
-  //   error = "La contraseña debe contener al menos una mayúscula, un carácter especial y tener una longitud mínima de 8 caracteres.";
+  } else if (password !== confirmPassword) {
+    error = "Las contraseñas no coinciden. Por favor, asegúrate de que las contraseñas sean iguales.";
   }
 
   return error;
