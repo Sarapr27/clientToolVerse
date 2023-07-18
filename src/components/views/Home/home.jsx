@@ -6,6 +6,7 @@ import Ordering from '../../Ordering/Ordering';
 import Filters from '../../Filters/Filters'
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import Footer from '../Footer/Footer';
 
 function Home() {
 
@@ -25,7 +26,7 @@ function Home() {
             <ProductCards />
             <hr />
 
-            
+            <Footer/>
 
             
         </div>
