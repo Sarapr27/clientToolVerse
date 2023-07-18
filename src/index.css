@@ -1,10 +1,10 @@
 :root {
   /* se setean las variables para definir la paleta de colores del proyecto */
   --primary: #ffffff;
-  --secondary: #f2c335;
-  --highlights: #d4d4d0;
+  --secondary: #f4c434;
+  --highlights: #bababa;
   --warnings: #914621;
-  --buttons: #929e44;
+  --buttons: #000000;
 
   /* PORPUESTA: ayuda a utilizar el rem para una web más dinámica sin usar tanto media query */
   font-size: 62.5%;
