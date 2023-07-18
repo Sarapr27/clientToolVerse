@@ -29,12 +29,12 @@ const Detail = () => {
         <br></br>
         <h3>Marca: {products.brand}</h3>
 
-        <p>Modelo: {products.model}</p>
+        <p><b>Modelo:</b> {products.model}</p>
 
-        <div><span className={style.block}>Características:</span> {products.feature}</div>
+        <div><span className={style.block}><b>Características: </b></span> {products.feature}</div>
         <h4>Precio ${products.price}</h4>
         <br></br>
-        <button className={style.addToCart} onClick={() => dispatch(addToCart(products))}><b>Add To Cart</b></button>
+        <button className={style.addToCart} onClick={() => dispatch(addToCart(products))}><b>Añadir al carrito</b></button>
       </div>
     </div>
   );
