@@ -23,7 +23,7 @@ const Ordering = () => {
         </button>
       </div>
       <div className={style.alphabeticalOrder}>
-        <span>Ordenar de</span>
+        <h3>Ordenar de: </h3>
         <select
           name="orderByName"
           onChange={(e) => {
@@ -39,7 +39,7 @@ const Ordering = () => {
         </select>
       </div>
       <div className={style.orderByPrice}>
-        <span>Ordenar por</span>
+        <h3>Ordenar por: </h3>
         <select
           name="orderByPrice"
           onChange={(e) => {
