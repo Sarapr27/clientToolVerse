@@ -1,24 +1,32 @@
+.orderByPrice,
 .alphabeticalOrder {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    border-radius: 15px;
-    align-items: center;
-    color: rgba(0,0,0,.9);
-  }
-  .orderByPrice {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    border-radius: 15px;
-    align-items: center;
-    color: rgba(0,0,0,.9);
-  }
-  .orderingContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border-radius: 15px;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.9);
+}
+.orderingContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+.orderingContainer button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  border: 0.1rem solid var(--secondary);
+  border-radius: 1rem;
+  height: 4rem;
+  width: 15rem;
+  margin-right: 2rem;
+  text-transform: uppercase;
+}
+.orderingContainer button:hover {
+  border: 0.2rem solid var(--buttons);
 }

@@ -30,12 +30,15 @@ const ProductCards = () => {
 
   return (
     <div>
+      <div>
+        <Pagination />
+      </div>
       <div className={style.container}>
         {toolsToShow.map((tool) => (
           <Card key={tool.id} {...tool} />
         ))}
       </div>
-      <div className={style.button}>
+      <div>
         <Pagination />
       </div>
     </div>

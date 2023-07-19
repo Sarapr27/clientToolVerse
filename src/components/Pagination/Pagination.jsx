@@ -6,7 +6,7 @@ import { setCurrentPage } from "../../redux/actions";
 export default function Pagination() {
   const dispatch = useDispatch();
   const currentPage = useSelector((state) => state.currentPage);
-  const tools = useSelector((state) => state.allTools);
+  const tools = useSelector((state) => state.toolsShown);
   const itemsPerPage = 12;
   const pageNumbers = Math.ceil(tools.length / itemsPerPage);
 
@@ -20,7 +20,7 @@ export default function Pagination() {
   }
 
   return (
-    <nav>
+    <div className={style.divButtons}>
       <button
         disabled={currentPage === 1}
         onClick={() => handleClick(currentPage - 1)}
@@ -42,6 +42,6 @@ export default function Pagination() {
       >
         Siguiente
       </button>
-    </nav>
+    </div>
   );
 }
