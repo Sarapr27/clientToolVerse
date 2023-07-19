@@ -12,6 +12,8 @@ import Cart from "./components/views/Cart/cart";
 import ProductCards from "./components/views/ProductCards/ProductCards";
 import Error404 from "./components/Error404/Error404";
 import Footer from "./components/views/Footer/Footer";
+import Dashboard from "./components/views/Admin/Dashboard/Dashboard";
+
 function App() {
   const location = useLocation();
 
@@ -30,6 +32,9 @@ function App() {
         <Route path="/tools" element={<ProductCards/>} />
         <Route path="/footer" element={<Footer/>} />
         <Route path="*" element={<Error404/>}/>
+
+        {/* Rutas para Admin */}
+        <Route path="/admin" element={<Dashboard/>}/>
       </Routes>
     </div>
   );
