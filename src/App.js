@@ -13,6 +13,7 @@ import ProductCards from "./components/views/ProductCards/ProductCards";
 import Error404 from "./components/Error404/Error404";
 import Footer from "./components/views/Footer/Footer";
 import Dashboard from "./components/views/Admin/Dashboard/Dashboard";
+import ProductsList from "./components/views/Admin/ProductsList/ProductsList";
 
 function App() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function App() {
 
         {/* Rutas para Admin */}
         <Route path="/admin" element={<Dashboard/>}/>
+        <Route path="/admin/productsList" element={<ProductsList/>}/>
       </Routes>
     </div>
   );
