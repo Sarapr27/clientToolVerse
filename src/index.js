@@ -6,6 +6,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store'
 import { Provider } from 'react-redux'
+import axios from "axios"
+
+// axios.defaults.baseURL="http://localhost:3001"
+axios.defaults.baseURL="apitoolverse-production.up.railway.app"
 
 ReactDOM.render(
   <React.StrictMode>
