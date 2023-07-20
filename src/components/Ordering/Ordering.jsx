@@ -12,6 +12,7 @@ const Ordering = () => {
 
   return (
     <div className={style.orderingContainer}>
+
       <div className={style.ordenamientos}>
         <div className={style.alphabeticalOrder}>
           <span className={style.orderTitle}>Ordenar por nombre </span>

@@ -1,20 +1,37 @@
 
 import style from './Filter.module.css';
 import { useDispatch } from "react-redux";
-// import { useEffect } from "react";
 import {
     changeFilterCategory,
     changeFilterBrand,
     setCurrentPage,
     //   getTools,  
 } from "../../redux/actions";
+import style from "./Filters.module.css";
 
 const Filters = () => {
+
     const dispatch = useDispatch()
 
-    // useEffect(() => {
-    //     dispatch(getTools())        
-    // }, [dispatch])
+
+  return (
+    <div className={style.filtersContainer}>
+      <div className={style.filterCategory}>
+        <h3>Filtrar por Categoría: </h3>
+        <select
+          onChange={(e) => {
+            dispatch(changeFilterCategory(e.target.value));
+            dispatch(setCurrentPage(1));
+          }}
+        >
+          <option value="Eléctricos">Eléctricos</option>
+          <option value="Manuales">Manuales</option>
+          <option value="Inalámbricos">Inalámbricos</option>
+          <option value="Neumáticos">Neumáticos</option>
+          <option value="Hogar">Hogar</option>
+        </select>
+      </div>
+
 
     return (
         <div className='container-filtros'>
@@ -51,6 +68,5 @@ const Filters = () => {
     )
 }
 
+
 export default Filters;
-
-

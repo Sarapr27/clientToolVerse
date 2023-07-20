@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./About.css";
-
+import styles from "./About.module.css";
+import Footer from "../Footer";
 
 const About = () => {
   const teamMembers = [
@@ -13,15 +13,15 @@ const About = () => {
       linkedin: 'https://www.linkedin.com/in/antonio-flores-desarrollador/'
     },
     {
-        name: "",
-        position: "",
+        name: "Alejandro Camacho",
+        position: "ejemplo",
         education: "",
         previousEmployment: "",
-        image: "",
+        image: "https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2022/03/avatar-facebook-2632445.jpg?tf=3840x",
         linkedinUrl:"",
     },
     {
-        name: "",
+        name: "ejemplo 3",
         position: "",
         education: "",
         previousEmployment: "",
@@ -71,11 +71,26 @@ const About = () => {
     
   ];
 
+  function sortTeamMembers(teamMembers) {
+    const sortedArray = [...teamMembers];
+    sortedArray.sort((a, b) => {
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      if (nameA < nameB) {
+        return -1;
+      }if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+    return sortedArray
+  };
+
   return (
     <div className={styles.ourTeamSection}>
-      <h3 className={styles.ourTeamTitle}>About Us</h3>
+      <h3 className={styles.ourTeamTitle}>Nuestro Equipo</h3>
       <div className={styles.teamMembersContainer}>
-        {teamMembers.map((member, index) => (
+        {sortTeamMembers(teamMembers).map((member, index) => (
           <div key={index} className={styles.teamMember}>
             <img className={styles.memberImage} src={member.image} alt={member.name} />
             <div className={styles.memberDetails}>
@@ -88,6 +103,7 @@ const About = () => {
           </div>
         ))}
       </div>
+      <Footer/>
     </div>
   );
 };

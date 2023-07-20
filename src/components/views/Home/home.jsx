@@ -11,6 +11,8 @@ import {
     getTools,
     setCurrentPage,
 } from "../../../redux/actions";
+import Footer from '../Footer/Footer';
+
 
 function Home() {
     const dispatch = useDispatch();
@@ -36,6 +38,8 @@ function Home() {
             </div>
             <ProductCards />
             <hr />
+
+            <Footer/>
 
 
 
