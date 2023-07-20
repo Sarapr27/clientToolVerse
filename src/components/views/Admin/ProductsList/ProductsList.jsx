@@ -1,26 +1,26 @@
-import React, {useState, useEffect} from 'react';
-//import styles from "./ProductsList.module.css";
-import axios from "axios";
+import React, { useEffect} from 'react';
+import styles from "./ProductsList.module.css";
+import { getTools } from '../../../../redux/actions';
+import { useSelector, useDispatch } from 'react-redux';
 
 const ProductsList = () => {
-    const [productsData, setProductsData] = useState([]);
+ const allProducts = useSelector((state) => state.toolsShown );
+ console.log(allProducts);
+const dispatch = useDispatch()
 
     useEffect(() => {
-        axios
-        .get(`http://localhost:3001/products`)
-        .then((response) => {
-            setProductsData(response.data);
-        })
-        .catch((error) => {
-            console.log("No se recibieron productos:", error);
-        })
+        try {
+            dispatch(getTools())
+        } catch (error) {
+            console.log("Error al obtener los productos:", error);
+        }
         
-    }, []);
+    }, [dispatch]);
 
     return (
         <div>
-            <h1>LISTADO DE PRODUCTOS</h1>
-            <table>
+            <h1 className={styles.title}>LISTADO DE PRODUCTOS</h1>
+            <table className={styles.table}>
                 <thead>
                     <tr>
                     <th>ID</th>
@@ -32,12 +32,12 @@ const ProductsList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {productsData.length === 0 ? (
+                    {allProducts.length === 0 ? (
                         <tr>
                             <td>No hay productos para mostrar</td>
                         </tr>
                     ) : (
-                        productsData.map((product) => (
+                        allProducts.map((product) => (
                             <tr key={product.id}>
                                 <td>{product.id}</td>
                                 <td>{product.name}</td>
