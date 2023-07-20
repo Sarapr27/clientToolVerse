@@ -22,7 +22,7 @@ import {
 
 export const getToolsByName = (tool) => {
   return async function (dispatch) {
-    let response = await axios.get(`http://localhost:3001/products?name=${tool}`);
+    let response = await axios.get(`/products?name=${tool}`);
     return dispatch({
       type: GET_TOOLS_BY_NAME,
       payload: response.data,
@@ -32,14 +32,14 @@ export const getToolsByName = (tool) => {
 
 export const getTools = () => {
   return async function (dispatch) {
-    const tools = await axios.get(`http://localhost:3001/products`)
+    const tools = await axios.get(`/products`)
     dispatch({ type: GET_TOOLS, payload: tools.data });
   };
 };
 
 export const getToolById = (id) => {
   return async function (dispatch) {
-    const tools = await axios.get(`http://localhost:3001/products/${id}`)
+    const tools = await axios.get(`/products/${id}`)
     dispatch({ type: GET_TOOLS_BY_ID, payload: tools.data });
   };
 };
@@ -47,7 +47,7 @@ export const getToolById = (id) => {
 export const createUser = (character) => {
   return async function (dispatch) {
     try {
-      const {data} = await axios.post(`http://localhost:3001/register`,character,{withCredentials:true});
+      const {data} = await axios.post(`/register`,character,{withCredentials:true});
       if(data){
         dispatch({ type: CREATE_USER, payload: data });
       }
@@ -59,7 +59,7 @@ export const createUser = (character) => {
 
 export const getUser = (name) => {
   return async function (dispatch) {
-    let response = await axios.get(`http://localhost:3001/user/${name}`);
+    let response = await axios.get(`/user/${name}`);
     console.log('esta es la response en actions.getUser', response)
     dispatch({ type: GET_USER, payload: response })
   }
