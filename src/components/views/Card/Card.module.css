@@ -35,6 +35,8 @@
 }
 
 .brand {
+    margin: 1rem;
+    background-color: var(--primary);
     color: var(--buttons);
 }
 

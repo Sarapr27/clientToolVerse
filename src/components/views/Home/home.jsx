@@ -6,8 +6,14 @@ import Ordering from '../../Ordering/Ordering';
 import Filters from '../../Filters/Filters'
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { useDispatch } from "react-redux";
+import {
+    getTools,
+    setCurrentPage,
+} from "../../../redux/actions";
 
 function Home() {
+    const dispatch = useDispatch();
 
     return (
         <div className={style.homeDiv}>
@@ -19,15 +25,21 @@ function Home() {
 
             </Carousel>
             <div className={style.filtOrd}>
-                <Ordering/>
-                <Filters/>
+                <Filters />
+                <Ordering />
+                <div className={style.button}>
+                    <input type="submit" value=" QUITAR FILTROS " onClick={() => {
+                        dispatch(getTools());
+                        dispatch(setCurrentPage(1));
+                    }} />
+                </div>
             </div>
             <ProductCards />
             <hr />
 
-            
 
-            
+
+
         </div>
     )
 }

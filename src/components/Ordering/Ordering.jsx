@@ -12,47 +12,39 @@ const Ordering = () => {
 
   return (
     <div className={style.orderingContainer}>
-      <div>
-        <button
-          onClick={() => {
-            dispatch(getTools());
-            dispatch(setCurrentPage(1));
-          }}
-        >
-          Todos los productos
-        </button>
-      </div>
-      <div className={style.alphabeticalOrder}>
-        <span>Ordenar de</span>
-        <select
-          name="orderByName"
-          onChange={(e) => {
-            dispatch(orderByName(e.target.value));
-            dispatch(setCurrentPage(1));
-          }}
-        >
-          {["A-Z", "Z-A"].map((e, i) => (
-            <option value={e} key={i}>
-              {e}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className={style.orderByPrice}>
-        <span>Ordenar por</span>
-        <select
-          name="orderByPrice"
-          onChange={(e) => {
-            dispatch(orderByPrice(e.target.value));
-            dispatch(setCurrentPage(1));
-          }}
-        >
-          {["Mayor precio", "Menor precio"].map((e, i) => (
-            <option value={e} key={i}>
-              {e}
-            </option>
-          ))}
-        </select>
+      <div className={style.ordenamientos}>
+        <div className={style.alphabeticalOrder}>
+          <span className={style.orderTitle}>Ordenar por nombre </span>
+          <select
+            name="orderByName"
+            onChange={(e) => {
+              dispatch(orderByName(e.target.value));
+              dispatch(setCurrentPage(1));
+            }}
+          >
+            {[" de A-Z", "de Z-A"].map((e, i) => (
+              <option value={e} key={i}>
+                {e}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className={style.orderByPrice}>
+          <span className={style.orderTitle}>Ordenar por precio </span>
+          <select
+            name="orderByPrice"
+            onChange={(e) => {
+              dispatch(orderByPrice(e.target.value));
+              dispatch(setCurrentPage(1));
+            }}
+          >
+            {["Ascendente", "Descendente"].map((e, i) => (
+              <option value={e} key={i}>
+                {e}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     </div>
   );
