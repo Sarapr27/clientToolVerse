@@ -36,13 +36,12 @@
     background-color: var(--highlights);
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    margin-top: 1rem;
-    font-size: medium;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  }
-  
-  .brand {
+    margin-top: -4rem;
+}
+
+.brand {
+    margin: 1rem;
+    background-color: var(--primary);
     color: var(--buttons);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   }
