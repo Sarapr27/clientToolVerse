@@ -47,8 +47,8 @@ export const getToolById = (id) => {
 export const createUser = (character) => {
   return async function (dispatch) {
     try {
-      const {data} = await axios.post(`/register`,character,{withCredentials:true});
-      if(data){
+      const { data } = await axios.post(`/register`, character, { withCredentials: true });
+      if (data) {
         dispatch({ type: CREATE_USER, payload: data });
       }
     } catch (error) {
@@ -66,6 +66,7 @@ export const getUser = (name) => {
 };
 
 export const addToCart = (item) => {
+  console.log('este es el item', item)
   return {
     type: ADD_TO_CART,
     payload: item,
@@ -114,14 +115,14 @@ export const cleanBdd = () => {
 
 export const changeFilterCategory = (category) => {
   return {
-      type: CHANGE_FILTER_CATEGORY,
-      payload: category
+    type: CHANGE_FILTER_CATEGORY,
+    payload: category
   }
 }
 
 export const changeFilterBrand = (brand) => {
   return {
-      type: CHANGE_FILTER_BRAND,
-      payload: brand
+    type: CHANGE_FILTER_BRAND,
+    payload: brand
   }
 }

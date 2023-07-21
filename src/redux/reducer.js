@@ -53,8 +53,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         toolsDetail: payload,
       };
     case CREATE_USER:
-      // debería haber una comprobación para que no hayan dos usuarios con el mismo nombre (?)
-      // no he chequeado aún si eso existe en el back
       return {
         ...state,
         usersCreated: [...state.usersCreated, payload],
@@ -64,11 +62,30 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         actualUser: payload
       }
+
     case ADD_TO_CART:
-      return {
-        ...state,
-        itemCart: [...state.itemCart, payload]
-      };
+      const itemId = payload.id;
+      const existingItemIndex = state.itemCart.findIndex(item => item.id === itemId);
+
+      // Si el elemento no existe, lo agrega con una quantity = 1
+      if (existingItemIndex === -1) {
+        payload.quantity = 1;
+        return {
+          ...state,
+          itemCart: [...state.itemCart, payload],
+        };
+      }
+      // Si el elemento existe, aumenta su cantidad en 1
+      else {
+        const updatedCart = state.itemCart.map(item =>
+          item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+        );
+        return {
+          ...state,
+          itemCart: updatedCart,
+        };
+      }
+
     case REMOVE_FROM_CART:
       return {
         ...state,
