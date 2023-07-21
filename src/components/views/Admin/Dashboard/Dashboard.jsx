@@ -11,8 +11,8 @@ const Dashboard = () => {
         <FilterBar>
             <h3 style={{paddingTop: "20px"}}>MENU</h3>
             <Link to="/admin/productsList"><h4 style={{paddingTop: "20px"}}>Lista de Productos</h4></Link>
+            <Link to="/admin/editproducts"><h4 style={{paddingTop: "20px"}}>Editar Productos</h4></Link>
             
-            <h4 style={{paddingTop: "20px"}}>Editar Productos</h4>
             <h4 style={{paddingTop: "20px"}}>Crear Productos</h4>
             <h4 style={{paddingTop: "20px"}}>Usuarios</h4>
             <h4 style={{paddingTop: "20px"}}>Ordenes</h4>
