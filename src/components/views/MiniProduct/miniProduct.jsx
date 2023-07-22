@@ -2,7 +2,7 @@ import style from './miniProduct.module.css';
 import bin from '../img/bin.png'
 
 const MiniProduct = ({ id, image, name, model, brand, price, handleDelete, stock, quantity }) => {
-    console.log('el stockk', stock)
+
 
     return (
         <div className={style.divMiniProd} key={id} >

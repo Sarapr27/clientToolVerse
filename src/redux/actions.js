@@ -64,8 +64,8 @@ export const getToolById = (id) => {
 export const createUser = (character) => {
   return async function (dispatch) {
     try {
-      const {data} = await axios.post(`/register`,character,{withCredentials:true});
-      if(data){
+      const { data } = await axios.post(`/register`, character, { withCredentials: true });
+      if (data) {
         dispatch({ type: CREATE_USER, payload: data });
       }
     } catch (error) {
@@ -89,9 +89,6 @@ export const getUser = (name) => {
 };
 
 export const addToCart = (item) => {
-  // buscar el stock del producto que quiero agregar y enviarlo como parte de la iformación que va por payload
-  // axios -> comunicación con el back -> get.product/stock -> obtengo el objeto en una vble. accedo a su pppiedad stck y eso envío en el payload
-  console.log('este es el item', item)
   return {
     type: ADD_TO_CART,
     payload: item,
@@ -154,15 +151,15 @@ export const cleanBdd = () => {
 
 export const changeFilterCategory = (category) => {
   return {
-      type: CHANGE_FILTER_CATEGORY,
-      payload: category
+    type: CHANGE_FILTER_CATEGORY,
+    payload: category
   }
 };
 
 export const changeFilterBrand = (brand) => {
   return {
-      type: CHANGE_FILTER_BRAND,
-      payload: brand
+    type: CHANGE_FILTER_BRAND,
+    payload: brand
   }
 };
 // Acción para registrar una entrada de stock
@@ -170,12 +167,12 @@ export const registerStockEntry = (toolId, quantity) => async (dispatch) => {
   try {
     const response = await axios.post(`/stock/entrada/${toolId}/${quantity}`);
     dispatch({
-      type: REGISTER_STOCK_ENTRY_SUCCESS, 
+      type: REGISTER_STOCK_ENTRY_SUCCESS,
       payload: { id: toolId, stock: response.data.stock },
     });
   } catch (error) {
     dispatch({
-      type: REGISTER_STOCK_ENTRY_FAILURE, 
+      type: REGISTER_STOCK_ENTRY_FAILURE,
       payload: error.response.data.error,
     });
   }
