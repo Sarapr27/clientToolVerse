@@ -22,20 +22,20 @@ export default function CartDetails() {
     // una función que cuente los elementos y muestre renderizada la cantidad -> que luego el botón elimine uno de esos elementos
 
     const [total, setTotal] = useState('')
-    const [elements, setElements] = useState();
 
-    const contador = (trolley) => {
-        let carrito = trolley.map((product) => {
-            return {
-                id: product.id,
-                name: product.name,
-                image: product.image,
-                model: product.model,
-                brand: product.brand,
-                price: product.price
-            }
-        })
-    }
+    // const contador = (trolley) => {
+    //     let carrito = trolley.map((product) => {
+    //         return {
+    //             id: product.id,
+    //             name: product.name,
+    //             image: product.image,
+    //             model: product.model,
+    //             brand: product.brand,
+    //             price: product.price,
+    //             stock: product.stock
+    //         }
+    //     })
+    // }
 
     const handleDelete = (id) => {
         dispatch(actions.removeFromCart(id))
@@ -75,7 +75,9 @@ export default function CartDetails() {
                                     model={product.model}
                                     brand={product.brand}
                                     price={product.price}
-                                    handleDelete={handleDelete} />
+                                    handleDelete={handleDelete}
+                                    stock={product.stock}
+                                    quantity={product.quantity} />
                             })
                         }
                     </div>

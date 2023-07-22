@@ -1,7 +1,8 @@
 import style from './miniProduct.module.css';
 import bin from '../img/bin.png'
 
-const MiniProduct = ({ id, image, name, model, brand, price, handleDelete }) => {
+const MiniProduct = ({ id, image, name, model, brand, price, handleDelete, stock, quantity }) => {
+    console.log('el stockk', stock)
 
     return (
         <div className={style.divMiniProd} key={id} >
@@ -17,6 +18,8 @@ const MiniProduct = ({ id, image, name, model, brand, price, handleDelete }) => 
             <button className={style.deleteProd} onClick={() => handleDelete(id)}>
                 <img src={bin} alt="bin" className={style.bin} />
             </button>
+            <div className={style.trato}>Stock {stock}</div>
+            <div className={style.trato}>Quantity {quantity}</div>
         </div>
     )
 };

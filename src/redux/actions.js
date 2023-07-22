@@ -66,6 +66,8 @@ export const getUser = (name) => {
 };
 
 export const addToCart = (item) => {
+  // buscar el stock del producto que quiero agregar y enviarlo como parte de la iformación que va por payload
+  // axios -> comunicación con el back -> get.product/stock -> obtengo el objeto en una vble. accedo a su pppiedad stck y eso envío en el payload
   console.log('este es el item', item)
   return {
     type: ADD_TO_CART,

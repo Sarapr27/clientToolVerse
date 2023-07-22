@@ -4,13 +4,13 @@ import style from "./Card.module.css";
 import { useDispatch } from 'react-redux';
 import * as actions from '../../../redux/actions';
 
-const Card = ({ id, image, name, model, brand, feature, price }) => {
+const Card = ({ id, image, name, model, brand, feature, price, stock }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch();
 
-  const handleAdd = (id, image, name, model, brand, feature, price) => {
+  const handleAdd = (id, image, name, model, brand, feature, price, stock) => {
     let product = {
-      id, image, name, model, brand, feature, price
+      id, image, name, model, brand, feature, price, stock
     }
     dispatch(actions.addToCart(product))
   }
@@ -27,7 +27,7 @@ const Card = ({ id, image, name, model, brand, feature, price }) => {
         <div className={style.extra}>
           <p className={style.model}> <span className={style.block}>Modelo:  </span> {model}</p>
           <div className={style.button}>
-            <input type="submit" value="Añadir al carrito" onClick={() => handleAdd(id, image, name, model, brand, feature, price)} />
+            <input type="submit" value="Añadir al carrito" onClick={() => handleAdd(id, image, name, model, brand, feature, price, stock)} />
           </div>
         </div>
       </div>
