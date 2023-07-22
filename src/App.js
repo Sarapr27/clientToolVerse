@@ -16,6 +16,8 @@ import Dashboard from "./components/views/Admin/Dashboard/Dashboard";
 import ProductsList from "./components/views/Admin/ProductsList/ProductsList";
 import Protected from "./Protection";
 import UserProfile from "./components/views/UserProfile/UserProfile"
+import EditProducts from "./components/views/Admin/EditProducts/EditProducts";
+
 
 function App() {
   const location = useLocation();
@@ -42,6 +44,9 @@ function App() {
         <Route path="/admin/productsList" element={<ProductsList/>}/>
         <Route path="/userprofile" element={<UserProfile/>}/>
         </Route>
+
+        <Route path="/admin/editproducts" element={<EditProducts/>}/>
+
       </Routes>
     </div>
   );

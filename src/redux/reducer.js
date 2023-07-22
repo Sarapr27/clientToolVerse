@@ -3,7 +3,6 @@ import {
   CLEAN_BDD,
   CREATE_USER,
   GET_USER,
-  ERROR_404,
   GET_TOOLS,
   GET_TOOLS_BY_ID,
   GET_TOOLS_BY_NAME,
@@ -17,6 +16,11 @@ import {
   CERRAR_SESION,
   ERROR_LOGIN,
   ISAUTHENTICATED
+  UPDATE_TOOL_STOCK,
+  REGISTER_STOCK_ENTRY_SUCCESS,
+  REGISTER_STOCK_ENTRY_FAILURE,
+  REGISTER_STOCK_EXIT_SUCCESS,
+  REGISTER_STOCK_EXIT_FAILURE,
 } from "./type";
 
 const initialState = {
@@ -32,9 +36,8 @@ const initialState = {
   //   email: "iamatest@soyunaprueba.com",
   //   phone: 1234567890,
   //   address: "Una calle 99, Centro, Cba, Arg. 5000"
-  // }, // esto es nada más para verlo renderizado en el carrito 
+  // }, // esto es nada más para verlo renderizado en el carrito
   itemCart: [], // Aca almacenaremos todos los productos cargados en el carrito
-  error404: false,
   currentPage: 1,
   login:[],
   errorLogin:"",
@@ -60,8 +63,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         toolsDetail: payload,
       };
     case CREATE_USER:
-      // debería haber una comprobación para que no hayan dos usuarios con el mismo nombre (?)
-      // no he chequeado aún si eso existe en el back
       return {
         ...state,
         usersCreated: [...state.usersCreated, payload],
@@ -71,22 +72,51 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         actualUser: payload
       }
+
     case ADD_TO_CART:
-      return {
-        ...state,
-        itemCart: [...state.itemCart, payload]
-      };
+      const itemId = payload.id;
+      const existingItemIndex = state.itemCart.findIndex(item => item.id === itemId);
+
+      // Si el elemento no existe, lo agrega con una quantity = 1
+      if (existingItemIndex === -1) {
+        payload.quantity = 1;
+        return {
+          ...state,
+          itemCart: [...state.itemCart, payload],
+        };
+      }
+      // Si el elemento existe, aumenta su cantidad en 1
+      else {
+        const updatedCart = state.itemCart.map(item =>
+          item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+        );
+        return {
+          ...state,
+          itemCart: updatedCart,
+        };
+      }
+
     case REMOVE_FROM_CART:
+      let resta = [];
+      state.itemCart.map((item) => {
+        if (item.id === payload) {
+          if (item.quantity === 1) return
+          if (item.quantity > 1) {
+            let lessItem = {
+              ...item,
+              quantity: item.quantity - 1
+            }
+            resta.push(lessItem)
+          }
+        }
+        else resta.push(item)
+      });
+
       return {
         ...state,
-        itemCart: state.itemCart.filter((item) => item.id !== payload)
+        itemCart: resta,
       };
-    case ERROR_404:
-      return {
-        // analizar si usaremos Esta logica en un componente si no se borra
-        ...state,
-        error404: true,
-      };
+
     case ORDER_BY_NAME:
       const productsName = [...state.toolsShown];
       const sortProductsName = productsName.sort((a, b) => {
@@ -125,19 +155,44 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case CLEAN_BDD:
       return {
         ...state,
-        toolsShown: []
+        toolsShown: [],
       };
     case CHANGE_FILTER_CATEGORY:
-      const cat = [...state.allTools]
+      const cat = [...state.allTools];
       return {
         ...state,
-        toolsShown: cat.filter(e => e.category.includes(payload))
+        toolsShown: cat.filter((e) => e.category.includes(payload)),
       };
     case CHANGE_FILTER_BRAND:
-      const brn = [...state.allTools]
+      const brn = [...state.allTools];
       return {
         ...state,
-        toolsShown: brn.filter(e => e.brand === payload)
+        toolsShown: brn.filter((e) => e.brand === payload),
+      };
+    case UPDATE_TOOL_STOCK:
+      // Actualizar el estado de las herramientas después de registrar una entrada o salida de stock
+      const updatedToolStock = state.allTools.map((tool) =>
+        tool.id === payload.toolId ? { ...tool, stock: payload.stock } : tool
+      );
+      return {
+        ...state,
+        allTools: updatedToolStock,
+      };
+    case REGISTER_STOCK_ENTRY_SUCCESS:
+    case REGISTER_STOCK_EXIT_SUCCESS:
+      // Actualizar el estado de las herramientas después de registrar una entrada o salida de stock
+      const updatedStock = state.allTools.map((tool) =>
+        tool.id === payload.id ? { ...tool, stock: payload.stock } : tool
+      );
+      return {
+        ...state,
+        allTools: updatedStock,
+      };
+    case REGISTER_STOCK_ENTRY_FAILURE:
+    case REGISTER_STOCK_EXIT_FAILURE:
+      return {
+        ...state,
+        error: payload,
       };
       case LOGIN:
         return{
