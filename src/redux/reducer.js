@@ -12,7 +12,11 @@ import {
   REMOVE_FROM_CART,
   SET_CURRRENT_PAGE,
   CHANGE_FILTER_CATEGORY,
-  CHANGE_FILTER_BRAND
+  CHANGE_FILTER_BRAND,
+  LOGIN,
+  CERRAR_SESION,
+  ERROR_LOGIN,
+  ISAUTHENTICATED
 } from "./type";
 
 const initialState = {
@@ -32,6 +36,9 @@ const initialState = {
   itemCart: [], // Aca almacenaremos todos los productos cargados en el carrito
   error404: false,
   currentPage: 1,
+  login:[],
+  errorLogin:"",
+  isAuthenticated:false
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -132,6 +139,26 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         toolsShown: brn.filter(e => e.brand === payload)
       };
+      case LOGIN:
+        return{
+          ...state,
+          login:payload
+        }
+      case CERRAR_SESION:
+        return{
+          ...state,
+          isAuthenticated: false
+        }
+      case ISAUTHENTICATED:
+        return{
+          ...state,
+          isAuthenticated:true
+        }
+      case ERROR_LOGIN:
+        return{
+          ...state,
+          errorLogin:payload
+        }
     default:
       return {
         ...state,

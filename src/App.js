@@ -14,6 +14,8 @@ import Error404 from "./components/Error404/Error404";
 import Footer from "./components/views/Footer/Footer";
 import Dashboard from "./components/views/Admin/Dashboard/Dashboard";
 import ProductsList from "./components/views/Admin/ProductsList/ProductsList";
+import Protected from "./Protection";
+import UserProfile from "./components/views/UserProfile/UserProfile"
 
 function App() {
   const location = useLocation();
@@ -35,8 +37,11 @@ function App() {
         <Route path="*" element={<Error404/>}/>
 
         {/* Rutas para Admin */}
+        <Route element={<Protected/>}>
         <Route path="/admin" element={<Dashboard/>}/>
         <Route path="/admin/productsList" element={<ProductsList/>}/>
+        <Route path="/userprofile" element={<UserProfile/>}/>
+        </Route>
       </Routes>
     </div>
   );
