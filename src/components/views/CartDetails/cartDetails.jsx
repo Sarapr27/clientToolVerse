@@ -12,30 +12,8 @@ export default function CartDetails() {
 //   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // QUIERO:
-  // generar un estado local de donde renderizar la info que viene desde el store -> con un id para cada uno?
-  // armar una fción que produzca un array para renderizar
-  // Dicho array:
-  // Determina la cantidad items de cada producto
-  // El botón para eliminar borra uno de cada item
-
-  // una función que cuente los elementos y muestre renderizada la cantidad -> que luego el botón elimine uno de esos elementos
-
   const [total, setTotal] = useState("");
   // const [elements, setElements] = useState();
-
-  // const contador = (trolley) => {
-  //     let carrito = trolley.map((product) => {
-  //         return {
-  //             id: product.id,
-  //             name: product.name,
-  //             image: product.image,
-  //             model: product.model,
-  //             brand: product.brand,
-  //             price: product.price
-  //         }
-  //     })
-  // }
 
   // Registrar Salida del Stock.
   const exitStock = () => {
