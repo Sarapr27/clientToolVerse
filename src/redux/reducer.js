@@ -67,6 +67,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
 
     case ADD_TO_CART:
+      // tengo que agregar la ppiedad stock de cada producto
       const itemId = payload.id;
       const existingItemIndex = state.itemCart.findIndex(item => item.id === itemId);
 
