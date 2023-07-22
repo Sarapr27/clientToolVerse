@@ -67,7 +67,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
 
     case ADD_TO_CART:
-      // tengo que agregar la ppiedad stock de cada producto
       const itemId = payload.id;
       const existingItemIndex = state.itemCart.findIndex(item => item.id === itemId);
 
@@ -89,11 +88,28 @@ const rootReducer = (state = initialState, { type, payload }) => {
           itemCart: updatedCart,
         };
       }
+
     case REMOVE_FROM_CART:
+      let resta = [];
+      state.itemCart.map((item) => {
+        if (item.id === payload) {
+          if (item.quantity === 1) return
+          if (item.quantity > 1) {
+            let lessItem = {
+              ...item,
+              quantity: item.quantity - 1
+            }
+            resta.push(lessItem)
+          }
+        }
+        else resta.push(item)
+      });
+
       return {
         ...state,
-        itemCart: state.itemCart.filter((item) => item.id !== payload),
+        itemCart: resta,
       };
+
     case ORDER_BY_NAME:
       const productsName = [...state.toolsShown];
       const sortProductsName = productsName.sort((a, b) => {
