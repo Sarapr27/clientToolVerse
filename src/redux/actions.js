@@ -8,39 +8,56 @@ import {
   GET_USER,
   ADD_TO_CART,
   REMOVE_FROM_CART,
-  ERROR_404,
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
   SET_CURRRENT_PAGE,
   CLEAN_BDD,
   CHANGE_FILTER_CATEGORY,
-  CHANGE_FILTER_BRAND
-
+  CHANGE_FILTER_BRAND,
+  REGISTER_STOCK_ENTRY_SUCCESS,
+  REGISTER_STOCK_ENTRY_FAILURE,
+  REGISTER_STOCK_EXIT_SUCCESS,
 } from "./type";
-
-
 
 export const getToolsByName = (tool) => {
   return async function (dispatch) {
-    let response = await axios.get(`/products?name=${tool}`);
-    return dispatch({
-      type: GET_TOOLS_BY_NAME,
-      payload: response.data,
-    });
+    try {
+      let response = await axios.get(`/products?name=${tool}`);
+      if (response) {
+        dispatch({
+          type: GET_TOOLS_BY_NAME,
+          payload: response.data,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
 export const getTools = () => {
   return async function (dispatch) {
-    const tools = await axios.get(`/products`)
-    dispatch({ type: GET_TOOLS, payload: tools.data });
+    try {
+      const tools = await axios.get(`/products`);
+      if (tools) {
+        dispatch({ type: GET_TOOLS, payload: tools.data });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
 export const getToolById = (id) => {
   return async function (dispatch) {
-    const tools = await axios.get(`/products/${id}`)
-    dispatch({ type: GET_TOOLS_BY_ID, payload: tools.data });
+    try {
+      const tools = await axios.get(`/products/${id}`);
+      if (tools) {
+        dispatch({ type: GET_TOOLS_BY_ID, payload: tools.data });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
@@ -59,13 +76,22 @@ export const createUser = (character) => {
 
 export const getUser = (name) => {
   return async function (dispatch) {
-    let response = await axios.get(`/user/${name}`);
-    console.log('esta es la response en actions.getUser', response)
-    dispatch({ type: GET_USER, payload: response })
-  }
+    try {
+      let response = await axios.get(`/user/${name}`);
+      console.log("esta es la response en actions.getUser", response);
+      if (response) {
+        dispatch({ type: GET_USER, payload: response });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
 
 export const addToCart = (item) => {
+  // buscar el stock del producto que quiero agregar y enviarlo como parte de la iformación que va por payload
+  // axios -> comunicación con el back -> get.product/stock -> obtengo el objeto en una vble. accedo a su pppiedad stck y eso envío en el payload
+  console.log('este es el item', item)
   return {
     type: ADD_TO_CART,
     payload: item,
@@ -73,55 +99,100 @@ export const addToCart = (item) => {
 };
 
 export const removeFromCart = (itemId) => {
-  return {
-    type: REMOVE_FROM_CART,
-    payload: itemId,
-  };
+  try {
+    return {
+      type: REMOVE_FROM_CART,
+      payload: itemId,
+    };
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const errorNotFound404 = () => { // analizar si usaremos Esta logica en un componente si no se borra
-  return {
-    type: ERROR_404,
-  }
-}
-
 export const orderByName = (name) => {
-  return {
-    type: ORDER_BY_NAME,
-    payload: name,
+  try {
+    return {
+      type: ORDER_BY_NAME,
+      payload: name,
+    };
+  } catch (error) {
+    console.log(error);
   }
-}
+};
 
 export const orderByPrice = (price) => {
-  return {
-    type: ORDER_BY_PRICE,
-    payload: price,
+  try {
+    return {
+      type: ORDER_BY_PRICE,
+      payload: price,
+    };
+  } catch (error) {
+    console.log(error);
   }
-}
+};
 
 export const setCurrentPage = (page) => {
-  return {
-    type: SET_CURRRENT_PAGE,
-    payload: page
+  try {
+    return {
+      type: SET_CURRRENT_PAGE,
+      payload: page,
+    };
+  } catch (error) {
+    console.log(error);
   }
-}
+};
 
 export const cleanBdd = () => {
-  return {
-    type: CLEAN_BDD
+  try {
+    return {
+      type: CLEAN_BDD,
+    };
+  } catch (error) {
+    console.log(error);
   }
-}
+};
 
 export const changeFilterCategory = (category) => {
   return {
       type: CHANGE_FILTER_CATEGORY,
       payload: category
   }
-}
+};
 
 export const changeFilterBrand = (brand) => {
   return {
       type: CHANGE_FILTER_BRAND,
       payload: brand
   }
-}
+};
+// Acción para registrar una entrada de stock
+export const registerStockEntry = (toolId, quantity) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/stock/entrada/${toolId}/${quantity}`);
+    dispatch({
+      type: REGISTER_STOCK_ENTRY_SUCCESS, 
+      payload: { id: toolId, stock: response.data.stock },
+    });
+  } catch (error) {
+    dispatch({
+      type: REGISTER_STOCK_ENTRY_FAILURE, 
+      payload: error.response.data.error,
+    });
+  }
+};
+
+// Acción para registrar una salida de stock
+export const registerStockExit = (toolId, quantity) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/stock/salida/${toolId}/${quantity}`);
+    dispatch({
+      type: REGISTER_STOCK_EXIT_SUCCESS,
+      payload: { id: toolId, stock: response.data.stock },
+    });
+  } catch (error) {
+    dispatch({
+      type: REGISTER_STOCK_EXIT_SUCCESS,
+      payload: error.response.data.error,
+    });
+  }
+};
