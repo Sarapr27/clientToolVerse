@@ -1,8 +1,7 @@
 import style from './miniProduct.module.css';
 import bin from '../img/bin.png'
 
-const MiniProduct = ({ id, image, name, model, brand, price, handleDelete }) => {
-
+const MiniProduct = ({ id, image, name, model, brand, price, stock, handleDelete }) => {
     return (
         <div className={style.divMiniProd} key={id} >
             <div className={style.nameImgMini}>
@@ -14,6 +13,7 @@ const MiniProduct = ({ id, image, name, model, brand, price, handleDelete }) => 
                 <div className={style.modelMiniProd}>{model}</div>
             </div>
             <div className={style.priceMiniProd}>{price}</div>
+            <div>stock: {stock}</div>
             <button className={style.deleteProd} onClick={() => handleDelete(id)}>
                 <img src={bin} alt="bin" className={style.bin} />
             </button>
