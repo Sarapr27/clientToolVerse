@@ -12,6 +12,10 @@ import {
   SET_CURRRENT_PAGE,
   CHANGE_FILTER_CATEGORY,
   CHANGE_FILTER_BRAND,
+  LOGIN,
+  CERRAR_SESION,
+  ERROR_LOGIN,
+  ISAUTHENTICATED
   UPDATE_TOOL_STOCK,
   REGISTER_STOCK_ENTRY_SUCCESS,
   REGISTER_STOCK_ENTRY_FAILURE,
@@ -35,6 +39,9 @@ const initialState = {
   // }, // esto es nada más para verlo renderizado en el carrito
   itemCart: [], // Aca almacenaremos todos los productos cargados en el carrito
   currentPage: 1,
+  login:[],
+  errorLogin:"",
+  isAuthenticated:false
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -187,6 +194,26 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         error: payload,
       };
+      case LOGIN:
+        return{
+          ...state,
+          login:payload
+        }
+      case CERRAR_SESION:
+        return{
+          ...state,
+          isAuthenticated: false
+        }
+      case ISAUTHENTICATED:
+        return{
+          ...state,
+          isAuthenticated:true
+        }
+      case ERROR_LOGIN:
+        return{
+          ...state,
+          errorLogin:payload
+        }
     default:
       return {
         ...state,

@@ -14,6 +14,11 @@ import {
   CLEAN_BDD,
   CHANGE_FILTER_CATEGORY,
   CHANGE_FILTER_BRAND,
+  LOGIN,
+  CERRAR_SESION,
+  VERIFY_LOGIN_SUCCESS,
+  ERROR_LOGIN,
+  ISAUTHENTICATED,
   REGISTER_STOCK_ENTRY_SUCCESS,
   REGISTER_STOCK_ENTRY_FAILURE,
   REGISTER_STOCK_EXIT_SUCCESS,
@@ -70,6 +75,54 @@ export const createUser = (character) => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+};
+
+const isAuthenticated=()=>{
+  return{
+    type:ISAUTHENTICATED
+  }
+}
+
+export const login=(character)=>{
+  return async function (dispatch) {
+    try {
+      const {data} = await axios.post(`http://localhost:3001/login`,character,{withCredentials:true});
+      // console.log(data)
+      if(data){
+        dispatch({ type: LOGIN, payload: data });
+        dispatch(isAuthenticated())
+      }
+    } catch (error) {
+      dispatch(errorLogin(error?.response?.data?.message))
+      console.log(error?.response?.data?.message);
+    }
+  };
+}
+
+export const errorLogin=(error)=>{
+  return{
+    type:ERROR_LOGIN,
+    payload:error
+  }
+}
+
+export const verifyLoginSuccess=()=>{
+  return{
+    type:VERIFY_LOGIN_SUCCESS
+  }
+}
+
+export const cerrarSesion = (tokenCookie) => {
+  return async (dispatch) => {
+    try {
+      const {data}=await axios.post('http://localhost:3001/logout',tokenCookie,{ withCredentials: true })
+      if(data){
+       return dispatch({ type:CERRAR_SESION });
+      }
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
     }
   };
 };
