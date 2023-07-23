@@ -17,8 +17,8 @@ import {
   ERROR_LOGIN,
   ISAUTHENTICATED,
   UPDATE_TOOL_STOCK,
-  REGISTER_STOCK_ENTRY_SUCCESS,
-  REGISTER_STOCK_ENTRY_FAILURE,
+  // REGISTER_STOCK_ENTRY_SUCCESS,
+  // REGISTER_STOCK_ENTRY_FAILURE,
   REGISTER_STOCK_EXIT_SUCCESS,
   REGISTER_STOCK_EXIT_FAILURE,
 } from "./type";
@@ -39,9 +39,9 @@ const initialState = {
   // }, // esto es nada más para verlo renderizado en el carrito
   itemCart: [], // Aca almacenaremos todos los productos cargados en el carrito
   currentPage: 1,
-  login:[],
-  errorLogin:"",
-  isAuthenticated:false
+  login: [],
+  errorLogin: "",
+  isAuthenticated: false,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -70,12 +70,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case GET_USER:
       return {
         ...state,
-        actualUser: payload
-      }
+        actualUser: payload,
+      };
 
     case ADD_TO_CART:
       const itemId = payload.id;
-      const existingItemIndex = state.itemCart.findIndex(item => item.id === itemId);
+      const existingItemIndex = state.itemCart.findIndex(
+        (item) => item.id === itemId
+      );
 
       // Si el elemento no existe, lo agrega con una quantity = 1
       if (existingItemIndex === -1) {
@@ -87,7 +89,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
       // Si el elemento existe, aumenta su cantidad en 1
       else {
-        const updatedCart = state.itemCart.map(item =>
+        const updatedCart = state.itemCart.map((item) =>
           item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
         );
         return {
@@ -98,20 +100,22 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
     case REMOVE_FROM_CART:
       let resta = [];
-      state.itemCart.map((item) => {
+      state.itemCart.forEach((item) => {
         if (item.id === payload) {
-          if (item.quantity === 1) return
+          if (item.quantity === 1) {
+            return 0;
+          }
           if (item.quantity > 1) {
             let lessItem = {
               ...item,
-              quantity: item.quantity - 1
-            }
-            resta.push(lessItem)
+              quantity: item.quantity - 1,
+            };
+            return resta.push(lessItem);
           }
+        } else {
+          resta.push(item);
         }
-        else resta.push(item)
       });
-
       return {
         ...state,
         itemCart: resta,
@@ -171,14 +175,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
     case UPDATE_TOOL_STOCK:
       // Actualizar el estado de las herramientas después de registrar una entrada o salida de stock
-      const updatedToolStock = state.allTools.map((tool) =>
-        tool.id === payload.toolId ? { ...tool, stock: payload.stock } : tool
+      const { productId, newStock } = payload;
+      const updatedAllTools = state.allTools.map((tool) =>
+        tool.id === productId ? { ...tool, stock: newStock } : tool
       );
       return {
         ...state,
-        allTools: updatedToolStock,
+        allTools: updatedAllTools,
       };
-    case REGISTER_STOCK_ENTRY_SUCCESS:
+    // case REGISTER_STOCK_ENTRY_SUCCESS:
     case REGISTER_STOCK_EXIT_SUCCESS:
       // Actualizar el estado de las herramientas después de registrar una entrada o salida de stock
       const updatedStock = state.allTools.map((tool) =>
@@ -188,32 +193,32 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         allTools: updatedStock,
       };
-    case REGISTER_STOCK_ENTRY_FAILURE:
+    // case REGISTER_STOCK_ENTRY_FAILURE:
     case REGISTER_STOCK_EXIT_FAILURE:
       return {
         ...state,
         error: payload,
       };
-      case LOGIN:
-        return{
-          ...state,
-          login:payload
-        }
-      case CERRAR_SESION:
-        return{
-          ...state,
-          isAuthenticated: false
-        }
-      case ISAUTHENTICATED:
-        return{
-          ...state,
-          isAuthenticated:true
-        }
-      case ERROR_LOGIN:
-        return{
-          ...state,
-          errorLogin:payload
-        }
+    case LOGIN:
+      return {
+        ...state,
+        login: payload,
+      };
+    case CERRAR_SESION:
+      return {
+        ...state,
+        isAuthenticated: false,
+      };
+    case ISAUTHENTICATED:
+      return {
+        ...state,
+        isAuthenticated: true,
+      };
+    case ERROR_LOGIN:
+      return {
+        ...state,
+        errorLogin: payload,
+      };
     default:
       return {
         ...state,

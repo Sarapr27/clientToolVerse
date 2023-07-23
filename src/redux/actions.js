@@ -22,6 +22,7 @@ import {
   REGISTER_STOCK_ENTRY_SUCCESS,
   REGISTER_STOCK_ENTRY_FAILURE,
   REGISTER_STOCK_EXIT_SUCCESS,
+  UPDATE_TOOL_STOCK,
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -214,6 +215,16 @@ export const changeFilterBrand = (brand) => {
     type: CHANGE_FILTER_BRAND,
     payload: brand
   }
+};
+//Accion que me actualiza el Stock global
+export const updateProductStock = (productId, newStock) => {
+  return {
+    type: UPDATE_TOOL_STOCK,
+    payload: {
+      productId,
+      newStock,
+    },
+  };
 };
 // Acción para registrar una entrada de stock
 export const registerStockEntry = (toolId, quantity) => async (dispatch) => {

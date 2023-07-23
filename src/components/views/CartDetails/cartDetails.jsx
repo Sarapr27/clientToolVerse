@@ -19,7 +19,9 @@ export default function CartDetails() {
     trolley.forEach((product) => {
       const productId = product.id;
       const quantity = 1;
-      dispatch(actions.registerStockExit(productId, quantity));
+        dispatch(actions.registerStockExit(productId, quantity)); // Registramos la salida del stock
+        const newStock = product.stock - quantity; // Calculamos el nuevo stock después de la compra
+        dispatch(actions.updateProductStock(productId, newStock)); // Actualizamos el stock en el estado global
     });
   };
 
@@ -47,32 +49,41 @@ export default function CartDetails() {
   });
   return (
     <div className={style.overallDetail}>
-      {
-        (trolley.length === 0) ? <div className={style.emptyTrolley}>
+      {trolley.length === 0 ? (
+        <div className={style.emptyTrolley}>
           <h3>Parece que aún no has colocado nada en la cesta</h3>
-          <img src={empty} alt='The trolley is empty' className={style.emptyTrolleyImg} />
-          <button className={style.goShopping} onClick={() => navigate('/home')}>Go Shopping</button>
+          <img
+            src={empty}
+            alt="The trolley is empty"
+            className={style.emptyTrolleyImg}
+          />
+          <button
+            className={style.goShopping}
+            onClick={() => navigate("/home")}
+          >
+            Go Shopping
+          </button>
         </div>
-
-          : <div className={style.trolleyFull}>
-            {trolley.map((product) => {
-              return (
-                <MiniProduct
-                  key={product.id}
-                  id={product.id}
-                  name={product.name}
-                  image={product.image}
-                  model={product.model}
-                  brand={product.brand}
-                  price={product.price}
-                  stock={product.stock}
-                  quantity={product.quantity}
-                  handleDelete={handleDelete}
-                />
-              );
-            })}
-          </div>
-      }
+      ) : (
+        <div className={style.trolleyFull}>
+          {trolley.map((product) => {
+            return (
+              <MiniProduct
+                key={product.id}
+                id={product.id}
+                name={product.name}
+                image={product.image}
+                model={product.model}
+                brand={product.brand}
+                price={product.price}
+                stock={product.stock}
+                quantity={product.quantity}
+                handleDelete={handleDelete}
+              />
+            );
+          })}
+        </div>
+      )}
       <div>
         <div className={style.summingTotal}>
           <div className={style.total}> Monto total ${total} </div>
