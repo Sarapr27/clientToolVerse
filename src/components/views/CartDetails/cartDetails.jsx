@@ -28,15 +28,11 @@ export default function CartDetails() {
 
     console.log('esta es la compra:', trolley)
     navigate("/purchaseOrder")
-//
-    
-//       axios.post('http://localhost:3001/payment', trolley.map((e)=>e)).then((res)=>window.location.href = res.data.response.body.init_point)
-    
-//   };
 
-//   const handleDelete = (id) => {
-//     dispatch(actions.removeFromCart(id));
 
+    axios.post('http://localhost:3001/payment', trolley.map((e) => e)).then((res) => window.location.href = res.data.response.body.init_point)
+
+  };
 
   const calculateTotal = () => {
     let suma = 0;
@@ -68,7 +64,7 @@ export default function CartDetails() {
           />
           <button
             className={style.goShopping}
-            onClick={() => navigate('/home') }
+            onClick={() => navigate('/home')}
           >
             Go Shopping
           </button>
