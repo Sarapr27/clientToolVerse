@@ -25,7 +25,7 @@ export default function UserDetails() {
                         </div>
                         <div className={style.msgRegister}>
                             <div className={style.mje}>
-                                Si te registras, tus datos serán guardados para que la próxima ocasión todo sea más ágil
+                                No estás registrado aún?
                             </div>
                             <button className={style.register} onClick={() => navigate('/form')}> Registro </button>
                         </div>
