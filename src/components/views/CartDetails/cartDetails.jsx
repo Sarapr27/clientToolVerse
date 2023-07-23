@@ -14,24 +14,29 @@ export default function CartDetails() {
   const dispatch = useDispatch();
 
   const [total, setTotal] = useState("");
+  // const [compra, setCompra] = useState("")
 
-  // Registrar Salida del Stock.
+  // Registrar Salida del Stock. -> NO BORRAR! SERÁ UTILIZADA MÁS ADELANTE EN LA CONFIRMACIÓN DE LA COMPRA
   const exitStock = () => {
     trolley.forEach((product) => {
       const productId = product.id;
-      const quantity = 1;
-        dispatch(actions.registerStockExit(productId, quantity)); // Registramos la salida del stock
-        const newStock = product.stock - quantity; // Calculamos el nuevo stock después de la compra
-        dispatch(actions.updateProductStock(productId, newStock)); // Actualizamos el stock en el estado global
+      const quantity = product.quantity;
+      dispatch(actions.registerStockExit(productId, quantity)); // Registramos la salida del stock
+      const newStock = product.stock - quantity; // Calculamos el nuevo stock después de la compra
+      dispatch(actions.updateProductStock(productId, newStock)); // Actualizamos el stock en el estado global
     });
-    
-      axios.post('http://localhost:3001/payment', trolley.map((e)=>e)).then((res)=>window.location.href = res.data.response.body.init_point)
-    
-  };
 
-  const handleDelete = (id) => {
-    dispatch(actions.removeFromCart(id));
-  };
+    console.log('esta es la compra:', trolley)
+    navigate("/purchaseOrder")
+//
+    
+//       axios.post('http://localhost:3001/payment', trolley.map((e)=>e)).then((res)=>window.location.href = res.data.response.body.init_point)
+    
+//   };
+
+//   const handleDelete = (id) => {
+//     dispatch(actions.removeFromCart(id));
+
 
   const calculateTotal = () => {
     let suma = 0;
@@ -80,9 +85,8 @@ export default function CartDetails() {
                 model={product.model}
                 brand={product.brand}
                 price={product.price}
-                stock={product.stock}
+                feature={product.feature}
                 quantity={product.quantity}
-                handleDelete={handleDelete}
               />
             );
           })}
@@ -91,13 +95,26 @@ export default function CartDetails() {
       <div>
         <div className={style.summingTotal}>
           <div className={style.total}> Monto total ${total} </div>
+          {/* <div className={style.button}>
+            <input
+              type="submit"
+              value="Confirma la Compra"
+              // debe habilitar el botón para elegir el metodo de pago
+              // muestra la compra
+              onClick={exitStock}
+            />
+          </div> */}
           <div className={style.button}>
             <input
               type="submit"
-              value="Elige tu Método de Pago"
-              onClick={exitStock}
+              value="Confirma tu compra"
+              // onClick={() => navigate("/purchaseOrder")}
+              onClick={() => exitStock()}
             />
           </div>
+          {/* {
+            compra && <div>{compra} </div>
+          } */}
         </div>
       </div>
     </div>

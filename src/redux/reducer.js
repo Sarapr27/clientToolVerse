@@ -9,6 +9,7 @@ import {
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
   REMOVE_FROM_CART,
+  LESS_FROM_CART,
   SET_CURRRENT_PAGE,
   CHANGE_FILTER_CATEGORY,
   CHANGE_FILTER_BRAND,
@@ -89,8 +90,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
       // Si el elemento existe, aumenta su cantidad en 1
       else {
-        const updatedCart = state.itemCart.map((item) =>
-          item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+        const updatedCart = state.itemCart.map((item) => {
+          if (item.id === itemId) {
+            if (item.quantity >= 5) return item
+            return {
+              ...item,
+              quantity: item.quantity + 1
+            }
+          }
+          else return item
+        }
         );
         return {
           ...state,
@@ -99,6 +108,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
 
     case REMOVE_FROM_CART:
+      return {
+        ...state,
+        itemCart: state.itemCart.filter(prod => prod.id !== payload)
+      };
+
+    case LESS_FROM_CART:
       let resta = [];
       state.itemCart.forEach((item) => {
         if (item.id === payload) {

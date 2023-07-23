@@ -8,6 +8,7 @@ import {
   GET_USER,
   ADD_TO_CART,
   REMOVE_FROM_CART,
+  LESS_FROM_CART,
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
   SET_CURRRENT_PAGE,
@@ -80,18 +81,18 @@ export const createUser = (character) => {
   };
 };
 
-const isAuthenticated=()=>{
-  return{
-    type:ISAUTHENTICATED
+const isAuthenticated = () => {
+  return {
+    type: ISAUTHENTICATED
   }
 }
 
-export const login=(character)=>{
+export const login = (character) => {
   return async function (dispatch) {
     try {
-      const {data} = await axios.post(`http://localhost:3001/login`,character,{withCredentials:true});
+      const { data } = await axios.post(`http://localhost:3001/login`, character, { withCredentials: true });
       // console.log(data)
-      if(data){
+      if (data) {
         dispatch({ type: LOGIN, payload: data });
         dispatch(isAuthenticated())
       }
@@ -102,25 +103,25 @@ export const login=(character)=>{
   };
 }
 
-export const errorLogin=(error)=>{
-  return{
-    type:ERROR_LOGIN,
-    payload:error
+export const errorLogin = (error) => {
+  return {
+    type: ERROR_LOGIN,
+    payload: error
   }
 }
 
-export const verifyLoginSuccess=()=>{
-  return{
-    type:VERIFY_LOGIN_SUCCESS
+export const verifyLoginSuccess = () => {
+  return {
+    type: VERIFY_LOGIN_SUCCESS
   }
 }
 
 export const cerrarSesion = (tokenCookie) => {
   return async (dispatch) => {
     try {
-      const {data}=await axios.post('http://localhost:3001/logout',tokenCookie,{ withCredentials: true })
-      if(data){
-       return dispatch({ type:CERRAR_SESION });
+      const { data } = await axios.post('http://localhost:3001/logout', tokenCookie, { withCredentials: true })
+      if (data) {
+        return dispatch({ type: CERRAR_SESION });
       }
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
@@ -159,6 +160,18 @@ export const removeFromCart = (itemId) => {
     console.log(error);
   }
 };
+
+export const lessFromCart = (itemId) => {
+  try {
+    return {
+      type: LESS_FROM_CART,
+      payload: itemId,
+    };
+  } catch (error) {
+    console.log(error)
+  }
+
+}
 
 export const orderByName = (name) => {
   try {
