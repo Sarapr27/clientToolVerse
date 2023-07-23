@@ -136,36 +136,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         itemCart: resta,
       };
 
-    case ORDER_BY_NAME:
-      const productsName = [...state.toolsShown];
-      const sortProductsName = productsName.sort((a, b) => {
-        if (a.name > b.name) {
-          return payload === "A-Z" ? 1 : -1;
-        }
-        if (a.name < b.name) {
-          return payload === "A-Z" ? -1 : 1;
-        } else return 0;
-      });
-
-      return {
-        ...state,
-        toolsShown: sortProductsName,
-      };
-
-    case ORDER_BY_PRICE:
-      const productsPrice = [...state.toolsShown];
-      const sortProductsPrice = productsPrice.sort((a, b) => {
-        if (a.price > b.price) {
-          return payload === "Mayor precio" ? -1 : 1;
-        }
-        if (a.price < b.price) {
-          return payload === "Mayor precio" ? 1 : -1;
-        } else return 0;
-      });
-      return {
-        ...state,
-        toolsShown: sortProductsPrice,
-      };
     case SET_CURRRENT_PAGE:
       return {
         ...state,
@@ -176,18 +146,54 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         toolsShown: [],
       };
+   
     case CHANGE_FILTER_CATEGORY:
-      const cat = [...state.allTools];
-      return {
-        ...state,
-        toolsShown: cat.filter((e) => e.category.includes(payload)),
-      };
+        const categoryFiltered = state.allTools.filter((e) => e.category.includes(payload));
+        return {
+          ...state,
+          toolsShown: categoryFiltered,
+        };
+      
     case CHANGE_FILTER_BRAND:
-      const brn = [...state.allTools];
+        const brandFiltered = state.allTools.filter((e) => e.brand === payload);
+        return {
+          ...state,
+          toolsShown: brandFiltered,
+        };
+
+
+    case ORDER_BY_NAME:
+        const productsName = [...state.toolsShown];
+        const sortProductsName = productsName.sort((a, b) => {
+          if (a.name > b.name) {
+            return payload === "de A-Z" ? 1 : -1;
+          }
+          if (a.name < b.name) {
+            return payload === "de A-Z" ? -1 : 1;
+          } else return 0;
+        });
+
       return {
         ...state,
-        toolsShown: brn.filter((e) => e.brand === payload),
+        toolsShown: [...sortProductsName], 
       };
+
+    case ORDER_BY_PRICE:
+          const productsPrice = [...state.toolsShown];
+          const sortProductsPrice = productsPrice.sort((a, b) => {
+            if (a.price < b.price) {
+              return payload === "Ascendente" ? -1 : 1; 
+            }
+            if (a.price > b.price) {
+              return payload === "Ascendente" ? 1 : -1; 
+            }
+            return 0;
+          });
+          return {
+            ...state,
+            toolsShown: [...sortProductsPrice], 
+          };
+
     case UPDATE_TOOL_STOCK:
       // Actualizar el estado de las herramientas después de registrar una entrada o salida de stock
       const { productId, newStock } = payload;

@@ -6,6 +6,7 @@ import MiniProduct from "../MiniProduct/miniProduct";
 import { useDispatch } from "react-redux";
 import * as actions from "../../../redux/actions";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function CartDetails() {
   const trolley = useSelector((state) => state.itemCart);
@@ -24,9 +25,18 @@ export default function CartDetails() {
       const newStock = product.stock - quantity; // Calculamos el nuevo stock después de la compra
       dispatch(actions.updateProductStock(productId, newStock)); // Actualizamos el stock en el estado global
     });
+
     console.log('esta es la compra:', trolley)
     navigate("/purchaseOrder")
-  };
+//
+    
+//       axios.post('http://localhost:3001/payment', trolley.map((e)=>e)).then((res)=>window.location.href = res.data.response.body.init_point)
+    
+//   };
+
+//   const handleDelete = (id) => {
+//     dispatch(actions.removeFromCart(id));
+
 
   const calculateTotal = () => {
     let suma = 0;
@@ -58,7 +68,7 @@ export default function CartDetails() {
           />
           <button
             className={style.goShopping}
-            onClick={() => navigate("/home")}
+            onClick={() => navigate('/home') }
           >
             Go Shopping
           </button>
