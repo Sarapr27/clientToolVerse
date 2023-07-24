@@ -6,8 +6,8 @@ import MiniProduct from "../MiniProduct/miniProduct";
 import { useDispatch } from "react-redux";
 import * as actions from "../../../redux/actions";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { CheckoutButton } from "../Paypal/CheckoutButton";
+
+
 
 //TODO: Implementar las siguientes funcionalidades para ocupar paypal:
 // Una vez que agregue el usuario sus productos se muestre el boton de Paypal en CartDetails solo cuando este logueado el usuario.
@@ -32,13 +32,7 @@ export default function CartDetails() {
       const newStock = product.stock - quantity; // Calculamos el nuevo stock después de la compra
       dispatch(actions.updateProductStock(productId, newStock)); // Actualizamos el stock en el estado global
     });
-
-    console.log('esta es la compra:', trolley)
     navigate("/purchaseOrder")
-
-
-    axios.post('http://localhost:3001/payment', trolley.map((e) => e)).then((res) => window.location.href = res.data.response.body.init_point)
-
   };
 
   const calculateTotal = () => {
@@ -59,6 +53,7 @@ export default function CartDetails() {
       console.log("Error al calcular el total", error);
     }
   });
+
   return (
     <div className={style.overallDetail}>
       {trolley.length === 0 ? (
@@ -98,27 +93,16 @@ export default function CartDetails() {
       <div>
         <div className={style.summingTotal}>
           <div className={style.total}> Monto total ${total} </div>
-          {/* <div className={style.button}>
-            <input
-              type="submit"
-              value="Confirma la Compra"
-              // debe habilitar el botón para elegir el metodo de pago
-              // muestra la compra
-              onClick={exitStock}
-            />
-          </div> */}
           <div className={style.button}>
             <input
               type="submit"
               value="Confirma tu compra"
-              // onClick={() => navigate("/purchaseOrder")}
+              // debería ser un navigate a la página de confirmación de la compra y allí podemos elegir los métodos de pago
               onClick={() => exitStock()}
             />
-            <CheckoutButton/>
+
           </div>
-          {/* {
-            compra && <div>{compra} </div>
-          } */}
+
         </div>
       </div>
     </div>

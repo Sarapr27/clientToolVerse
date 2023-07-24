@@ -10,8 +10,8 @@ function Login() {
     email: "",
     password: "",
   });
-  const {errorLogin}=useSelector(state=>state)
-  const {isAuthenticated}=useSelector(state=>state)
+  const { errorLogin } = useSelector(state => state)
+  const { isAuthenticated } = useSelector(state => state)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,10 +27,12 @@ function Login() {
     event.preventDefault();
     dispatch(login(inputs))
   };
-useEffect(()=>{
-  isAuthenticated&&navigate('/userprofile')
-},[isAuthenticated])
+  useEffect(() => {
+    isAuthenticated && navigate('/userprofile')
+  }, [isAuthenticated])
+
   console.log(isAuthenticated)
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>Inicia sesión</div>
@@ -38,7 +40,7 @@ useEffect(()=>{
         <form onSubmit={handleSubmit}>
           <div className={styles["user-details"]}>
             <div className={styles["input-box"]}>
-              <span className={styles.details}>Nombre de Usuario</span>
+              <span className={styles.details}>Nombre de Usuario (Email) </span>
               <input
                 type="text"
                 placeholder="Ingresa tu nombre de usuario"

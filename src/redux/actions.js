@@ -24,6 +24,7 @@ import {
   REGISTER_STOCK_ENTRY_FAILURE,
   REGISTER_STOCK_EXIT_SUCCESS,
   UPDATE_TOOL_STOCK,
+  ACTUAL_USER
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -91,7 +92,6 @@ export const login = (character) => {
   return async function (dispatch) {
     try {
       const { data } = await axios.post(`http://localhost:3001/login`, character, { withCredentials: true });
-      // console.log(data)
       if (data) {
         dispatch({ type: LOGIN, payload: data });
         dispatch(isAuthenticated())
@@ -107,6 +107,13 @@ export const errorLogin = (error) => {
   return {
     type: ERROR_LOGIN,
     payload: error
+  }
+};
+
+export const actualUser = (info) => {
+  return {
+    type: ACTUAL_USER,
+    payload: info
   }
 }
 

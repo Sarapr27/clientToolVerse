@@ -49,7 +49,7 @@ const MiniProduct = ({ id, image, name, model, brand, price, quantity, feature }
                 <div className={style.brandMiniProd}>{brand}</div>
                 <div className={style.modelMiniProd}>{model}</div>
             </div>
-            <div className={style.priceMiniProd}>{price}</div>
+            <div className={style.priceMiniProd}>${price}</div>
             <div className={style.stockMiniProd}>Stock {localStock}</div>
             {
                 localStock <= 5 && <p className={style.warning}> Este producto está bajo en stock! Es posible que el envío se retrase</p>

@@ -22,6 +22,7 @@ import {
   // REGISTER_STOCK_ENTRY_FAILURE,
   REGISTER_STOCK_EXIT_SUCCESS,
   REGISTER_STOCK_EXIT_FAILURE,
+  ACTUAL_USER,
 } from "./type";
 
 const initialState = {
@@ -29,9 +30,9 @@ const initialState = {
   toolsShown: [], // éstas son las tools que van a renderizarse
   toolsDetail: {}, // Tendra la informacion detallada de cada tools.
   usersCreated: [], // Aca guardaremos nuestras User Creadas del FORM. npmbre del array MODIFICABLE
-  actualUser: {}, // aquí veremos el user una vez que haga hecho logIn
+  actualUser: {}, // temporal -> el usuarui 
   // actualUser: {
-  //   id: 99,
+  //   id: 9999,
   //   firstName: "Testing",
   //   lastName: "User",
   //   email: "iamatest@soyunaprueba.com",
@@ -40,7 +41,7 @@ const initialState = {
   // }, // esto es nada más para verlo renderizado en el carrito
   itemCart: [], // Aca almacenaremos todos los productos cargados en el carrito
   currentPage: 1,
-  login: [],
+  login: [], // aquí veremos el user una vez que haga hecho logIn
   errorLogin: "",
   isAuthenticated: false,
 };
@@ -146,53 +147,52 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         toolsShown: [],
       };
-   
-    case CHANGE_FILTER_CATEGORY:
-        const categoryFiltered = state.allTools.filter((e) => e.category.includes(payload));
-        return {
-          ...state,
-          toolsShown: categoryFiltered,
-        };
-      
-    case CHANGE_FILTER_BRAND:
-        const brandFiltered = state.allTools.filter((e) => e.brand === payload);
-        return {
-          ...state,
-          toolsShown: brandFiltered,
-        };
 
+    case CHANGE_FILTER_CATEGORY:
+      const categoryFiltered = state.allTools.filter((e) => e.category.includes(payload));
+      return {
+        ...state,
+        toolsShown: categoryFiltered,
+      };
+
+    case CHANGE_FILTER_BRAND:
+      const brandFiltered = state.allTools.filter((e) => e.brand === payload);
+      return {
+        ...state,
+        toolsShown: brandFiltered,
+      };
 
     case ORDER_BY_NAME:
-        const productsName = [...state.toolsShown];
-        const sortProductsName = productsName.sort((a, b) => {
-          if (a.name > b.name) {
-            return payload === "de A-Z" ? 1 : -1;
-          }
-          if (a.name < b.name) {
-            return payload === "de A-Z" ? -1 : 1;
-          } else return 0;
-        });
+      const productsName = [...state.toolsShown];
+      const sortProductsName = productsName.sort((a, b) => {
+        if (a.name > b.name) {
+          return payload === "de A-Z" ? 1 : -1;
+        }
+        if (a.name < b.name) {
+          return payload === "de A-Z" ? -1 : 1;
+        } else return 0;
+      });
 
       return {
         ...state,
-        toolsShown: [...sortProductsName], 
+        toolsShown: [...sortProductsName],
       };
 
     case ORDER_BY_PRICE:
-          const productsPrice = [...state.toolsShown];
-          const sortProductsPrice = productsPrice.sort((a, b) => {
-            if (a.price < b.price) {
-              return payload === "Ascendente" ? -1 : 1; 
-            }
-            if (a.price > b.price) {
-              return payload === "Ascendente" ? 1 : -1; 
-            }
-            return 0;
-          });
-          return {
-            ...state,
-            toolsShown: [...sortProductsPrice], 
-          };
+      const productsPrice = [...state.toolsShown];
+      const sortProductsPrice = productsPrice.sort((a, b) => {
+        if (a.price < b.price) {
+          return payload === "Ascendente" ? -1 : 1;
+        }
+        if (a.price > b.price) {
+          return payload === "Ascendente" ? 1 : -1;
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        toolsShown: [...sortProductsPrice],
+      };
 
     case UPDATE_TOOL_STOCK:
       // Actualizar el estado de las herramientas después de registrar una entrada o salida de stock
@@ -225,6 +225,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         login: payload,
       };
+
+    case ACTUAL_USER:
+      return {
+        ...state,
+        actualUser: payload
+      }
+
     case CERRAR_SESION:
       return {
         ...state,
