@@ -7,8 +7,8 @@ import React, { useEffect, useState } from "react";
 
 export default function PurchaseOrder() {
     const trolley = useSelector((state) => state.itemCart);
-    const actualUser = useSelector((state) => state.actualUser)
-    console.log('estos son los datos del actualUser', actualUser)
+    const actualUser = useSelector((state) => state.actualUser);
+    console.log('estos son los datos del actualUser', actualUser);
     const [total, setTotal] = useState("");
 
     const calculateTotal = () => {
@@ -19,19 +19,20 @@ export default function PurchaseOrder() {
         // En este código, usamos toFixed(2) para limitar "suma" a dos dígitos después de la coma decimal. Luego, utilizamos parseFloat() para convertir la cadena resultante nuevamente en un número de punto flotante con dos dígitos después de la coma.
         // Con esta modificación, "suma" tendrá siempre dos dígitos después de la coma decimal al calcular el total en la función calculateTotal().
         suma = parseFloat(suma.toFixed(2));
-        return setTotal(suma);
+        return suma;
     };
 
     useEffect(() => {
         try {
-            calculateTotal();
+            const totalAmount = calculateTotal();
+            setTotal(totalAmount);
         } catch (error) {
             console.log("Error al calcular el total", error);
         }
-    });
+    }, [trolley]);
 
     const handleMP = () => {
-        axios.post('http://localhost:3001/payment', trolley.map((e) => e)).then((res) => window.location.href = res.data.response.body.init_point)
+        axios.post('http://localhost:3001/payment', trolley.map((e) => e)).then((res) => window.location.href = res.data.response.body.init_point);
     }
 
     return (
@@ -70,7 +71,7 @@ export default function PurchaseOrder() {
 
                                     })
                                 }
-                                < h2 className={style.total}> Total: {total}</h2>
+                                <h2 className={style.total}> Total: ${total}</h2>
                             </div>
                         </div>
 
@@ -80,12 +81,15 @@ export default function PurchaseOrder() {
                                 <img src={mercadoPago} alt="Mercado Pago" className={style.mercadoPago} />
                             </button>
 
-                            <CheckoutButton className={style.buttonPay} />
+                            <div className={style.buttonPay}>
+                                <CheckoutButton totalAmount={total} />
+                            </div>
+
                         </div>
 
                     </div>
                 </div>
             }
-        </div >
+        </div>
     )
 }
