@@ -5,13 +5,13 @@ import { login } from "../../../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
   });
-  const { errorLogin } = useSelector(state => state)
-  const { isAuthenticated } = useSelector(state => state)
+  const errorLogin = useSelector(state => state.errorLogin)
+  const isAuthenticated = useSelector(state => state.isAuthenticated)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ function Login() {
   };
   useEffect(() => {
     isAuthenticated && navigate('/userprofile')
-  }, [isAuthenticated])
+  }, [isAuthenticated, navigate])
 
   console.log(isAuthenticated)
 

@@ -43,6 +43,7 @@ export default function UserLogin() {
         timeout={350}
         classNames="UserMenuAnimation"
         unmountOnExit
+        nodeRef={userMenuRef}
       >
         <div className={styles.UserMenu} ref={userMenuRef}>
           {isAuthenticated ? ( 
