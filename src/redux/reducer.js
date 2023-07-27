@@ -44,6 +44,7 @@ const initialState = {
   login: [], // aquí veremos el user una vez que haga hecho logIn
   errorLogin: "",
   isAuthenticated: false,
+  cartError: true
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -229,7 +230,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case ACTUAL_USER:
       return {
         ...state,
-        actualUser: payload
+        actualUser: payload,
+        cartError: false
       }
 
     case CERRAR_SESION:
