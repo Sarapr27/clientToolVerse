@@ -2,6 +2,7 @@ import { React } from "react";
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
 import About from "./components/views/Footer/About/About";
+import ContactUs from "./components/views/Footer/ContactUs/ContactUs";
 import Detail from "./components/views/Detail/detail";
 import Form from "./components/views/Form/form";
 import Login from "./components/views/Login/login"
@@ -30,6 +31,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contactus" element={<ContactUs/>}/>
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/form" element={<Form />} />
         <Route path="/login" element={<Login />} />
