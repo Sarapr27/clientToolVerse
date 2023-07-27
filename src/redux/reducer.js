@@ -23,6 +23,7 @@ import {
   REGISTER_STOCK_EXIT_SUCCESS,
   REGISTER_STOCK_EXIT_FAILURE,
   ACTUAL_USER,
+  DELETE_TROLLEY
 } from "./type";
 
 const initialState = {
@@ -137,6 +138,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         itemCart: resta,
       };
+
+    case DELETE_TROLLEY:
+      return {
+        ...state,
+        itemCart: []
+      }
 
     case SET_CURRRENT_PAGE:
       return {

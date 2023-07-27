@@ -7,12 +7,6 @@ import { useDispatch } from "react-redux";
 import * as actions from "../../../redux/actions";
 import React, { useEffect, useState } from "react";
 
-//TODO: Implementar las siguientes funcionalidades para ocupar paypal:
-// Una vez que agregue el usuario sus productos se muestre el boton de Paypal en CartDetails solo cuando este logueado el usuario.
-// Vincular el monto total con el Sandbox.
-// Una vez hecha la compra crear la orden de compra POST
-//Mostrar alertas visuales en el navegador
-
 export default function CartDetails() {
   const trolley = useSelector((state) => state.itemCart);
   const cartError = useSelector((state) => state.cartError);
@@ -45,10 +39,19 @@ export default function CartDetails() {
   useEffect(() => {
     try {
       calculateTotal();
+
     } catch (error) {
       console.log("Error al calcular el total", error);
     }
   });
+
+  const deleteTrolley = () => {
+    let answer = window.confirm("Esto eliminará TODOS los productos en el carrito. Deseas continuar?")
+    if (answer) {
+      dispatch(actions.deleteTrolley());
+    }
+    else return
+  }
 
   return (
     <div className={style.overallDetail}>
@@ -86,6 +89,13 @@ export default function CartDetails() {
           })}
           <div className={style.summingTotal}>
             <div className={style.total}> Monto total ${total} </div>
+            <div className={style.deletAll}>
+              <input
+                type="submit"
+                value="Elimina todo el Carrito"
+                onClick={() => deleteTrolley()} />
+            </div>
+
             {
               cartError ? <div> Para avanzar con tu compra, por favor completa tus datos </div>
 
