@@ -7,14 +7,6 @@ import { useDispatch } from "react-redux";
 import * as actions from "../../../redux/actions";
 import React, { useEffect, useState } from "react";
 
-
-
-//TODO: Implementar las siguientes funcionalidades para ocupar paypal:
-// Una vez que agregue el usuario sus productos se muestre el boton de Paypal en CartDetails solo cuando este logueado el usuario.
-// Vincular el monto total con el Sandbox.
-// Una vez hecha la compra crear la orden de compra POST
-//Mostrar alertas visuales en el navegador
-
 export default function CartDetails() {
   const trolley = useSelector((state) => state.itemCart);
   const navigate = useNavigate();
