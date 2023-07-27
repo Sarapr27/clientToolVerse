@@ -42,11 +42,11 @@ function App() {
         <Route path="/purchaseOrder" element={<PurchaseOrder />} />
 
         {/* Rutas para Admin */}
-        <Route element={<Protected />}>
+        {/* <Route element={<Protected />}> */}
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/admin/productsList" element={<ProductsList />} />
           <Route path="/userprofile" element={<UserProfile />} />
-        </Route>
+        {/*</Route>*/}
 
         <Route path="/admin/editproducts" element={<EditProducts />} />
 

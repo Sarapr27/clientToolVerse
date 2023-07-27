@@ -3,13 +3,18 @@ import styles from "./EditProducts.module.css";
 import { getTools } from "../../../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import Pagination from "../../../Pagination/Pagination";
 
 const EditProducts = () => {
   const allProducts = useSelector((state) => state.toolsShown);
+  const currentPage = useSelector((state) => state.currentPage)
   console.log(allProducts);
   const dispatch = useDispatch();
+  const itemsPerPage = 12;
 
   const [editData, setEditData] = useState({});
+
+  
 
   useEffect(() => {
     try {
@@ -65,13 +70,17 @@ const EditProducts = () => {
     })
   };
 
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const toolsShown = allProducts.slice(startIndex, endIndex);
+
   return (
     <div>
       <h1 className={styles.title}>EDITAR PRODUCTOS</h1>
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>SKU</th>
             <th>Producto</th>
             <th>Modelo</th>
             <th>Marca</th>
@@ -81,12 +90,12 @@ const EditProducts = () => {
           </tr>
         </thead>
         <tbody>
-          {allProducts.length === 0 ? (
+          {toolsShown.length === 0 ? (
             <tr>
               <td>No hay productos para mostrar</td>
             </tr>
           ) : (
-            allProducts.map((product) => (
+            toolsShown.map((product) => (
               <tr key={product.id}>
                 <td>{product.id}</td>
                 <td>{editData[product.id] ? (
@@ -205,6 +214,7 @@ const EditProducts = () => {
           )}
         </tbody>
       </table>
+      <Pagination/>
     </div>
   );
 };
