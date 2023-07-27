@@ -19,6 +19,7 @@ import Protected from "./Protection";
 import UserProfile from "./components/views/UserProfile/UserProfile"
 import EditProducts from "./components/views/Admin/EditProducts/EditProducts";
 import PurchaseOrder from "./components/views/PurchaseOrder/purchaseOrder";
+import MPFeedback from "./components/MPFeedback/MPFeedback";
 
 function App() {
   const location = useLocation();
@@ -40,6 +41,7 @@ function App() {
         <Route path="/footer" element={<Footer />} />
         <Route path="*" element={<Error404 />} />
         <Route path="/purchaseOrder" element={<PurchaseOrder />} />
+        <Route path="/feedback" element={<MPFeedback />} />
 
         {/* Rutas para Admin */}
         {/* <Route element={<Protected />}> */}
