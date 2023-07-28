@@ -1,10 +1,12 @@
 import React, { useEffect,useState } from "react";
 import styles from "./EditProducts.module.css";
-import { getTools } from "../../../../redux/actions";
+import { getTools, setCurrentPage } from "../../../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Pagination from "../../../Pagination/Pagination";
 import SearchBar from "../SearchBarAdmin/searchBar";
+import Filters from '../../../Filters/Filters';
+
 
 const EditProducts = () => {
   const allProducts = useSelector((state) => state.toolsShown);
@@ -80,6 +82,13 @@ const EditProducts = () => {
     <div>
       <h1 className={styles.title}>EDITAR PRODUCTOS</h1>
       <SearchBar/>
+      <Filters/>
+      <div className={styles.button}>
+                    <input type="submit" value="Restablecer filtros" onClick={() => {
+                        dispatch(getTools());
+                        dispatch(setCurrentPage(1));
+                    }} />
+                </div>
       <table className={styles.table}>
         <thead>
           <tr>
