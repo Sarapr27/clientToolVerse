@@ -1,5 +1,6 @@
 import style from "./cartDetails.module.css";
 import empty from "../img/emptyTrolley.gif";
+import vaciar from "../img/vaciar.png";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from "react-router-dom";
 import MiniProduct from "../MiniProduct/miniProduct";
@@ -88,14 +89,12 @@ export default function CartDetails() {
             );
           })}
           <div className={style.summingTotal}>
+            <button className={style.deleteAll}>
+              <img src={vaciar} alt="Vaciar el carrito"
+                onClick={() => deleteTrolley()} className={style.emptyTrolley} />
+              {/* <p className={style.axnEmpty} > Vaciar el carrito</p> */}
+            </button>
             <div className={style.total}> Monto total ${total} </div>
-            <div className={style.deletAll}>
-              <input
-                type="submit"
-                value="Elimina todo el Carrito"
-                onClick={() => deleteTrolley()} />
-            </div>
-
             {
               cartError ? <div> Para avanzar con tu compra, por favor completa tus datos </div>
 

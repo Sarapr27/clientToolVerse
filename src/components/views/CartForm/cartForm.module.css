@@ -1,9 +1,18 @@
 .cartForm {
     /* border: 1px solid var(--highlights); */
-    padding: 2rem;
+    /* padding: 2rem; */
     display: flex;
     flex-direction: column;
     background-color: var(--secondary);
+    padding: 25px 30px;
+    border-radius: 5px;
+
+}
+
+.title {
+    font-size: 25px;
+    font-weight: bold;
+    position: relative;
 }
 
 .labelForm {
@@ -11,11 +20,11 @@
 }
 
 .inputGral {
-    /* border: 1px solid var(--highlights); */
-    border: none;
+    border: 1px solid var(--highlights);
     font-size: medium;
     width: 28rem;
     margin: 1rem;
+    height: 2rem;
 }
 
 .button {

@@ -62,6 +62,7 @@ export default function CartForm() {
 
     return (
         <div className={style.cartForm}>
+            <div className={style.title}>Completa tus datos:</div>
             <form onSubmit={handleSubmit} className={style.cartForm}>
                 <label className={style.labelForm}>Nombre: </label>
                 <input type="text" className={style.inputGral} name='firstName' placeholder='Nombre del receptor' onChange={handleInputChange} value={user.firstName} />
