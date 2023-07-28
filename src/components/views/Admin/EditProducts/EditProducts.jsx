@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Pagination from "../../../Pagination/Pagination";
 import SearchBar from "../SearchBarAdmin/searchBar";
+import Filters from '../../../Filters/Filters';
+
 
 const EditProducts = () => {
   const allProducts = useSelector((state) => state.toolsShown);
@@ -80,6 +82,7 @@ const EditProducts = () => {
     <div>
       <h1 className={styles.title}>EDITAR PRODUCTOS</h1>
       <SearchBar/>
+      <Filters/>
       <table className={styles.table}>
         <thead>
           <tr>

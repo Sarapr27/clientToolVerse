@@ -4,6 +4,7 @@ import { getTools } from '../../../../redux/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import Pagination from "../../../Pagination/Pagination"
 import SearchBar from '../SearchBarAdmin/searchBar';
+import Filters from '../../../Filters/Filters';
 
 const ProductsList = () => {
  const allProducts = useSelector((state) => state.toolsShown );
@@ -29,6 +30,7 @@ const itemsPerPage = 12;
         <div>
             <h1 className={styles.title}>LISTADO DE PRODUCTOS</h1>
             <SearchBar/>
+            <Filters/>
             <table className={styles.table}>
                 <thead>
                     <tr>
