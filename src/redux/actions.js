@@ -25,9 +25,10 @@ import {
   REGISTER_STOCK_EXIT_SUCCESS,
   UPDATE_TOOL_STOCK,
   ACTUAL_USER,
-  // ADD_REVIEW,
-  // UPDATE_REVIEW_COMMENTS,
-  // DELETE_REVIEW
+  ADD_REVIEW,
+  UPDATE_REVIEW_COMMENTS,
+  DELETE_REVIEW,
+  DELETE_TROLLEY,
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -282,17 +283,17 @@ export const registerStockExit = (toolId, quantity) => async (dispatch) => {
 };
 
 //Actions Reviews
-// export const addReview = (review) => ({
-//   type: ADD_REVIEW,
-//   payload: review,
-// });
+export const addReview = (review) => ({
+  type: ADD_REVIEW,
+  payload: review,
+});
 
-// export const updateReviewComments = (id, comments) => ({
-//   type: UPDATE_REVIEW_COMMENTS,
-//   payload: { id, comments },
-// });
+export const updateReviewComments = (id, comments) => ({
+  type: UPDATE_REVIEW_COMMENTS,
+  payload: { id, comments },
+});
 
-// export const deleteReview = (id) => ({
-//   type: DELETE_REVIEW,
-//   payload: id,
-// });
+export const deleteReview = (id) => ({
+  type: DELETE_REVIEW,
+  payload: id,
+});
