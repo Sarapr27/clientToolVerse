@@ -1,0 +1,30 @@
+.userProfileContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: var(--primary);
+    padding: 20px;
+  }
+  
+  h1 {
+    color: var(--secondary);
+    margin-bottom: 20px;
+  }
+  
+  .customButton {
+    background-color: var(--buttons);
+    color: var(--primary);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .customButton:hover {
+    background-color: var(--highlights);
+  }
+  

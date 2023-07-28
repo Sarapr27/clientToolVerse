@@ -26,29 +26,27 @@
     padding: 6px 12px;
     font-size: 14px;
     border-radius: 4px;
-    background-color: #eee;
+    background-color: #007BFF;
     border: none;
     cursor: pointer;
+    color: white;
+    font-weight: bold;
+    margin-top: 5px;
   }
   
   .table button:hover {
-    background-color: #ddd;
+    background-color: #0056b3;
   }
   
   .actionsHeader {
     text-align: center;
   }
   
-  .button {
-    margin-right: 4px;
-    padding: 6px 12px;
-    font-size: 14px;
-    border-radius: 4px;
-    background-color: #eee;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .button:hover {
-    background-color: #ddd;
+  input, textarea {
+    width: 90%;
+    padding: 5px;
+    font-size: medium;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
   }
