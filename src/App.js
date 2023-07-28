@@ -18,6 +18,7 @@ import Protected from "./Protection";
 import UserProfile from "./components/views/UserProfile/UserProfile"
 import EditProducts from "./components/views/Admin/EditProducts/EditProducts";
 import PurchaseOrder from "./components/views/PurchaseOrder/purchaseOrder";
+import CreateProduct from "./components/views/Admin/CreateProduct/CreateProduct";
 
 function App() {
   const location = useLocation();
@@ -40,11 +41,12 @@ function App() {
         <Route path="/purchaseOrder" element={<PurchaseOrder />} />
 
         {/* Rutas para Admin */}
-        <Route element={<Protected />}>
+        {/* <Route element={<Protected />}> */}
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/admin/productsList" element={<ProductsList />} />
           <Route path="/userprofile" element={<UserProfile />} />
-        </Route>
+          <Route path="/createProduct" element={<CreateProduct />} />
+        {/* </Route> */}
 
         <Route path="/admin/editproducts" element={<EditProducts />} />
 
