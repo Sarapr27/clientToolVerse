@@ -1,6 +1,6 @@
 import React, { useEffect} from 'react';
 import styles from "./ProductsList.module.css";
-import { getTools } from '../../../../redux/actions';
+import { getTools,setCurrentPage } from '../../../../redux/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import Pagination from "../../../Pagination/Pagination"
 import SearchBar from '../SearchBarAdmin/searchBar';
@@ -31,6 +31,12 @@ const itemsPerPage = 12;
             <h1 className={styles.title}>LISTADO DE PRODUCTOS</h1>
             <SearchBar/>
             <Filters/>
+            <div className={styles.button}>
+                    <input type="submit" value="Restablecer filtros" onClick={() => {
+                        dispatch(getTools());
+                        dispatch(setCurrentPage(1));
+                    }} />
+                </div>
             <table className={styles.table}>
                 <thead>
                     <tr>
