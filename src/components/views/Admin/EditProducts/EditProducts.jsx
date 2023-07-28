@@ -14,8 +14,6 @@ const EditProducts = () => {
 
   const [editData, setEditData] = useState({});
 
-  
-
   useEffect(() => {
     try {
       dispatch(getTools());
@@ -49,7 +47,10 @@ const EditProducts = () => {
       brand,
       price,
       detail
-    })
+    });
+    //La unica linea que puse para que los inputs se actualizen simultaneamente :)
+    await dispatch(getTools());
+
     setEditData((prevEditData) => {
       const updatedEditData = {...prevEditData};
       delete updatedEditData[id];
@@ -179,7 +180,7 @@ const EditProducts = () => {
                 )}
                 </td>
                 <td>{editData[product.id] ? (
-                  <input
+                  <textarea
                     type="text"
                     value={editData[product.id].detail}
                     onChange={(e) => {
