@@ -2,6 +2,7 @@ import { React } from "react";
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
 import About from "./components/views/Footer/About/About";
+import ContactUs from "./components/views/Footer/ContactUs/ContactUs";
 import Detail from "./components/views/Detail/detail";
 import Form from "./components/views/Form/form";
 import Login from "./components/views/Login/login"
@@ -19,6 +20,11 @@ import UserProfile from "./components/views/UserProfile/UserProfile"
 import EditProducts from "./components/views/Admin/EditProducts/EditProducts";
 import PurchaseOrder from "./components/views/PurchaseOrder/purchaseOrder";
 
+import CreateProduct from "./components/views/Admin/CreateProduct/CreateProduct";
+
+import MPFeedback from "./components/MPFeedback/MPFeedback";
+
+
 function App() {
   const location = useLocation();
 
@@ -30,6 +36,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contactus" element={<ContactUs/>}/>
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/form" element={<Form />} />
         <Route path="/login" element={<Login />} />
@@ -38,13 +45,16 @@ function App() {
         <Route path="/footer" element={<Footer />} />
         <Route path="*" element={<Error404 />} />
         <Route path="/purchaseOrder" element={<PurchaseOrder />} />
+        <Route path="/feedback" element={<MPFeedback />} />
 
         {/* Rutas para Admin */}
-        <Route element={<Protected />}>
+        {/* <Route element={<Protected />}> */}
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/admin/productsList" element={<ProductsList />} />
           <Route path="/userprofile" element={<UserProfile />} />
-        </Route>
+          <Route path="/createProduct" element={<CreateProduct />} />
+        {/* </Route> */}
+
 
         <Route path="/admin/editproducts" element={<EditProducts />} />
 

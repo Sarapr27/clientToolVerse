@@ -1,0 +1,4 @@
+.simbolo::after {
+    content: "$";
+    margin-left: -20px;
+  }
