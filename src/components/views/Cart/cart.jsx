@@ -1,18 +1,13 @@
 import style from './cart.module.css';
 import CartDetails from '../CartDetails/cartDetails';
-import UserDetails from '../UserDetails/userDetails';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { useNavigate } from 'react-router-dom';
-import React from "react";
-
-// este componente debería tener:
-// un área donde poner ver/poner los datos del usuario
-// un área donde ver la info obtenida del carrito de compras 
-// un botón para confirmar la compra y habilitar el pago
+import { React } from "react";
+import CartForm from '../CartForm/cartForm';
 
 export default function Cart() {
     const actualUser = useSelector(state => state.login);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
         <div>
@@ -33,7 +28,7 @@ export default function Cart() {
                         </div>
                     </div>
                         : <div className={style.userDetails}>
-                            <UserDetails />
+                            <CartForm />
                             <CartDetails />
                         </div>
                 }

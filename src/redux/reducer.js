@@ -23,6 +23,7 @@ import {
   REGISTER_STOCK_EXIT_SUCCESS,
   REGISTER_STOCK_EXIT_FAILURE,
   ACTUAL_USER,
+  DELETE_TROLLEY
 } from "./type";
 
 const initialState = {
@@ -44,6 +45,7 @@ const initialState = {
   login: [], // aquí veremos el user una vez que haga hecho logIn
   errorLogin: "",
   isAuthenticated: false,
+  cartError: true
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -137,6 +139,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         itemCart: resta,
       };
 
+    case DELETE_TROLLEY:
+      return {
+        ...state,
+        itemCart: []
+      }
+
     case SET_CURRRENT_PAGE:
       return {
         ...state,
@@ -229,7 +237,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case ACTUAL_USER:
       return {
         ...state,
-        actualUser: payload
+        actualUser: payload,
+        cartError: false
       }
 
     case CERRAR_SESION:

@@ -63,3 +63,25 @@
 .button input:hover {
     background: linear-gradient(-135deg, #acadad, #515755);
 }
+
+
+.emptyTrolley {
+    border: none;
+    height: 3rem;
+}
+
+.deleteAll {
+    border: 2px solid var(--secondary);
+    background-color: transparent;
+    cursor: pointer;
+    width: 3.5rem;
+}
+
+.deleteAll:hover {
+    border: 2px solid var(--warnings);
+}
+
+.summingTotal {
+    display: flex;
+    flex-direction: column;
+}

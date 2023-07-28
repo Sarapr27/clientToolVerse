@@ -24,7 +24,8 @@ import {
   REGISTER_STOCK_ENTRY_FAILURE,
   REGISTER_STOCK_EXIT_SUCCESS,
   UPDATE_TOOL_STOCK,
-  ACTUAL_USER
+  ACTUAL_USER,
+  DELETE_TROLLEY
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -178,6 +179,16 @@ export const lessFromCart = (itemId) => {
     console.log(error)
   }
 
+}
+
+export const deleteTrolley = () => {
+  try {
+    return {
+      type: DELETE_TROLLEY
+    };
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const orderByName = (name) => {

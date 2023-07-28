@@ -1,5 +1,6 @@
 import style from "./cartDetails.module.css";
 import empty from "../img/emptyTrolley.gif";
+import vaciar from "../img/vaciar.png";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useNavigate } from "react-router-dom";
 import MiniProduct from "../MiniProduct/miniProduct";
@@ -9,11 +10,11 @@ import React, { useEffect, useState } from "react";
 
 export default function CartDetails() {
   const trolley = useSelector((state) => state.itemCart);
+  const cartError = useSelector((state) => state.cartError);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [total, setTotal] = useState("");
-  // const [compra, setCompra] = useState("")
 
   // Registrar Salida del Stock. -> NO BORRAR! SERÁ UTILIZADA MÁS ADELANTE EN LA CONFIRMACIÓN DE LA COMPRA
   const exitStock = () => {
@@ -32,8 +33,6 @@ export default function CartDetails() {
     trolley.forEach((product) => {
       suma = suma + product.price * product.quantity;
     });
-    // En este código, usamos toFixed(2) para limitar "suma" a dos dígitos después de la coma decimal. Luego, utilizamos parseFloat() para convertir la cadena resultante nuevamente en un número de punto flotante con dos dígitos después de la coma.
-    // Con esta modificación, "suma" tendrá siempre dos dígitos después de la coma decimal al calcular el total en la función calculateTotal().
     suma = parseFloat(suma.toFixed(2));
     return setTotal(suma);
   };
@@ -41,10 +40,19 @@ export default function CartDetails() {
   useEffect(() => {
     try {
       calculateTotal();
+
     } catch (error) {
       console.log("Error al calcular el total", error);
     }
   });
+
+  const deleteTrolley = () => {
+    let answer = window.confirm("Esto eliminará TODOS los productos en el carrito. Deseas continuar?")
+    if (answer) {
+      dispatch(actions.deleteTrolley());
+    }
+    else return
+  }
 
   return (
     <div className={style.overallDetail}>
@@ -80,23 +88,28 @@ export default function CartDetails() {
               />
             );
           })}
-        </div>
-      )}
-      <div>
-        <div className={style.summingTotal}>
-          <div className={style.total}> Monto total ${total} </div>
-          <div className={style.button}>
-            <input
-              type="submit"
-              value="Confirma tu compra"
-              // debería ser un navigate a la página de confirmación de la compra y allí podemos elegir los métodos de pago
-              onClick={() => exitStock()}
-            />
+          <div className={style.summingTotal}>
+            <button className={style.deleteAll}>
+              <img src={vaciar} alt="Vaciar el carrito"
+                onClick={() => deleteTrolley()} className={style.emptyTrolley} />
+              {/* <p className={style.axnEmpty} > Vaciar el carrito</p> */}
+            </button>
+            <div className={style.total}> Monto total ${total} </div>
+            {
+              cartError ? <div> Para avanzar con tu compra, por favor completa tus datos </div>
 
+                : <div className={style.button}>
+                  <input
+                    type="submit"
+                    value="Confirma tu compra"
+                    onClick={() => exitStock()}
+                  />
+                </div>
+            }
           </div>
-
         </div>
-      </div>
+
+      )}
     </div>
   );
 }
