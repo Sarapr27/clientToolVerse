@@ -32,6 +32,9 @@ import {
   PURCHASE_ORDER_ERROR,
   CREATE_SHIPPING_ADDRESS_SUCCESS,
   CREATE_SHIPPING_ADDRESS_ERROR,
+  ADD_REVIEW,
+  UPDATE_REVIEW_COMMENTS,
+  DELETE_REVIEW,
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -372,3 +375,19 @@ export const createShippingAddress =
       });
     }
   };
+
+//Actions Reviews
+export const addReview = (review) => ({
+  type: ADD_REVIEW,
+  payload: review,
+});
+
+export const updateReviewComments = (id, comments) => ({
+  type: UPDATE_REVIEW_COMMENTS,
+  payload: { id, comments },
+});
+
+export const deleteReview = (id) => ({
+  type: DELETE_REVIEW,
+  payload: id,
+});
