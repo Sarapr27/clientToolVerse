@@ -7,6 +7,8 @@ import {
   CREATE_USER,
   GET_USER,
   ADD_TO_CART,
+  ADD_TO_CART_SUCCESS,
+  ADD_TO_CART_FAILURE,
   REMOVE_FROM_CART,
   LESS_FROM_CART,
   ORDER_BY_NAME,
@@ -25,7 +27,11 @@ import {
   REGISTER_STOCK_EXIT_SUCCESS,
   UPDATE_TOOL_STOCK,
   ACTUAL_USER,
-  DELETE_TROLLEY
+  DELETE_TROLLEY,
+  PURCHASE_ORDER_SUCCESS,
+  PURCHASE_ORDER_ERROR,
+  CREATE_SHIPPING_ADDRESS_SUCCESS,
+  CREATE_SHIPPING_ADDRESS_ERROR,
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -73,7 +79,9 @@ export const getToolById = (id) => {
 export const createUser = (character) => {
   return async function (dispatch) {
     try {
-      const { data } = await axios.post(`/register`, character, { withCredentials: true });
+      const { data } = await axios.post(`/register`, character, {
+        withCredentials: true,
+      });
       if (data) {
         dispatch({ type: CREATE_USER, payload: data });
       }
@@ -85,54 +93,58 @@ export const createUser = (character) => {
 
 const isAuthenticated = () => {
   return {
-    type: ISAUTHENTICATED
-  }
-}
+    type: ISAUTHENTICATED,
+  };
+};
 
 export const login = (character) => {
   return async function (dispatch) {
     try {
-      const { data } = await axios.post(`/login`, character, { withCredentials: true });
+      const { data } = await axios.post(`/login`, character, {
+        withCredentials: true,
+      });
       if (data) {
         dispatch({ type: LOGIN, payload: data });
-        dispatch(isAuthenticated())
+        dispatch(isAuthenticated());
       }
     } catch (error) {
-      dispatch(errorLogin(error?.response?.data?.message))
+      dispatch(errorLogin(error?.response?.data?.message));
       console.log(error?.response?.data?.message);
     }
   };
-}
+};
 
 export const errorLogin = (error) => {
   return {
     type: ERROR_LOGIN,
-    payload: error
-  }
+    payload: error,
+  };
 };
 
 export const actualUser = (info) => {
   return {
     type: ACTUAL_USER,
-    payload: info
-  }
-}
+    payload: info,
+  };
+};
 
 export const verifyLoginSuccess = () => {
   return {
-    type: VERIFY_LOGIN_SUCCESS
-  }
-}
+    type: VERIFY_LOGIN_SUCCESS,
+  };
+};
 
 export const cerrarSesion = (tokenCookie) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post('http://localhost:3001/logout', tokenCookie, { withCredentials: true })
+      const { data } = await axios.post("/logout", tokenCookie, {
+        withCredentials: true,
+      });
       if (data) {
         return dispatch({ type: CERRAR_SESION });
       }
     } catch (error) {
-      console.error('Error al cerrar sesión:', error);
+      console.error("Error al cerrar sesión:", error);
     }
   };
 };
@@ -176,20 +188,19 @@ export const lessFromCart = (itemId) => {
       payload: itemId,
     };
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-
-}
+};
 
 export const deleteTrolley = () => {
   try {
     return {
-      type: DELETE_TROLLEY
+      type: DELETE_TROLLEY,
     };
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const orderByName = (name) => {
   try {
@@ -237,15 +248,15 @@ export const cleanBdd = () => {
 export const changeFilterCategory = (category) => {
   return {
     type: CHANGE_FILTER_CATEGORY,
-    payload: category
-  }
+    payload: category,
+  };
 };
 
 export const changeFilterBrand = (brand) => {
   return {
     type: CHANGE_FILTER_BRAND,
-    payload: brand
-  }
+    payload: brand,
+  };
 };
 //Accion que me actualiza el Stock global
 export const updateProductStock = (productId, newStock) => {
@@ -288,3 +299,76 @@ export const registerStockExit = (toolId, quantity) => async (dispatch) => {
     });
   }
 };
+
+//carga el carrito completo en la bdd
+export const addToCartRoute =
+  (quantity, userId, productId) => async (dispatch) => {
+    try {
+      const response = await axios.post("/purchaseCart", {
+        quantity: quantity,
+        userId: userId,
+        productId: productId,
+      });
+
+      dispatch({
+        type: ADD_TO_CART_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADD_TO_CART_FAILURE,
+        payload: error.response.data.error,
+      });
+    }
+  };
+
+// carga la orden de compra en la bdd
+export const addPurchaseOrder =
+  (userId, purchaseCartId, shippingAddressId, paymentMethodId, total) =>
+  async (dispatch) => {
+    try {
+      const response = await axios.post("/purchaseOrder", {
+        userId,
+        purchaseCartId,
+        shippingAddressId,
+        paymentMethodId,
+        total,
+      });
+
+      dispatch({
+        type: PURCHASE_ORDER_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PURCHASE_ORDER_ERROR,
+        payload: error.response.data.error,
+      });
+    }
+  };
+
+//carga los datos de envio en la bdd
+export const createShippingAddress =
+  (country, state, city, address, postalCode, userId) => async (dispatch) => {
+    try {
+      const response = await axios.post(
+        "/shippingAddress",
+        country,
+        state,
+        city,
+        address,
+        postalCode,
+        userId
+      );
+
+      dispatch({
+        type: CREATE_SHIPPING_ADDRESS_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: CREATE_SHIPPING_ADDRESS_ERROR,
+        payload: error.response.data.error,
+      });
+    }
+  };
