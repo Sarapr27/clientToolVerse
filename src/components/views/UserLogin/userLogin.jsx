@@ -36,7 +36,7 @@ export default function UserLogin() {
       className={styles.userLogin}
       onMouseEnter={showUserMenu}
       onMouseLeave={hideUserMenu}
-    >
+    >      
       <img src={userIcon} alt="User Icon" className={styles.UserIcon} />
       <CSSTransition
         in={isUserMenuVisible}
@@ -47,7 +47,10 @@ export default function UserLogin() {
       >
         <div className={styles.UserMenu} ref={userMenuRef}>
           {isAuthenticated ? ( 
-            <button onClick={handleLogout}>Cerrar Sesión</button>
+            <>            
+              <button onClick={() => handleMenuItemClick("/login")}>Panel de Usuario</button>
+              <button onClick={handleLogout}>Cerrar Sesión</button>
+            </>
           ) : (
            
             <>
