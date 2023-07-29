@@ -1,9 +1,12 @@
 import React, { useEffect,useState } from "react";
 import styles from "./EditProducts.module.css";
-import { getTools } from "../../../../redux/actions";
+import { getTools, setCurrentPage } from "../../../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Pagination from "../../../Pagination/Pagination";
+import SearchBar from "../SearchBarAdmin/searchBar";
+import Filters from '../../../Filters/Filters';
+
 
 const EditProducts = () => {
   const allProducts = useSelector((state) => state.toolsShown);
@@ -13,8 +16,6 @@ const EditProducts = () => {
   const itemsPerPage = 12;
 
   const [editData, setEditData] = useState({});
-
-  
 
   useEffect(() => {
     try {
@@ -49,7 +50,10 @@ const EditProducts = () => {
       brand,
       price,
       detail
-    })
+    });
+    //La unica linea que puse para que los inputs se actualizen simultaneamente :)
+    await dispatch(getTools());
+
     setEditData((prevEditData) => {
       const updatedEditData = {...prevEditData};
       delete updatedEditData[id];
@@ -77,6 +81,14 @@ const EditProducts = () => {
   return (
     <div>
       <h1 className={styles.title}>EDITAR PRODUCTOS</h1>
+      <SearchBar/>
+      <Filters/>
+      <div className={styles.button}>
+                    <input type="submit" value="Restablecer filtros" onClick={() => {
+                        dispatch(getTools());
+                        dispatch(setCurrentPage(1));
+                    }} />
+                </div>
       <table className={styles.table}>
         <thead>
           <tr>
@@ -179,7 +191,7 @@ const EditProducts = () => {
                 )}
                 </td>
                 <td>{editData[product.id] ? (
-                  <input
+                  <textarea
                     type="text"
                     value={editData[product.id].detail}
                     onChange={(e) => {

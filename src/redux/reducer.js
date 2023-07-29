@@ -49,6 +49,7 @@ const initialState = {
   errorLogin: "",
   isAuthenticated: false,
   reviews:[],
+  cartError: true
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -142,6 +143,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         itemCart: resta,
       };
 
+    case DELETE_TROLLEY:
+      return {
+        ...state,
+        itemCart: []
+      }
+
     case SET_CURRRENT_PAGE:
       return {
         ...state,
@@ -234,7 +241,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case ACTUAL_USER:
       return {
         ...state,
-        actualUser: payload
+        actualUser: payload,
+        cartError: false
       }
 
     case CERRAR_SESION:

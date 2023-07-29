@@ -42,4 +42,31 @@
     text-align: center;
   }
   
+  input, textarea {
+    width: 90%;
+    padding: 5px;
+    font-size: medium;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
   
+
+.button input {
+    height: 100%;
+    max-width: 15%;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    font-size: medium;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #acadad, #515755);
+}
+
+.button input:hover {
+    background: linear-gradient(-135deg, #acadad, #515755);
+}
