@@ -23,6 +23,9 @@ import {
   REGISTER_STOCK_EXIT_SUCCESS,
   REGISTER_STOCK_EXIT_FAILURE,
   ACTUAL_USER,
+  ADD_REVIEW,
+  UPDATE_REVIEW_COMMENTS,
+  DELETE_REVIEW,
   DELETE_TROLLEY
 } from "./type";
 
@@ -45,6 +48,7 @@ const initialState = {
   login: [], // aquí veremos el user una vez que haga hecho logIn
   errorLogin: "",
   isAuthenticated: false,
+  reviews:[],
   cartError: true
 };
 
@@ -256,6 +260,29 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         errorLogin: payload,
       };
+
+    case ADD_REVIEW:
+        return {
+          ...state,
+          reviews: [...state.reviews, payload],
+        };
+
+    case UPDATE_REVIEW_COMMENTS:
+        const { id, comments } = payload;
+        return {
+          ...state,
+          reviews: state.reviews.map((review) =>
+            review.id === id ? { ...review, comments } : review
+          ),
+        };
+
+    case DELETE_REVIEW:
+        const reviewId = payload;
+        return {
+          ...state,
+          reviews: state.reviews.filter((review) => review.id !== reviewId),
+        };
+
     default:
       return {
         ...state,
