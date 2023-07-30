@@ -7,6 +7,8 @@ import {
   CREATE_USER,
   GET_USER,
   ADD_TO_CART,
+  ADD_TO_CART_SUCCESS,
+  ADD_TO_CART_FAILURE,
   REMOVE_FROM_CART,
   LESS_FROM_CART,
   ORDER_BY_NAME,
@@ -27,6 +29,13 @@ import {
   ACTUAL_USER,
   DELETE_TROLLEY,
   GET_CATEGORY,
+  PURCHASE_ORDER_SUCCESS,
+  PURCHASE_ORDER_ERROR,
+  CREATE_SHIPPING_ADDRESS_SUCCESS,
+  CREATE_SHIPPING_ADDRESS_ERROR,
+  ADD_REVIEW,
+  UPDATE_REVIEW_COMMENTS,
+  DELETE_REVIEW,
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -137,6 +146,9 @@ export const cerrarSesion = (tokenCookie) => {
         tokenCookie,
         { withCredentials: true }
       );
+      const { data } = await axios.post("/logout", tokenCookie, {
+        withCredentials: true,
+      });
       if (data) {
         return dispatch({ type: CERRAR_SESION });
       }
@@ -296,7 +308,6 @@ export const registerStockExit = (toolId, quantity) => async (dispatch) => {
     });
   }
 };
-
 //Accion de traer las categorias
 export const getCategory = () => {
   return async function (dispatch) {
@@ -310,3 +321,91 @@ export const getCategory = () => {
     }
   };
 };
+//carga el carrito completo en la bdd
+export const addToCartRoute =
+  (quantity, userId, productId) => async (dispatch) => {
+    try {
+      const response = await axios.post("/purchaseCart", {
+        quantity: quantity,
+        userId: userId,
+        productId: productId,
+      });
+
+      dispatch({
+        type: ADD_TO_CART_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADD_TO_CART_FAILURE,
+        payload: error.response.data.error,
+      });
+    }
+  };
+
+// carga la orden de compra en la bdd
+export const addPurchaseOrder =
+  (userId, purchaseCartId, shippingAddressId, paymentMethodId, total) =>
+  async (dispatch) => {
+    try {
+      const response = await axios.post("/purchaseOrder", {
+        userId,
+        purchaseCartId,
+        shippingAddressId,
+        paymentMethodId,
+        total,
+      });
+
+      dispatch({
+        type: PURCHASE_ORDER_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PURCHASE_ORDER_ERROR,
+        payload: error.response.data.error,
+      });
+    }
+  };
+
+//carga los datos de envio en la bdd
+export const createShippingAddress =
+  (country, state, city, address, postalCode, userId) => async (dispatch) => {
+    try {
+      const response = await axios.post(
+        "/shippingAddress",
+        country,
+        state,
+        city,
+        address,
+        postalCode,
+        userId
+      );
+
+      dispatch({
+        type: CREATE_SHIPPING_ADDRESS_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: CREATE_SHIPPING_ADDRESS_ERROR,
+        payload: error.response.data.error,
+      });
+    }
+  };
+
+//Actions Reviews
+export const addReview = (review) => ({
+  type: ADD_REVIEW,
+  payload: review,
+});
+
+export const updateReviewComments = (id, comments) => ({
+  type: UPDATE_REVIEW_COMMENTS,
+  payload: { id, comments },
+});
+
+export const deleteReview = (id) => ({
+  type: DELETE_REVIEW,
+  payload: id,
+});
