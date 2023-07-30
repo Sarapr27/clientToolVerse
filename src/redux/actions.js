@@ -141,7 +141,8 @@ export const verifyLoginSuccess = () => {
 export const cerrarSesion = (tokenCookie) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(
+      //const { data } = await axios.post(
+      await axios.post(
         "http://localhost:3001/logout",
         tokenCookie,
         { withCredentials: true }
