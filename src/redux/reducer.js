@@ -23,10 +23,12 @@ import {
   REGISTER_STOCK_EXIT_SUCCESS,
   REGISTER_STOCK_EXIT_FAILURE,
   ACTUAL_USER,
+  DELETE_TROLLEY,
+  GET_CATEGORY,
   ADD_REVIEW,
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
-  DELETE_TROLLEY
+  DELETE_TROLLEY,
 } from "./type";
 
 const initialState = {
@@ -48,6 +50,8 @@ const initialState = {
   login: [], // aquí veremos el user una vez que haga hecho logIn
   errorLogin: "",
   isAuthenticated: false,
+  cartError: true,
+  category: [],
   reviews:[],
   cartError: true
 };
@@ -260,7 +264,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         errorLogin: payload,
       };
-
+      case GET_CATEGORY:
+        return {
+          ...state,
+          category: payload,
+        }
     case ADD_REVIEW:
         return {
           ...state,
@@ -282,7 +290,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
           ...state,
           reviews: state.reviews.filter((review) => review.id !== reviewId),
         };
-
     default:
       return {
         ...state,
