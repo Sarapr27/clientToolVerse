@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styles from "./CreateProduct.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getTools } from "../../../../redux/actions";
+import { getCategory, getTools } from "../../../../redux/actions";
 import axios from "axios";
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getTools());
+    dispatch(getCategory(),
+    getTools())
   }, [dispatch]);
 
-  const allTools = useSelector((state) => state.toolsShown);
+  const categoria = useSelector((state) => state.category);
+
   const [product, setProduct] = useState({
     brand: "",
     name: "",
@@ -18,7 +20,7 @@ const CreateProduct = () => {
     feature: "",
     detail: "",
     price: "",
-    image: "",
+    // image: "",
     category: [],
     stock: "",
   });
@@ -29,11 +31,10 @@ const CreateProduct = () => {
     feature: "",
     detail: "",
     price: "",
-    image: "",
+    // image: "",
     category: "",
     stock: "",
   });
-
   const handlerProduct = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -62,12 +63,26 @@ const CreateProduct = () => {
       feature: "",
       detail: "",
       price: "",
-      image: "",
-      category: "",
+      // image: "",
+      category: [],
       stock: "",
     });
+  };  
+  const handlerSelect = (e) => {
+    const { options } = e.target;
+    const selectedCategories = [];
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        selectedCategories.push(parseInt(options[i].value));
+      }
+    }
+    setProduct({ ...product, category: selectedCategories });
   };
-
+  const buscaId = (id) => {
+    const buscaCategory = categoria.find((busca) => busca.id === id);
+    return buscaCategory ? buscaCategory.name : ""
+  };
+  const categoryMap = product.category.map((e) => buscaId(e));
   //revision --------------------------->
   // const [imageOptions, setImageOptions] = useState([]); // Estado para almacenar las opciones de imágenes disponibles
   // useEffect(() => {
@@ -88,12 +103,12 @@ const CreateProduct = () => {
   //     image: selectedImage, // Actualiza el estado con la URL de la imagen seleccionada
   //   });
   // }
-            //revision <-------------------------------------
-  
+  //revision <-------------------------------------
+
   return (
     <div className={styles.listContainer}>
       <div>
-        <div onSubmit={handlerSubmit}>
+        <form onSubmit={handlerSubmit}>
           <hr />
           <h1>Agrega los Datos del Producto</h1>
           <div>
@@ -182,7 +197,10 @@ const CreateProduct = () => {
             <span>$</span>
           </div>
           <span>{error.price}</span>
-          <img src="image" alt="image" />
+          <img
+            src="https://www.bosch-professional.com/ar/es/ocsmedia/60785-54/product-image/265x265/taladro-gbm-10-re-060113e5h0.png"
+            alt="Taladro GBM 10 RE"
+          />
           {/* <div>
             <label htmlFor="image">Imagen del producto:</label>
             <select
@@ -202,17 +220,23 @@ const CreateProduct = () => {
           <span>{error.image}</span> */}
           <div>
             <label htmlFor="category">Categoría:</label>
+            <input
+              type="text"
+              id="categoryInput"
+              value={categoryMap.join(", ")}
+              onChange={handlerProduct}
+              placeholder="Selecciona Categoria"
+            />
             <select
               id="category"
               name="category"
-              onChange={handlerProduct}
+              multiple={true}
+              value={product.category}
+              onChange={handlerSelect}
             >
-              <option value=""> Selecciona la Categoria </option>
-              <option value="Eléctricos"> Eléctricos </option>
-              <option value="Manuales">Manuales</option>
-              <option value="Inalámbricos">Inalámbricos</option>
-              <option value="Neumáticos">Neumáticos</option>
-              <option value="Hogar">Hogar</option>
+              {categoria.map((e)=> (
+                <option key={e.id} value={e.id}>{e.name}</option>
+              ))}
             </select>
             <span>{error.category}</span>
           </div>
@@ -229,8 +253,9 @@ const CreateProduct = () => {
             />
           </div>
           <span>{error.stock}</span>
-        </div>
           <button type="submit">Guardar producto</button>
+          <hr />
+        </form>
       </div>
     </div>
   );
