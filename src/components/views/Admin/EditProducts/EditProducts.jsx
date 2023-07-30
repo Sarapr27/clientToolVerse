@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./EditProducts.module.css";
 import { getTools, setCurrentPage } from "../../../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ import Filters from '../../../Filters/Filters';
 const EditProducts = () => {
   const allProducts = useSelector((state) => state.toolsShown);
   const currentPage = useSelector((state) => state.currentPage)
-  console.log(allProducts);
+  //console.log(allProducts);
   const dispatch = useDispatch();
   const itemsPerPage = 12;
 
@@ -60,7 +60,9 @@ const EditProducts = () => {
       return updatedEditData;
     })
     };
-    
+    console.log(`PUT request http://localhost:3001/products/${id}`);
+    alert('¡Edicion exitosa!');
+
     } catch (error) {
       console.log("Error updating", error);
     }

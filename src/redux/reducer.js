@@ -28,7 +28,7 @@ import {
   ADD_REVIEW,
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
-  DELETE_TROLLEY,
+  //DELETE_TROLLEY,
 } from "./type";
 
 const initialState = {

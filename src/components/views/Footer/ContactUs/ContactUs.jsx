@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "./ContactUs.module.css";
 //import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import backgroundImage from "./fondo.avif"
 
 export default function ContactUs() {
   const navigate = useNavigate();
@@ -44,7 +45,8 @@ export default function ContactUs() {
   }; */
 
   return (
-    <div>
+    <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", height: "100vh" }}>
+    <h1 style={{fontWeight:"bold", color: "black", fontSize: "xx-large"}}>Tienes alguna consulta o sugerencia, haznoslo saber</h1>
       <div className={styles.formContainer}>
         <form onSubmit={handleSubmit} className={styles.contactForm}>
           <label className={styles.formLabel}>
