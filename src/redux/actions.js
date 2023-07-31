@@ -28,6 +28,7 @@ import {
   UPDATE_TOOL_STOCK,
   ACTUAL_USER,
   DELETE_TROLLEY,
+  GET_CATEGORY,
   PURCHASE_ORDER_SUCCESS,
   PURCHASE_ORDER_ERROR,
   CREATE_SHIPPING_ADDRESS_SUCCESS,
@@ -142,6 +143,12 @@ export const verifyLoginSuccess = () => {
 export const cerrarSesion = (tokenCookie) => {
   return async (dispatch) => {
     try {
+      //const { data } = await axios.post(
+      await axios.post(
+        "http://localhost:3001/logout",
+        tokenCookie,
+        { withCredentials: true }
+      );
       const { data } = await axios.post("/logout", tokenCookie, {
         withCredentials: true,
       });
@@ -304,7 +311,19 @@ export const registerStockExit = (toolId, quantity) => async (dispatch) => {
     });
   }
 };
-
+//Accion de traer las categorias
+export const getCategory = () => {
+  return async function (dispatch) {
+    try {
+      const category = await axios.get(`/category`);
+      if (category) {
+        dispatch({ type: GET_CATEGORY, payload: category.data });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 //carga el carrito completo en la bdd
 export const addToCartRoute =
   (quantity, userId, productId) => async (dispatch) => {
