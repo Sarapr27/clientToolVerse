@@ -28,9 +28,7 @@ import {
   ADD_REVIEW,
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
-  DELETE_TROLLEY,
   GET_SHIPPING_ADDRESS_SUCCESS,
-
 } from "./type";
 
 const initialState = {
@@ -55,7 +53,7 @@ const initialState = {
   address: [],
   cartError: true,
   category: [],
-  reviews:[],
+  reviews: [],
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -266,11 +264,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         errorLogin: payload,
       };
-      case GET_CATEGORY:
-        return {
-          ...state,
-          category: payload,
-        }
+    case GET_CATEGORY:
+      return {
+        ...state,
+        category: payload,
+      };
     case ADD_REVIEW:
       return {
         ...state,
