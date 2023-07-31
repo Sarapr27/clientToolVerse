@@ -4,6 +4,7 @@ import styles from "./ContactUs.module.css";
 //import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "./fondo.avif"
+import Footer from "../Footer";
 
 export default function ContactUs() {
   const navigate = useNavigate();
@@ -111,6 +112,7 @@ export default function ContactUs() {
           <input type="submit" value="Enviar" className={styles.formSubmit} />
         </form>
       </div>
+      <Footer/>
     </div>
   );
 }
