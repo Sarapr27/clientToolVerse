@@ -20,7 +20,7 @@ const CreateProduct = () => {
     feature: "",
     detail: "",
     price: "",
-    // image: "",
+     image: "",
     category: [],
     stock: "",
   });
@@ -31,7 +31,7 @@ const CreateProduct = () => {
     feature: "",
     detail: "",
     price: "",
-    // image: "",
+     image: "",
     category: "",
     stock: "",
   });
@@ -63,7 +63,7 @@ const CreateProduct = () => {
       feature: "",
       detail: "",
       price: "",
-      // image: "",
+       image: "",
       category: [],
       stock: "",
     });
@@ -201,12 +201,12 @@ const CreateProduct = () => {
             src="https://www.bosch-professional.com/ar/es/ocsmedia/60785-54/product-image/265x265/taladro-gbm-10-re-060113e5h0.png"
             alt="Taladro GBM 10 RE"
           />
-          {/* <div>
+           {/* <div>
             <label htmlFor="image">Imagen del producto:</label>
             <select
               name="image"
               id="image"
-              onChange={handleImageChange}
+              
               value={product.image}
             >
               <option value="">Selecciona una imagen</option>
@@ -217,7 +217,20 @@ const CreateProduct = () => {
               ))}
             </select>
           </div>
-          <span>{error.image}</span> */}
+          <span>{error.image}</span>  */}
+          <div>
+            <label htmlFor="image">Imagen: </label>
+            <input
+              type="text"
+              id="image"
+              value={product.image}
+              onChange={handlerProduct}
+              name="image"
+              placeholder="Nombre del imageo..."
+              required
+            />
+          </div>
+          
           <div>
             <label htmlFor="category">Categoría:</label>
             <input

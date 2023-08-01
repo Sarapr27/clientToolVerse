@@ -28,9 +28,13 @@ import {
   ADD_REVIEW,
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
+
   //DELETE_TROLLEY,
   CREATE_CART,
   ADD_CART_DETAIL
+
+  GET_SHIPPING_ADDRESS_SUCCESS,
+
 } from "./type";
 
 const initialState = {
@@ -44,6 +48,7 @@ const initialState = {
   login: [], // aquí veremos el user una vez que haga hecho logIn
   errorLogin: "",
   isAuthenticated: false,
+  address: [],
   cartError: true,
   category: [],
   reviews: [],
@@ -125,15 +130,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
       else {
         const updatedCart = state.itemCart.map((item) => {
           if (item.id === itemId) {
-            if (item.quantity >= 5) return item
+            if (item.quantity >= 5) return item;
             return {
               ...item,
-              quantity: item.quantity + 1
-            }
-          }
-          else return item
-        }
-        );
+              quantity: item.quantity + 1,
+            };
+          } else return item;
+        });
         return {
           ...state,
           itemCart: updatedCart,
@@ -143,7 +146,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case REMOVE_FROM_CART:
       return {
         ...state,
-        itemCart: state.itemCart.filter(prod => prod.id !== payload)
+        itemCart: state.itemCart.filter((prod) => prod.id !== payload),
       };
 
     case LESS_FROM_CART:
@@ -172,8 +175,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case DELETE_TROLLEY:
       return {
         ...state,
-        itemCart: []
-      }
+        itemCart: [],
+      };
 
     case SET_CURRRENT_PAGE:
       return {
@@ -187,7 +190,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case CHANGE_FILTER_CATEGORY:
-      const categoryFiltered = state.allTools.filter((e) => e.category.includes(payload));
+      const categoryFiltered = state.allTools.filter((e) =>
+        e.category.includes(payload)
+      );
       return {
         ...state,
         toolsShown: categoryFiltered,
@@ -268,8 +273,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         actualUser: payload,
-        cartError: false
-      }
+        cartError: false,
+      };
 
     case CERRAR_SESION:
       return {
@@ -290,7 +295,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         category: payload,
-      }
+      };
+
     case ADD_REVIEW:
       return {
         ...state,
@@ -312,6 +318,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         reviews: state.reviews.filter((review) => review.id !== reviewId),
       };
+
+    case GET_SHIPPING_ADDRESS_SUCCESS:
+      return {
+        ...state,
+        address: payload,
+      };
+
     default:
       return {
         ...state,

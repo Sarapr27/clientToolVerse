@@ -36,8 +36,13 @@ import {
   ADD_REVIEW,
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
+
   CREATE_CART,
   ADD_CART_DETAIL
+
+  GET_SHIPPING_ADDRESS_SUCCESS,
+  GET_SHIPPING_ADDRESS_ERROR,
+
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -414,17 +419,9 @@ export const addPurchaseOrder =
 
 //carga los datos de envio en la bdd
 export const createShippingAddress =
-  (country, state, city, address, postalCode, userId) => async (dispatch) => {
+  (address) => async (dispatch) => {
     try {
-      const response = await axios.post(
-        "/shippingAddress",
-        country,
-        state,
-        city,
-        address,
-        postalCode,
-        userId
-      );
+      const response = await axios.post("/shippingAddress", address);
 
       dispatch({
         type: CREATE_SHIPPING_ADDRESS_SUCCESS,
@@ -437,6 +434,22 @@ export const createShippingAddress =
       });
     }
   };
+
+//traigo las direcciones de la base de datos por id de cliente
+export const getShippingAddressByUserId = (userId) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/shippingAddress/user/${userId}`);
+    dispatch({
+      type: GET_SHIPPING_ADDRESS_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_SHIPPING_ADDRESS_ERROR,
+      payload: error.response.data.error,
+    });
+  }
+};
 
 //Actions Reviews
 export const addReview = (review) => ({
