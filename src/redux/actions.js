@@ -36,6 +36,8 @@ import {
   ADD_REVIEW,
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
+  CREATE_CART,
+  ADD_CART_DETAIL
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -86,6 +88,7 @@ export const createUser = (character) => {
       const { data } = await axios.post(`/register`, character, {
         withCredentials: true,
       });
+      console.log('la data del user', data)
       if (data) {
         dispatch({ type: CREATE_USER, payload: data });
       }
@@ -163,7 +166,6 @@ export const getUser = (name) => {
   return async function (dispatch) {
     try {
       let response = await axios.get(`/user/${name}`);
-      console.log("esta es la response en actions.getUser", response);
       if (response) {
         dispatch({ type: GET_USER, payload: response });
       }
@@ -172,6 +174,47 @@ export const getUser = (name) => {
     }
   };
 };
+
+export const createCart = (userId, email, address) => {
+  return async function (dispatch) {
+    try {
+      let cart = await axios.post(`/purchaseCart`, { userId, email, address });
+      console.log('el cart creado', cart)
+      if (cart) {
+        dispatch({ type: CREATE_CART, payload: cart });
+      }
+      return cart
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const createDetail = (purchaseCartId, products) => {
+  return async function (dispatch) {
+    try {
+      let allCart = {
+        purchaseCartId: purchaseCartId,
+        detail: []
+      }
+
+      products.forEach(async prod => {
+        let productId = prod.productId
+        let quantity = prod.quantity
+        let price = prod.price
+        let name = prod.name
+        let orden = await axios.post('/purchaseDetail', { purchaseCartId, productId, quantity, price, name })
+        allCart.detail.push(orden.data)
+      });
+
+      console.log('todo el carrito que va a ir al state', allCart)
+
+      dispatch({ type: ADD_CART_DETAIL, payload: allCart.detail })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 export const addToCart = (item) => {
   return {
@@ -347,27 +390,27 @@ export const addToCartRoute =
 // carga la orden de compra en la bdd
 export const addPurchaseOrder =
   (userId, purchaseCartId, shippingAddressId, paymentMethodId, total) =>
-  async (dispatch) => {
-    try {
-      const response = await axios.post("/purchaseOrder", {
-        userId,
-        purchaseCartId,
-        shippingAddressId,
-        paymentMethodId,
-        total,
-      });
+    async (dispatch) => {
+      try {
+        const response = await axios.post("/purchaseOrder", {
+          userId,
+          purchaseCartId,
+          shippingAddressId,
+          paymentMethodId,
+          total,
+        });
 
-      dispatch({
-        type: PURCHASE_ORDER_SUCCESS,
-        payload: response.data,
-      });
-    } catch (error) {
-      dispatch({
-        type: PURCHASE_ORDER_ERROR,
-        payload: error.response.data.error,
-      });
-    }
-  };
+        dispatch({
+          type: PURCHASE_ORDER_SUCCESS,
+          payload: response.data,
+        });
+      } catch (error) {
+        dispatch({
+          type: PURCHASE_ORDER_ERROR,
+          payload: error.response.data.error,
+        });
+      }
+    };
 
 //carga los datos de envio en la bdd
 export const createShippingAddress =

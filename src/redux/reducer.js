@@ -29,6 +29,8 @@ import {
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
   //DELETE_TROLLEY,
+  CREATE_CART,
+  ADD_CART_DETAIL
 } from "./type";
 
 const initialState = {
@@ -36,15 +38,7 @@ const initialState = {
   toolsShown: [], // éstas son las tools que van a renderizarse
   toolsDetail: {}, // Tendra la informacion detallada de cada tools.
   usersCreated: [], // Aca guardaremos nuestras User Creadas del FORM. npmbre del array MODIFICABLE
-  actualUser: {}, // temporal -> el usuarui 
-  // actualUser: {
-  //   id: 9999,
-  //   firstName: "Testing",
-  //   lastName: "User",
-  //   email: "iamatest@soyunaprueba.com",
-  //   phone: 1234567890,
-  //   address: "Una calle 99, Centro, Cba, Arg. 5000"
-  // }, // esto es nada más para verlo renderizado en el carrito
+  actualUser: {}, // temporal -> tiene los datos de la dirección donde va a ser enviado el producto
   itemCart: [], // Aca almacenaremos todos los productos cargados en el carrito
   currentPage: 1,
   login: [], // aquí veremos el user una vez que haga hecho logIn
@@ -52,8 +46,8 @@ const initialState = {
   isAuthenticated: false,
   cartError: true,
   category: [],
-  reviews:[],
-  cartError: true
+  reviews: [],
+  actualCart: {},
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -84,6 +78,34 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         actualUser: payload,
       };
+
+    case CREATE_CART:
+      console.log('el carrito en el reducer', payload.data)
+      return {
+        ...state,
+        actualCart: payload.data,
+      }
+
+    case ADD_CART_DETAIL:
+      console.log('la action.payload en el reducer ADDDETAIL', payload)
+      console.log('el state actualCart', state.actualCart)
+      let products = []
+
+      // payload.forEach((elem) => {
+      //   let detalle = {
+      //     productId:
+      //   }
+      // })
+      // let cartTotal = {
+      //   idCart: payload.purchaseCartId,
+      //   products: [{ productId: payload.productId, price: payload.price, quantity: payload.quantity }]
+      // }
+      // console.log('el carrito para redux', cartTotal)
+
+      return {
+        ...state,
+        actualCart: payload
+      }
 
     case ADD_TO_CART:
       const itemId = payload.id;
@@ -264,32 +286,32 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         errorLogin: payload,
       };
-      case GET_CATEGORY:
-        return {
-          ...state,
-          category: payload,
-        }
+    case GET_CATEGORY:
+      return {
+        ...state,
+        category: payload,
+      }
     case ADD_REVIEW:
-        return {
-          ...state,
-          reviews: [...state.reviews, payload],
-        };
+      return {
+        ...state,
+        reviews: [...state.reviews, payload],
+      };
 
     case UPDATE_REVIEW_COMMENTS:
-        const { id, comments } = payload;
-        return {
-          ...state,
-          reviews: state.reviews.map((review) =>
-            review.id === id ? { ...review, comments } : review
-          ),
-        };
+      const { id, comments } = payload;
+      return {
+        ...state,
+        reviews: state.reviews.map((review) =>
+          review.id === id ? { ...review, comments } : review
+        ),
+      };
 
     case DELETE_REVIEW:
-        const reviewId = payload;
-        return {
-          ...state,
-          reviews: state.reviews.filter((review) => review.id !== reviewId),
-        };
+      const reviewId = payload;
+      return {
+        ...state,
+        reviews: state.reviews.filter((review) => review.id !== reviewId),
+      };
     default:
       return {
         ...state,

@@ -11,22 +11,14 @@ import React, { useEffect, useState } from "react";
 export default function CartDetails() {
   const trolley = useSelector((state) => state.itemCart);
   const cartError = useSelector((state) => state.cartError);
+  const actualUser = useSelector((state) => state.actualUser)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [total, setTotal] = useState("");
 
   // Registrar Salida del Stock. -> NO BORRAR! SERÁ UTILIZADA MÁS ADELANTE EN LA CONFIRMACIÓN DE LA COMPRA
-  const exitStock = () => {
-    trolley.forEach((product) => {
-      const productId = product.id;
-      const quantity = product.quantity;
-      dispatch(actions.registerStockExit(productId, quantity)); // Registramos la salida del stock
-      const newStock = product.stock - quantity; // Calculamos el nuevo stock después de la compra
-      dispatch(actions.updateProductStock(productId, newStock)); // Actualizamos el stock en el estado global
-    });
-    navigate("/purchaseOrder")
-  };
+
 
   const calculateTotal = () => {
     let suma = 0;
@@ -40,7 +32,6 @@ export default function CartDetails() {
   useEffect(() => {
     try {
       calculateTotal();
-
     } catch (error) {
       console.log("Error al calcular el total", error);
     }
@@ -52,6 +43,16 @@ export default function CartDetails() {
       dispatch(actions.deleteTrolley());
     }
     else return
+  }
+
+  const createCart = () => {
+    // aquí vamos a crear un Carrito de Compra que esté asociado al userId
+    let userId = actualUser.id
+    let email = actualUser.email
+    let userAddress = actualUser.address
+    dispatch(actions.createCart(userId, email, userAddress))
+    // y avanzamos para continuar con la compra
+    navigate("/purchaseOrder")
   }
 
   return (
@@ -101,8 +102,8 @@ export default function CartDetails() {
                 : <div className={style.button}>
                   <input
                     type="submit"
-                    value="Confirma tu compra"
-                    onClick={() => exitStock()}
+                    value="Continúa con tu compra"
+                    onClick={() => createCart()}
                   />
                 </div>
             }

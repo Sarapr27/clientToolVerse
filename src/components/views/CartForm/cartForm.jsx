@@ -14,7 +14,6 @@ export function validate({ firstName, lastName, phone, address }) {
 }
 
 export default function CartForm() {
-
     const dispatch = useDispatch();
     const login = useSelector(state => state.login)
     const [user, setUser] = useState({
