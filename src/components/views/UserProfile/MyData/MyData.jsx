@@ -5,10 +5,13 @@ import {
   createShippingAddress,
   getShippingAddressByUserId,
 } from "../../../../redux/actions";
+import MyDataForm from "./MyDataForm";
 
 const MyData = ({ user }) => {
   const dispatch = useDispatch();
   const address = useSelector((state) => state.address);
+
+  const [active, setActive] = useState(true);
 
   const [formAddress, setFormAddress] = useState({
     country: address.length ? address[0].country : "",
@@ -56,6 +59,9 @@ const MyData = ({ user }) => {
   const handleChange = (e) => {
     setFormAddress({ ...formAddress, [e.target.name]: e.target.value });
   };
+  const handleModify = () => {
+    setActive(false);
+  };
 
   useEffect(() => {
     dispatch(getShippingAddressByUserId(user.id));
@@ -63,69 +69,29 @@ const MyData = ({ user }) => {
 
   return (
     <div>
-      <div>Registro</div>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <div>
-              <span>País</span>
-              <input
-                type="text"
-                name="country"
-                placeholder="Ingresa tu país"
-                value={formAddress.country}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <span>Estado</span>
-              <input
-                type="text"
-                name="state"
-                placeholder="Ingresa tu estado"
-                value={formAddress.state}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <span>Ciudad</span>
-              <input
-                type="text"
-                name="city"
-                placeholder="Ingresa tu ciudad"
-                value={formAddress.city}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <span>Dirección</span>
-              <input
-                type="text"
-                name="address"
-                placeholder="Ingresa tu dirección"
-                value={formAddress.address}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <span>Código Postal</span>
-              <input
-                type="text"
-                name="postalCode"
-                placeholder="Ingresa tu código postal"
-                value={formAddress.postalCode}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div>
-            <input type="submit" value="Confirmar" />
-          </div>
-        </form>
-
-        {error && <div>{error}</div>}
-      </div>
+      {!address.length ? (
+        <div>
+          <span>No tienes direcciones cargadas</span>
+          <button>Cargar dirección</button>
+        </div>
+      ) : active ? (
+        <div>
+          <h1>Mis Direcciones</h1>
+          <h2>Pais: {address[0].country}</h2>
+          <h2>Estado: {address[0].state}</h2>
+          <h2>Ciudad: {address[0].city}</h2>
+          <h2>Dirección: {address[0].address}</h2>
+          <h2>Código: {address[0].postalCode}</h2>
+          <button onClick={handleModify}>Modificar</button>
+        </div>
+      ) : (
+        <MyDataForm
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          formAddress={formAddress}
+          error={error}
+        />
+      )}
     </div>
   );
 };
