@@ -119,7 +119,7 @@ const CreateProduct = () => {
               value={product.name}
               onChange={handlerProduct}
               name="name"
-              placeholder="Nombre del producto..."
+              placeholder="Nombre del producto"
               required
             />
           </div>
@@ -151,7 +151,7 @@ const CreateProduct = () => {
               value={product.model}
               onChange={handlerProduct}
               name="model"
-              placeholder="Nombre del Modelo..."
+              placeholder="Nombre del Modelo"
               required
             />
           </div>
@@ -163,7 +163,7 @@ const CreateProduct = () => {
               value={product.feature}
               onChange={handlerProduct}
               name="feature"
-              placeholder="Características..."
+              placeholder="Características"
               rows={2}
               cols={25}
             />
@@ -177,7 +177,7 @@ const CreateProduct = () => {
               value={product.detail}
               onChange={handlerProduct}
               name="detail"
-              placeholder="Detalle..."
+              placeholder="Detalles"
             />
           </div>
           <span>{error.detail}</span>
@@ -226,7 +226,7 @@ const CreateProduct = () => {
               value={product.image}
               onChange={handlerProduct}
               name="image"
-              placeholder="Nombre del imageo..."
+              placeholder="Nombre del imagen"
               required
             />
           </div>
@@ -262,11 +262,11 @@ const CreateProduct = () => {
               value={product.stock}
               onChange={handlerProduct}
               name="stock"
-              placeholder="Stock Inicial...."
+              placeholder="Stock Inicial"
             />
           </div>
           <span>{error.stock}</span>
-          <button type="submit">Guardar producto</button>
+          <button type="submit">Crear Producto</button>
           <hr />
         </form>
       </div>
