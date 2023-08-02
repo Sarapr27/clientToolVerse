@@ -38,6 +38,12 @@ import {
   DELETE_REVIEW,
   GET_SHIPPING_ADDRESS_SUCCESS,
   GET_SHIPPING_ADDRESS_ERROR,
+  DELETE_SHIPPING_ADDRESS_SUCCESS,
+  DELETE_SHIPPING_ADDRESS_ERROR,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
+  UPDATE_SHIPPING_ADDRESS_SUCCESS,
+  UPDATE_SHIPPING_ADDRESS_ERROR,
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -144,11 +150,9 @@ export const cerrarSesion = (tokenCookie) => {
   return async (dispatch) => {
     try {
       //const { data } = await axios.post(
-      await axios.post(
-        "http://localhost:3001/logout",
-        tokenCookie,
-        { withCredentials: true }
-      );
+      await axios.post("http://localhost:3001/logout", tokenCookie, {
+        withCredentials: true,
+      });
       const { data } = await axios.post("/logout", tokenCookie, {
         withCredentials: true,
       });
@@ -372,22 +376,21 @@ export const addPurchaseOrder =
   };
 
 //carga los datos de envio en la bdd
-export const createShippingAddress =
-  (address) => async (dispatch) => {
-    try {
-      const response = await axios.post("/shippingAddress", address);
+export const createShippingAddress = (address) => async (dispatch) => {
+  try {
+    const response = await axios.post("/shippingAddress", address);
 
-      dispatch({
-        type: CREATE_SHIPPING_ADDRESS_SUCCESS,
-        payload: response.data,
-      });
-    } catch (error) {
-      dispatch({
-        type: CREATE_SHIPPING_ADDRESS_ERROR,
-        payload: error.response.data.error,
-      });
-    }
-  };
+    dispatch({
+      type: CREATE_SHIPPING_ADDRESS_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_SHIPPING_ADDRESS_ERROR,
+      payload: error.response.data.error,
+    });
+  }
+};
 
 //traigo las direcciones de la base de datos por id de cliente
 export const getShippingAddressByUserId = (userId) => async (dispatch) => {
@@ -420,3 +423,48 @@ export const deleteReview = (id) => ({
   type: DELETE_REVIEW,
   payload: id,
 });
+
+export const deleteShippingAddress = (id) => async (dispatch) => {
+  try {
+    const response = await axios.delete(`/shippingAddress/${id}`);
+    dispatch({
+      type: DELETE_SHIPPING_ADDRESS_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_SHIPPING_ADDRESS_ERROR,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+export const updateShippingAddress = (id) => async (dispatch) => {
+  try {
+    const response = await axios.put(`/shippingAddress/${id}`);
+    dispatch({
+      type: UPDATE_SHIPPING_ADDRESS_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_SHIPPING_ADDRESS_ERROR,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+export const updateUser = (id) => async (dispatch) => {
+  try {
+    const response = await axios.put(`/user/${id}`);
+    dispatch({
+      type: UPDATE_USER_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_ERROR,
+      payload: error.response.data.error,
+    });
+  }
+};
