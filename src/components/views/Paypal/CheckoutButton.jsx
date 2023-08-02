@@ -2,6 +2,7 @@ import React from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 //import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert2";
 
 //TODO: Implementar las siguientes funcionalidades para ocupar PayPal:
 // Una vez que el usuario agregue sus productos, mostrar el botón de PayPal en CartDetails solo cuando esté logueado el usuario.✓
@@ -20,8 +21,15 @@ export function CheckoutButton({ totalAmount, trolley }) {
     try {
       const order = await actions.order.capture();
       console.log("¡Pago realizado exitosamente!", order);
-      alert("¡Pago realizado exitosamente!", order);
-      navigate("/userprofile")
+      new swal({
+        title: "Success",
+        text: "¡Pago realizado exitosamente!",
+        icon: "success",
+        buttons: true,
+      })
+      .then(() => {
+        navigate("/userprofile")
+      })
 
       /* handleCreateOrder(); */ 
     } catch (error) {

@@ -5,9 +5,12 @@ import styles from "./ContactUs.module.css";
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "./fondo.avif"
 import Footer from "../Footer";
+import swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 export default function ContactUs() {
   const navigate = useNavigate();
+  const mySwal = withReactContent(swal);
 
   const [formState, setFormState] = useState({
     firstName: "",
@@ -26,8 +29,13 @@ export default function ContactUs() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Tu solicitud ha sido enviada con exito");
-    navigate("/home");
+    mySwal.fire({
+      title: "Success",
+        text: "¡Tu solicitud se ha enviado con exito!",
+        icon: "success",
+        buttons: true,
+    })
+   .then (navigate("/home"));
   };
 
   //!Necesito un endpoint para enviar la solicitud del cliente

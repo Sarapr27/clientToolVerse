@@ -6,6 +6,8 @@ import axios from "axios";
 import Pagination from "../../../Pagination/Pagination";
 import SearchBar from "../SearchBarAdmin/searchBar";
 import Filters from '../../../Filters/Filters';
+import swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content"
 
 
 const EditProducts = () => {
@@ -16,6 +18,7 @@ const EditProducts = () => {
   const itemsPerPage = 12;
 
   const [editData, setEditData] = useState({});
+  const mySwal = withReactContent(swal)
 
   useEffect(() => {
     try {
@@ -61,7 +64,13 @@ const EditProducts = () => {
     })
     };
     console.log(`PUT request http://localhost:3001/products/${id}`);
-    alert('¡Edicion exitosa!');
+    return new swal({
+      title: "Success",
+      text: "Edicion exitosa",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 2000
+    })
 
     } catch (error) {
       console.log("Error updating", error);
