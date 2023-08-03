@@ -36,6 +36,7 @@ import {
   ADD_REVIEW,
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
+  SET_IS_AUTHENTICATED
   GET_SHIPPING_ADDRESS_SUCCESS,
   GET_SHIPPING_ADDRESS_ERROR,
   DELETE_SHIPPING_ADDRESS_SUCCESS,
@@ -109,6 +110,13 @@ const isAuthenticated = () => {
   };
 };
 
+export const setIsAuthenticated = (value) => {
+  return {
+    type: SET_IS_AUTHENTICATED,
+    payload: value,
+  };
+};
+
 export const login = (character) => {
   return async function (dispatch) {
     try {
@@ -116,6 +124,13 @@ export const login = (character) => {
         withCredentials: true,
       });
       if (data) {
+        const token = data.token;
+        console.log('action token:', data.token);
+
+        window.localStorage.setItem("token", token);
+        //window.localStorage.setItem("islogged", true);
+        console.log('Set token en action Login:', token); 
+
         dispatch({ type: LOGIN, payload: data });
         dispatch(isAuthenticated());
       }
@@ -157,6 +172,7 @@ export const cerrarSesion = (tokenCookie) => {
         withCredentials: true,
       });
       if (data) {
+        window.localStorage.removeItem('token');
         return dispatch({ type: CERRAR_SESION });
       }
     } catch (error) {

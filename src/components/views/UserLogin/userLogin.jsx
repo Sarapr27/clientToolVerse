@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 import styles from "./userLogin.module.css";
 import userIcon from "./userLogin.png";
@@ -28,8 +28,13 @@ export default function UserLogin() {
 
   const handleLogout = () => {
     dispatch(cerrarSesion());
-    navigate("/login");
   };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated]);
 
   return (
     <div

@@ -28,6 +28,8 @@ import {
   ADD_REVIEW,
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
+  DELETE_TROLLEY,
+  SET_IS_AUTHENTICATED
   GET_SHIPPING_ADDRESS_SUCCESS,
 } from "./type";
 
@@ -259,6 +261,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         isAuthenticated: true,
       };
+      case SET_IS_AUTHENTICATED:
+        return {
+          ...state,
+          isAuthenticated: payload,
+        };
     case ERROR_LOGIN:
       return {
         ...state,
