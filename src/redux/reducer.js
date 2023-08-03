@@ -26,7 +26,8 @@ import {
   ADD_REVIEW,
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
-  DELETE_TROLLEY
+  DELETE_TROLLEY,
+  SET_IS_AUTHENTICATED
 } from "./type";
 
 const initialState = {
@@ -255,6 +256,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         isAuthenticated: true,
       };
+      case SET_IS_AUTHENTICATED:
+        return {
+          ...state,
+          isAuthenticated: payload,
+        };
     case ERROR_LOGIN:
       return {
         ...state,

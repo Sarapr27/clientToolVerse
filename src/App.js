@@ -1,4 +1,4 @@
-import { React } from "react";
+import React, {useEffect} from "react";
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
 import About from "./components/views/Footer/About/About";
@@ -15,7 +15,7 @@ import Error404 from "./components/Error404/Error404";
 import Footer from "./components/views/Footer/Footer";
 import Dashboard from "./components/views/Admin/Dashboard/Dashboard";
 import ProductsList from "./components/views/Admin/ProductsList/ProductsList";
-import Protected from "./Protection";
+//import Protected from "./Protection";
 import UserProfile from "./components/views/UserProfile/UserProfile"
 import EditProducts from "./components/views/Admin/EditProducts/EditProducts";
 import PurchaseOrder from "./components/views/PurchaseOrder/purchaseOrder";
@@ -23,10 +23,25 @@ import PurchaseOrder from "./components/views/PurchaseOrder/purchaseOrder";
 import CreateProduct from "./components/views/Admin/CreateProduct/CreateProduct";
 
 import MPFeedback from "./components/MPFeedback/MPFeedback";
+import { useDispatch} from "react-redux";
+import { setIsAuthenticated } from "./redux/actions";
+import {persistor} from './redux/store';
 
 
 function App() {
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Verificar si hay un token almacenado en el Local Storage
+    const storedToken = window.localStorage.getItem('token');
+    if (storedToken) {
+      dispatch(setIsAuthenticated(true));
+    }
+
+    // Configura Redux Persist para mantener el estado global después de un reinicio
+    persistor.persist();
+  }, [dispatch]);
 
   return (
     <div className="App">
