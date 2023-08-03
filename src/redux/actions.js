@@ -28,6 +28,7 @@ import {
   UPDATE_TOOL_STOCK,
   ACTUAL_USER,
   DELETE_TROLLEY,
+  GET_CATEGORY,
   PURCHASE_ORDER_SUCCESS,
   PURCHASE_ORDER_ERROR,
   CREATE_SHIPPING_ADDRESS_SUCCESS,
@@ -36,6 +37,14 @@ import {
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
   SET_IS_AUTHENTICATED
+  GET_SHIPPING_ADDRESS_SUCCESS,
+  GET_SHIPPING_ADDRESS_ERROR,
+  DELETE_SHIPPING_ADDRESS_SUCCESS,
+  DELETE_SHIPPING_ADDRESS_ERROR,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
+  UPDATE_SHIPPING_ADDRESS_SUCCESS,
+  UPDATE_SHIPPING_ADDRESS_ERROR,
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -155,6 +164,10 @@ export const verifyLoginSuccess = () => {
 export const cerrarSesion = (tokenCookie) => {
   return async (dispatch) => {
     try {
+      //const { data } = await axios.post(
+      await axios.post("http://localhost:3001/logout", tokenCookie, {
+        withCredentials: true,
+      });
       const { data } = await axios.post("/logout", tokenCookie, {
         withCredentials: true,
       });
@@ -318,7 +331,19 @@ export const registerStockExit = (toolId, quantity) => async (dispatch) => {
     });
   }
 };
-
+//Accion de traer las categorias
+export const getCategory = () => {
+  return async function (dispatch) {
+    try {
+      const category = await axios.get(`/category`);
+      if (category) {
+        dispatch({ type: GET_CATEGORY, payload: category.data });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 //carga el carrito completo en la bdd
 export const addToCartRoute =
   (quantity, userId, productId) => async (dispatch) => {
@@ -367,30 +392,37 @@ export const addPurchaseOrder =
   };
 
 //carga los datos de envio en la bdd
-export const createShippingAddress =
-  (country, state, city, address, postalCode, userId) => async (dispatch) => {
-    try {
-      const response = await axios.post(
-        "/shippingAddress",
-        country,
-        state,
-        city,
-        address,
-        postalCode,
-        userId
-      );
+export const createShippingAddress = (address) => async (dispatch) => {
+  try {
+    const response = await axios.post("/shippingAddress", address);
 
-      dispatch({
-        type: CREATE_SHIPPING_ADDRESS_SUCCESS,
-        payload: response.data,
-      });
-    } catch (error) {
-      dispatch({
-        type: CREATE_SHIPPING_ADDRESS_ERROR,
-        payload: error.response.data.error,
-      });
-    }
-  };
+    dispatch({
+      type: CREATE_SHIPPING_ADDRESS_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_SHIPPING_ADDRESS_ERROR,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+//traigo las direcciones de la base de datos por id de cliente
+export const getShippingAddressByUserId = (userId) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/shippingAddress/user/${userId}`);
+    dispatch({
+      type: GET_SHIPPING_ADDRESS_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_SHIPPING_ADDRESS_ERROR,
+      payload: error.response.data.error,
+    });
+  }
+};
 
 //Actions Reviews
 export const addReview = (review) => ({
@@ -407,3 +439,48 @@ export const deleteReview = (id) => ({
   type: DELETE_REVIEW,
   payload: id,
 });
+
+export const deleteShippingAddress = (id) => async (dispatch) => {
+  try {
+    const response = await axios.delete(`/shippingAddress/${id}`);
+    dispatch({
+      type: DELETE_SHIPPING_ADDRESS_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_SHIPPING_ADDRESS_ERROR,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+export const updateShippingAddress = (id) => async (dispatch) => {
+  try {
+    const response = await axios.put(`/shippingAddress/${id}`);
+    dispatch({
+      type: UPDATE_SHIPPING_ADDRESS_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_SHIPPING_ADDRESS_ERROR,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+export const updateUser = (id) => async (dispatch) => {
+  try {
+    const response = await axios.put(`/user/${id}`);
+    dispatch({
+      type: UPDATE_USER_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_ERROR,
+      payload: error.response.data.error,
+    });
+  }
+};

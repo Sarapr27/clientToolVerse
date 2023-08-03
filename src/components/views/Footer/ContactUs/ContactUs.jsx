@@ -3,9 +3,14 @@ import { useState } from "react";
 import styles from "./ContactUs.module.css";
 //import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import backgroundImage from "./fondo.avif"
+import Footer from "../Footer";
+import swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 export default function ContactUs() {
   const navigate = useNavigate();
+  const mySwal = withReactContent(swal);
 
   const [formState, setFormState] = useState({
     firstName: "",
@@ -24,8 +29,13 @@ export default function ContactUs() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Tu solicitud ha sido enviada con exito");
-    navigate("/home");
+    mySwal.fire({
+      title: "Success",
+        text: "¡Tu solicitud se ha enviado con exito!",
+        icon: "success",
+        buttons: true,
+    })
+   .then (navigate("/home"));
   };
 
   //!Necesito un endpoint para enviar la solicitud del cliente
@@ -44,7 +54,8 @@ export default function ContactUs() {
   }; */
 
   return (
-    <div>
+    <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: "cover", height: "100vh" }}>
+    <h1 style={{fontWeight:"bold", color: "black", fontSize: "xx-large"}}>Tienes alguna consulta o sugerencia, haznoslo saber</h1>
       <div className={styles.formContainer}>
         <form onSubmit={handleSubmit} className={styles.contactForm}>
           <label className={styles.formLabel}>
@@ -109,6 +120,7 @@ export default function ContactUs() {
           <input type="submit" value="Enviar" className={styles.formSubmit} />
         </form>
       </div>
+      <Footer/>
     </div>
   );
 }

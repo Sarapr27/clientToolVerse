@@ -23,11 +23,14 @@ import {
   REGISTER_STOCK_EXIT_SUCCESS,
   REGISTER_STOCK_EXIT_FAILURE,
   ACTUAL_USER,
+  DELETE_TROLLEY,
+  GET_CATEGORY,
   ADD_REVIEW,
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
   DELETE_TROLLEY,
   SET_IS_AUTHENTICATED
+  GET_SHIPPING_ADDRESS_SUCCESS,
 } from "./type";
 
 const initialState = {
@@ -35,7 +38,7 @@ const initialState = {
   toolsShown: [], // éstas son las tools que van a renderizarse
   toolsDetail: {}, // Tendra la informacion detallada de cada tools.
   usersCreated: [], // Aca guardaremos nuestras User Creadas del FORM. npmbre del array MODIFICABLE
-  actualUser: {}, // temporal -> el usuarui 
+  actualUser: {}, // temporal -> el usuarui
   // actualUser: {
   //   id: 9999,
   //   firstName: "Testing",
@@ -49,8 +52,10 @@ const initialState = {
   login: [], // aquí veremos el user una vez que haga hecho logIn
   errorLogin: "",
   isAuthenticated: false,
-  reviews:[],
-  cartError: true
+  address: [],
+  cartError: true,
+  category: [],
+  reviews: [],
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -100,15 +105,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
       else {
         const updatedCart = state.itemCart.map((item) => {
           if (item.id === itemId) {
-            if (item.quantity >= 5) return item
+            if (item.quantity >= 5) return item;
             return {
               ...item,
-              quantity: item.quantity + 1
-            }
-          }
-          else return item
-        }
-        );
+              quantity: item.quantity + 1,
+            };
+          } else return item;
+        });
         return {
           ...state,
           itemCart: updatedCart,
@@ -118,7 +121,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case REMOVE_FROM_CART:
       return {
         ...state,
-        itemCart: state.itemCart.filter(prod => prod.id !== payload)
+        itemCart: state.itemCart.filter((prod) => prod.id !== payload),
       };
 
     case LESS_FROM_CART:
@@ -147,8 +150,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case DELETE_TROLLEY:
       return {
         ...state,
-        itemCart: []
-      }
+        itemCart: [],
+      };
 
     case SET_CURRRENT_PAGE:
       return {
@@ -162,7 +165,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case CHANGE_FILTER_CATEGORY:
-      const categoryFiltered = state.allTools.filter((e) => e.category.includes(payload));
+      const categoryFiltered = state.allTools.filter((e) =>
+        e.category.includes(payload)
+      );
       return {
         ...state,
         toolsShown: categoryFiltered,
@@ -243,8 +248,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         actualUser: payload,
-        cartError: false
-      }
+        cartError: false,
+      };
 
     case CERRAR_SESION:
       return {
@@ -266,29 +271,35 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         errorLogin: payload,
       };
-
+    case GET_CATEGORY:
+      return {
+        ...state,
+        category: payload,
+      };
     case ADD_REVIEW:
-        return {
-          ...state,
-          reviews: [...state.reviews, payload],
-        };
-
+      return {
+        ...state,
+        reviews: [...state.reviews, payload],
+      };
     case UPDATE_REVIEW_COMMENTS:
-        const { id, comments } = payload;
-        return {
-          ...state,
-          reviews: state.reviews.map((review) =>
-            review.id === id ? { ...review, comments } : review
-          ),
-        };
-
+      const { id, comments } = payload;
+      return {
+        ...state,
+        reviews: state.reviews.map((review) =>
+          review.id === id ? { ...review, comments } : review
+        ),
+      };
     case DELETE_REVIEW:
-        const reviewId = payload;
-        return {
-          ...state,
-          reviews: state.reviews.filter((review) => review.id !== reviewId),
-        };
-
+      const reviewId = payload;
+      return {
+        ...state,
+        reviews: state.reviews.filter((review) => review.id !== reviewId),
+      };
+    case GET_SHIPPING_ADDRESS_SUCCESS:
+      return {
+        ...state,
+        address: payload,
+      };
     default:
       return {
         ...state,

@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./EditProducts.module.css";
 import { getTools, setCurrentPage } from "../../../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,16 +6,19 @@ import axios from "axios";
 import Pagination from "../../../Pagination/Pagination";
 import SearchBar from "../SearchBarAdmin/searchBar";
 import Filters from '../../../Filters/Filters';
+import swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content"
 
 
 const EditProducts = () => {
   const allProducts = useSelector((state) => state.toolsShown);
   const currentPage = useSelector((state) => state.currentPage)
-  console.log(allProducts);
+  //console.log(allProducts);
   const dispatch = useDispatch();
   const itemsPerPage = 12;
 
   const [editData, setEditData] = useState({});
+  const mySwal = withReactContent(swal)
 
   useEffect(() => {
     try {
@@ -60,7 +63,15 @@ const EditProducts = () => {
       return updatedEditData;
     })
     };
-    
+    console.log(`PUT request http://localhost:3001/products/${id}`);
+    return new swal({
+      title: "Success",
+      text: "Edicion exitosa",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 2000
+    })
+
     } catch (error) {
       console.log("Error updating", error);
     }
