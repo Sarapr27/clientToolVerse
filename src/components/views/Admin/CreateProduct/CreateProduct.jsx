@@ -7,8 +7,7 @@ import axios from "axios";
 const CreateProduct = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCategory(),
-    getTools())
+    dispatch(getCategory(), getTools());
   }, [dispatch]);
 
   const categoria = useSelector((state) => state.category);
@@ -20,7 +19,7 @@ const CreateProduct = () => {
     feature: "",
     detail: "",
     price: "",
-     image: "",
+    image: "",
     category: [],
     stock: "",
   });
@@ -31,7 +30,7 @@ const CreateProduct = () => {
     feature: "",
     detail: "",
     price: "",
-     image: "",
+    image: "",
     category: "",
     stock: "",
   });
@@ -63,11 +62,11 @@ const CreateProduct = () => {
       feature: "",
       detail: "",
       price: "",
-       image: "",
+      image: "",
       category: [],
       stock: "",
     });
-  };  
+  };
   const handlerSelect = (e) => {
     const { options } = e.target;
     const selectedCategories = [];
@@ -80,7 +79,7 @@ const CreateProduct = () => {
   };
   const buscaId = (id) => {
     const buscaCategory = categoria.find((busca) => busca.id === id);
-    return buscaCategory ? buscaCategory.name : ""
+    return buscaCategory ? buscaCategory.name : "";
   };
   const categoryMap = product.category.map((e) => buscaId(e));
   //revision --------------------------->
@@ -201,7 +200,7 @@ const CreateProduct = () => {
             src="https://www.bosch-professional.com/ar/es/ocsmedia/60785-54/product-image/265x265/taladro-gbm-10-re-060113e5h0.png"
             alt="Taladro GBM 10 RE"
           />
-           {/* <div>
+          {/* <div>
             <label htmlFor="image">Imagen del producto:</label>
             <select
               name="image"
@@ -230,7 +229,7 @@ const CreateProduct = () => {
               required
             />
           </div>
-          
+
           <div>
             <label htmlFor="category">Categoría:</label>
             <input
@@ -247,8 +246,10 @@ const CreateProduct = () => {
               value={product.category}
               onChange={handlerSelect}
             >
-              {categoria.map((e)=> (
-                <option key={e.id} value={e.id}>{e.name}</option>
+              {categoria.map((e) => (
+                <option key={e.id} value={e.id}>
+                  {e.name}
+                </option>
               ))}
             </select>
             <span>{error.category}</span>

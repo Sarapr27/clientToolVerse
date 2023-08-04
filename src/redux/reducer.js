@@ -18,8 +18,6 @@ import {
   ERROR_LOGIN,
   ISAUTHENTICATED,
   UPDATE_TOOL_STOCK,
-  // REGISTER_STOCK_ENTRY_SUCCESS,
-  // REGISTER_STOCK_ENTRY_FAILURE,
   REGISTER_STOCK_EXIT_SUCCESS,
   REGISTER_STOCK_EXIT_FAILURE,
   ACTUAL_USER,
@@ -31,6 +29,8 @@ import {
   // DELETE_TROLLEY,
   SET_IS_AUTHENTICATED,
   GET_SHIPPING_ADDRESS_SUCCESS,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from "./type";
 
 const initialState = {
@@ -38,15 +38,7 @@ const initialState = {
   toolsShown: [], // éstas son las tools que van a renderizarse
   toolsDetail: {}, // Tendra la informacion detallada de cada tools.
   usersCreated: [], // Aca guardaremos nuestras User Creadas del FORM. npmbre del array MODIFICABLE
-  actualUser: {}, // temporal -> el usuarui
-  // actualUser: {
-  //   id: 9999,
-  //   firstName: "Testing",
-  //   lastName: "User",
-  //   email: "iamatest@soyunaprueba.com",
-  //   phone: 1234567890,
-  //   address: "Una calle 99, Centro, Cba, Arg. 5000"
-  // }, // esto es nada más para verlo renderizado en el carrito
+  actualUser: {}, // temporal -> el usuar
   itemCart: [], // Aca almacenaremos todos los productos cargados en el carrito
   currentPage: 1,
   login: [], // aquí veremos el user una vez que haga hecho logIn
@@ -56,6 +48,7 @@ const initialState = {
   cartError: true,
   category: [],
   reviews: [],
+  updateUserError: null,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -84,7 +77,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case GET_USER:
       return {
         ...state,
-        actualUser: payload,
+        usersCreated: payload,
       };
 
     case ADD_TO_CART:
@@ -222,7 +215,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         allTools: updatedAllTools,
       };
-    // case REGISTER_STOCK_ENTRY_SUCCESS:
     case REGISTER_STOCK_EXIT_SUCCESS:
       // Actualizar el estado de las herramientas después de registrar una entrada o salida de stock
       const updatedStock = state.allTools.map((tool) =>
@@ -232,7 +224,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         allTools: updatedStock,
       };
-    // case REGISTER_STOCK_ENTRY_FAILURE:
     case REGISTER_STOCK_EXIT_FAILURE:
       return {
         ...state,
@@ -299,6 +290,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         address: payload,
+      };
+      case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        actualUser: payload, // ACA actualizamos los datos del usuario actualizado
+        updateUserError: null, // OJO  para reiniciar el error en caso de que haya ocurrido anteriormente
+      };
+    case UPDATE_USER_ERROR:
+      return {
+        ...state,
+        updateUserError: payload, // ACA almacenamos el error en caso de que ocurra un error al actualizar el usuario
       };
     default:
       return {
