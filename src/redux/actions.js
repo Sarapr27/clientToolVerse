@@ -470,9 +470,24 @@ export const updateShippingAddress = (id) => async (dispatch) => {
   }
 };
 
-export const updateUser = (id) => async (dispatch) => {
+// export const updateUser = (id) => async (dispatch) => {
+//   try {
+//     const response = await axios.put(`/user/${id}`);
+//     dispatch({
+//       type: UPDATE_USER_SUCCESS,
+//       payload: response.data,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: UPDATE_USER_ERROR,
+//       payload: error.response.data.error,
+//     });
+//   }
+// };
+
+export const updateUser = (id, userData) => async (dispatch) => {
   try {
-    const response = await axios.put(`/user/${id}`);
+    const response = await axios.put(`/user/${id}`, userData);
     dispatch({
       type: UPDATE_USER_SUCCESS,
       payload: response.data,
@@ -483,4 +498,17 @@ export const updateUser = (id) => async (dispatch) => {
       payload: error.response.data.error,
     });
   }
+};
+
+export const getAllUsers = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`/user`); // Reemplaza "/users" con la ruta correcta hacia la API que obtiene todos los usuarios en tu backend
+      if (response) {
+        dispatch({ type: GET_USER, payload: response.data });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
