@@ -19,13 +19,14 @@ import ProductsList from "./components/views/Admin/ProductsList/ProductsList";
 import UserProfile from "./components/views/UserProfile/UserProfile"
 import EditProducts from "./components/views/Admin/EditProducts/EditProducts";
 import PurchaseOrder from "./components/views/PurchaseOrder/purchaseOrder";
-
+import User from "./components/views/Admin/User/User"
 import CreateProduct from "./components/views/Admin/CreateProduct/CreateProduct";
 
 import MPFeedback from "./components/MPFeedback/MPFeedback";
 import { useDispatch, useSelector} from "react-redux";
 import { setIsAuthenticated, setLastVisitedRoute } from "./redux/actions";
 import {persistor} from './redux/store';
+import Order from "./components/views/Admin/Order/Order";
 
 
 function App() {
@@ -81,6 +82,8 @@ function App() {
           <Route path="/admin/productsList" element={<ProductsList />} />
           <Route path="/userprofile" element={<UserProfile />} />
           <Route path="/createProduct" element={<CreateProduct />} />
+          <Route path="/admin/user" element={<User />} />
+          <Route path="/admin/order" element={<Order />} />
         {/* </Route> */}
 
 
