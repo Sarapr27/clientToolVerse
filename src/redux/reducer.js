@@ -28,9 +28,9 @@ import {
   ADD_REVIEW,
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
-  DELETE_TROLLEY,
-  SET_IS_AUTHENTICATED
+  SET_IS_AUTHENTICATED,
   GET_SHIPPING_ADDRESS_SUCCESS,
+  GET_USER_ID,
 } from "./type";
 
 const initialState = {
@@ -56,6 +56,7 @@ const initialState = {
   cartError: true,
   category: [],
   reviews: [],
+  user: {},
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -86,7 +87,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         actualUser: payload,
       };
-
+    case GET_USER_ID:
+      return {
+        ...state,
+        user: payload,
+      };
     case ADD_TO_CART:
       const itemId = payload.id;
       const existingItemIndex = state.itemCart.findIndex(
@@ -261,11 +266,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         isAuthenticated: true,
       };
-      case SET_IS_AUTHENTICATED:
-        return {
-          ...state,
-          isAuthenticated: payload,
-        };
+    case SET_IS_AUTHENTICATED:
+      return {
+        ...state,
+        isAuthenticated: payload,
+      };
     case ERROR_LOGIN:
       return {
         ...state,

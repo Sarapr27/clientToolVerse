@@ -1,29 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./UserProfile.module.css";
-import { useSelector } from "react-redux";
-import MyData from "./MyData/MyData";
+import { useDispatch, useSelector } from "react-redux";
+import MyAddress from "./MyAddress/MyAddress";
 import MyProfile from "./MyProfile/MyProfile";
 import MyReviews from "./MyReviews/MyReviews";
 import MyShopping from "./MyShopping/MyShopping";
+import { getUserById } from "../../../redux/actions";
 
 const UserProfile = () => {
-  const login = useSelector((state) => state.login);
-  const [active, setActive] = useState(null);
+  const { id, firstName, lastName } = useSelector((state) => state.login);
+  const user = useSelector((state) => state.user);
+  const [active, setActive] = useState("MiPerfil");
+  const dispatch = useDispatch();
 
-  const handleMiPerfilClick = () => {
-    setActive("MiPerfil");
-  };
+  useEffect(() => {
+    try {
+      dispatch(getUserById(id));
+    } catch (error) {
+      console.log("No se puede obtener el usuario", error);
+    }
+  }, [dispatch, id]);
 
-  const handleMisDatosClick = () => {
-    setActive("MisDatos");
-  };
-
-  const handleMisComprasClick = () => {
-    setActive("MisCompras");
-  };
-
-  const handleMisReviewsClick = () => {
-    setActive("MisReviews");
+  const handleButtonClick = (activeValue) => {
+    setActive(activeValue);
   };
 
   return (
@@ -31,50 +30,42 @@ const UserProfile = () => {
       <div className={style.secondaryContainer}>
         <div>
           <h1>
-            Hola {login.firstName} {login.lastName}
+            Hola {firstName} {lastName}
           </h1>
         </div>
         <div className={style.buttonClass}>
-          <div>
-            <button
-              className={style.customButton}
-              onClick={handleMiPerfilClick}
-            >
-              Mi Perfil
-            </button>
-          </div>
+          <button
+            className={style.customButton}
+            onClick={() => handleButtonClick("MiPerfil")}
+          >
+            Mi Perfil
+          </button>
 
-          <div>
-            <button
-              className={style.customButton}
-              onClick={handleMisDatosClick}
-            >
-              Mis Datos
-            </button>
-          </div>
+          <button
+            className={style.customButton}
+            onClick={() => handleButtonClick("MisDatos")}
+          >
+            Mis Direcciones
+          </button>
 
-          <div>
-            <button
-              className={style.customButton}
-              onClick={handleMisComprasClick}
-            >
-              Mis Compras
-            </button>
-          </div>
+          <button
+            className={style.customButton}
+            onClick={() => handleButtonClick("MisCompras")}
+          >
+            Mis Compras
+          </button>
 
-          <div>
-            <button
-              className={style.customButton}
-              onClick={handleMisReviewsClick}
-            >
-              Mis Reviews
-            </button>
-          </div>
+          <button
+            className={style.customButton}
+            onClick={() => handleButtonClick("MisReviews")}
+          >
+            Mis Reviews
+          </button>
         </div>
       </div>
       <div className={style.componentContainer}>
-        {active === "MiPerfil" && <MyProfile user={login} />}
-        {active === "MisDatos" && <MyData user={login} />}
+        {active === "MiPerfil" && <MyProfile user={user} />}
+        {active === "MisDatos" && <MyAddress user={user} />}
         {active === "MisCompras" && <MyShopping />}
         {active === "MisReviews" && <MyReviews />}
       </div>

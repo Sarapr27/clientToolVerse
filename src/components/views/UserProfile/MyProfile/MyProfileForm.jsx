@@ -1,28 +1,55 @@
-const MyProfileForm = () => {
+const MyProfileForm = ({ handleSubmit, handleChange, formProfile, error }) => {
   return (
-    <form onSubmit={()=>console.log("handleSubmit")}>
-      <div>
+    <div>
+      <form onSubmit={handleSubmit}>
         <div>
-          <span>Nombre:</span>
-          <input type="text" name="firstName" placeholder="Ingresa tu nombre" value="" onChange={()=>console.log("EL NOMBRE")}/>
+          <div>
+            <label htmlFor="firstName">Nombre:</label>
+            <input
+              type="text"
+              name="firstName"
+              placeholder="Ingresa tu nombre"
+              value={formProfile.firstName}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="lastName">Apellido:</label>
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Ingresa tu apellido"
+              value={formProfile.lastName}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Ingresa tu correo"
+              value={formProfile.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="phone">Teléfono:</label>
+            <input
+              type="text"
+              name="phone"
+              placeholder="Ingresa tu teléfono"
+              value={formProfile.phone}
+              onChange={handleChange}
+            />
+          </div>
         </div>
         <div>
-          <span>Apellido:</span>
-          <input type="text" name="lastName" placeholder="Ingresa tu apellido" value="" onChange={()=>console.log("EL APELLIDO")}/>
+          <input type="submit" value="Confirmar" />
         </div>
-        <div>
-          <span>Email:</span>
-          <input type="email" name="email" placeholder="Ingresa tu correo" value="" onChange={()=>console.log("EL CORREO")}/>
-        </div>
-        <div>
-          <span>Teléfono:</span>
-          <input type="text" name="phone" placeholder="Ingresa tu teléfono" value="" onChange={()=>console.log("EL TELEFONO")}/>
-        </div>
-      </div>
-      <div>
-        <input type="submit" value="Confirmar" />
-      </div>
-    </form>
+      </form>
+      {error && <div>{error}</div>}
+    </div>
   );
 };
 
