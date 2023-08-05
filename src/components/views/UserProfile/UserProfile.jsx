@@ -14,12 +14,19 @@ const UserProfile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    try {
-      dispatch(getUserById(id));
-    } catch (error) {
-      console.log("No se puede obtener el usuario", error);
-    }
+    const fetchUserData = async () => {
+      try {
+        await dispatch(getUserById(id));
+      } catch (error) {
+        console.log("No se puede obtener el usuario", error);
+      }
+    };
+    fetchUserData();
   }, [dispatch, id]);
+
+  if (!user) {
+    return <div>Cargando...</div>;
+  }
 
   const handleButtonClick = (activeValue) => {
     setActive(activeValue);
