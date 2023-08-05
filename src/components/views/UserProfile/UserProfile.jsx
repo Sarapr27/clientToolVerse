@@ -6,20 +6,16 @@ import MyProfile from "./MyProfile/MyProfile";
 import MyReviews from "./MyReviews/MyReviews";
 import MyShopping from "./MyShopping/MyShopping";
 import { useNavigate } from "react-router-dom";
-
-const UserProfile = () => {
-  const login = useSelector((state) => state.login);
-  const isAuthenticated = useSelector((state) => state.isAuthenticated);
-  const [active, setActive] = useState(null);
-  const navigate = useNavigate();
-
 import { getUserById } from "../../../redux/actions";
 
 const UserProfile = () => {
   const { id, firstName, lastName } = useSelector((state) => state.login);
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
   const user = useSelector((state) => state.user);
   const [active, setActive] = useState("MiPerfil");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -93,5 +89,6 @@ const UserProfile = () => {
     </div>
   );
 };
+}
 
 export default UserProfile;
