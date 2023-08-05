@@ -5,6 +5,14 @@ import MyAddress from "./MyAddress/MyAddress";
 import MyProfile from "./MyProfile/MyProfile";
 import MyReviews from "./MyReviews/MyReviews";
 import MyShopping from "./MyShopping/MyShopping";
+import { useNavigate } from "react-router-dom";
+
+const UserProfile = () => {
+  const login = useSelector((state) => state.login);
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+  const [active, setActive] = useState(null);
+  const navigate = useNavigate();
+
 import { getUserById } from "../../../redux/actions";
 
 const UserProfile = () => {
@@ -31,6 +39,12 @@ const UserProfile = () => {
   const handleButtonClick = (activeValue) => {
     setActive(activeValue);
   };
+
+  if (!isAuthenticated) {
+    // Si no está autenticado, redirige a la página de inicio de sesión
+    navigate("/login");
+    return null;
+  }
 
   return (
     <div className={style.userProfileContainer}>

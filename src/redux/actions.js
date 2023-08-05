@@ -45,6 +45,7 @@ import {
   UPDATE_USER_ERROR,
   UPDATE_SHIPPING_ADDRESS_SUCCESS,
   UPDATE_SHIPPING_ADDRESS_ERROR,
+  SET_LAST_VISITED_ROUTE
   GET_USER_ID,
   GET_USER_ID_ERROR,
 } from "./type";
@@ -166,10 +167,6 @@ export const verifyLoginSuccess = () => {
 export const cerrarSesion = (tokenCookie) => {
   return async (dispatch) => {
     try {
-      //const { data } = await axios.post(
-      await axios.post("/logout", tokenCookie, {
-        withCredentials: true,
-      });
       const { data } = await axios.post("/logout", tokenCookie, {
         withCredentials: true,
       });
@@ -180,6 +177,13 @@ export const cerrarSesion = (tokenCookie) => {
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
+  };
+};
+
+export const setLastVisitedRoute = (route) => {
+  return {
+    type: SET_LAST_VISITED_ROUTE,
+    payload: route,
   };
 };
 

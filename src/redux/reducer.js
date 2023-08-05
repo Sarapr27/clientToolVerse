@@ -28,6 +28,7 @@ import {
   DELETE_REVIEW,
   SET_IS_AUTHENTICATED,
   GET_SHIPPING_ADDRESS_SUCCESS,
+  SET_LAST_VISITED_ROUTE
   GET_USER_ID,  
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
@@ -48,6 +49,7 @@ const initialState = {
   cartError: true,
   category: [],
   reviews: [],
+  lastVisitedRoute: "/",
   user: {},
   updateUserError: null,
 };
@@ -257,6 +259,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         isAuthenticated: true,
       };
+      case SET_IS_AUTHENTICATED:
+        return {
+          ...state,
+          isAuthenticated: payload,
+        };
+        case SET_LAST_VISITED_ROUTE:
+          return {
+            ...state,
+            lastVisitedRoute: payload,
+          };
     case SET_IS_AUTHENTICATED:
       return {
         ...state,
