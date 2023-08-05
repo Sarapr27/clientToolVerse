@@ -6,6 +6,8 @@ import MyProfile from "./MyProfile/MyProfile";
 import MyReviews from "./MyReviews/MyReviews";
 import MyShopping from "./MyShopping/MyShopping";
 import { useNavigate } from "react-router-dom";
+import { getUserById } from "../../../redux/actions";
+
 
 const UserProfile = () => {
   const login = useSelector((state) => state.login);
@@ -13,7 +15,6 @@ const UserProfile = () => {
   const [active, setActive] = useState(null);
   const navigate = useNavigate();
 
-import { getUserById } from "../../../redux/actions";
 
 const UserProfile = () => {
   const { id, firstName, lastName } = useSelector((state) => state.login);
@@ -93,5 +94,6 @@ const UserProfile = () => {
     </div>
   );
 };
+}
 
 export default UserProfile;
