@@ -26,9 +26,10 @@ import {
   ADD_REVIEW,
   UPDATE_REVIEW_COMMENTS,
   DELETE_REVIEW,
-  // DELETE_TROLLEY,
   SET_IS_AUTHENTICATED,
   GET_SHIPPING_ADDRESS_SUCCESS,
+  SET_LAST_VISITED_ROUTE,
+  GET_USER_ID,  
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
 } from "./type";
@@ -48,6 +49,8 @@ const initialState = {
   cartError: true,
   category: [],
   reviews: [],
+  lastVisitedRoute: "/",
+  user: {},
   updateUserError: null,
 };
 
@@ -79,7 +82,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         usersCreated: payload,
       };
-
+    case GET_USER_ID:
+      return {
+        ...state,
+        user: payload,
+      };
     case ADD_TO_CART:
       const itemId = payload.id;
       const existingItemIndex = state.itemCart.findIndex(
@@ -257,6 +264,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
           ...state,
           isAuthenticated: payload,
         };
+        case SET_LAST_VISITED_ROUTE:
+          return {
+            ...state,
+            lastVisitedRoute: payload,
+          };
     case ERROR_LOGIN:
       return {
         ...state,

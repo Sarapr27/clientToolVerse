@@ -3,6 +3,7 @@ import styles from "./login.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../redux/actions";
 import { useNavigate } from "react-router-dom";
+//import { setLastVisitedRoute } from "../../../redux/actions";
 
 function Login() {
   // const [error, setError] = useState("");
@@ -15,6 +16,8 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [isLoginFormSubmitted, setIsLoginFormSubmitted] = useState(false);
+
   const handleInput = (event) => {
     const { name, value } = event.target;
     setInputs({
@@ -26,12 +29,18 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(login(inputs))
+   setIsLoginFormSubmitted(true)
   };
-  useEffect(() => {
-    isAuthenticated && navigate('/userprofile')
-  }, [isAuthenticated, navigate])
 
-  console.log(isAuthenticated)
+  useEffect(() => {
+    if (isAuthenticated) {
+      // Redirige al usuario a la página de inicio del perfil solo si se envió el formulario
+      navigate("/userprofile");
+    }
+  }, [isAuthenticated, navigate]);
+
+
+  console.log('se envio Login, ahora la autenticacion es:',isAuthenticated)
 
   return (
     <div className={styles.container}>

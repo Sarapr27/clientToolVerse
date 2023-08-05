@@ -92,7 +92,6 @@ export default function CartDetails() {
             <button className={style.deleteAll}>
               <img src={vaciar} alt="Vaciar el carrito"
                 onClick={() => deleteTrolley()} className={style.emptyTrolley} />
-              {/* <p className={style.axnEmpty} > Vaciar el carrito</p> */}
             </button>
             <div className={style.total}> Monto total ${total} </div>
             {
