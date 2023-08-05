@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styles from "./CreateProduct.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory, getTools } from "../../../../redux/actions";
 import axios from "axios";
-
+import CloudinaryUploadWidget from "../../CloudinaryUploadWidget/CloudinaryUploadWidget";
+//!aqui se toco para cloudinary para subir cambios(eliminar comentario antes de subir)
 const CreateProduct = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCategory(), getTools());
+    dispatch(getCategory(),
+    getTools())
   }, [dispatch]);
 
   const categoria = useSelector((state) => state.category);
+  const imageRef = useRef()
 
   const [product, setProduct] = useState({
     brand: "",
@@ -19,7 +22,7 @@ const CreateProduct = () => {
     feature: "",
     detail: "",
     price: "",
-    image: "",
+     image: "",
     category: [],
     stock: "",
   });
@@ -30,24 +33,47 @@ const CreateProduct = () => {
     feature: "",
     detail: "",
     price: "",
-    image: "",
+     image: "",
     category: "",
     stock: "",
   });
+
+  //!punto de arranque para la sengunda modificacion, si no funciona deshacer hasta aca
   const handlerProduct = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setProduct({ ...product, [name]: value });
-    // setError(Validacion) Falta CREAR VALIDACIONES
+
+    if(e.target.name !== "image"){
+      let inputsAux = {...product, [e.target.name]: e.target.value}
+      setProduct(inputsAux);
+    }
   };
 
   const handlerSubmit = (e) => {
-    console.log(e);
     e.preventDefault();
     alert("Enviando. . . . .");
+    // Si product.image es un objeto, utiliza product.image.url, que es la URL de la imagen desde Cloudinary.
+    const imageUrl = typeof product.image === 'object' ? product.image.url : product.image;
+    // Crea una copia del producto con el campo 'image' reemplazado por la URL de la imagen.
+    const productDataToSend = { ...product, image: imageUrl };
+  
     axios
-      .post(`/products`, product)
-      .then((res) => alert("Producto Creado Correctamente"))
+      .post(`/products`, productDataToSend)
+      .then((res) => {
+        console.log(axios
+          .post(`/products`, productDataToSend))
+        alert("Producto Creado Correctamente");
+        // Limpia los campos del formulario después de enviar.
+        setProduct({
+          brand: "",
+          name: "",
+          model: "",
+          feature: "",
+          detail: "",
+          price: "",
+          image: "", // Cambiar a null para que no haya datos residuales en el campo de la imagen.
+          category: [],
+          stock: "",
+        });
+      })
       .catch((error) => {
         if (error.response && error.response.status === 400) {
           alert("Bad Request: Invalid Product Data");
@@ -55,18 +81,8 @@ const CreateProduct = () => {
           alert("Error" + error.message);
         }
       });
-    setProduct({
-      brand: "",
-      name: "",
-      model: "",
-      feature: "",
-      detail: "",
-      price: "",
-      image: "",
-      category: [],
-      stock: "",
-    });
   };
+  
   const handlerSelect = (e) => {
     const { options } = e.target;
     const selectedCategories = [];
@@ -79,31 +95,15 @@ const CreateProduct = () => {
   };
   const buscaId = (id) => {
     const buscaCategory = categoria.find((busca) => busca.id === id);
-    return buscaCategory ? buscaCategory.name : "";
+    return buscaCategory ? buscaCategory.name : ""
   };
-  const categoryMap = product.category.map((e) => buscaId(e));
-  //revision --------------------------->
-  // const [imageOptions, setImageOptions] = useState([]); // Estado para almacenar las opciones de imágenes disponibles
-  // useEffect(() => {
-  //   // Realiza una llamada a la API para obtener las opciones de imágenes disponibles
-  //   axios
-  //     .get("URL_DE_LA_API_DE_CLOUDINARY")
-  //     .then((response) => {
-  //       setImageOptions(response.data); // Actualiza el estado con las opciones de imágenes disponibles
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error al obtener las opciones de imágenes:", error);
-  //     });
-  // }, []);
-  // const handleImageChange = (e) => {
-  //   const selectedImage = e.target.value; // Obtiene la URL de la imagen seleccionada
-  //   setProduct({
-  //     ...product,
-  //     image: selectedImage, // Actualiza el estado con la URL de la imagen seleccionada
-  //   });
-  // }
-  //revision <-------------------------------------
+  const categoryMap = product.category?.map((e) => buscaId(e)) || [];
 
+  //ya no creo que me sirva
+  /* const handleImageUrl = (imageUrl) => {
+    setProduct({...product, image: imageUrl})
+  } */
+  
   return (
     <div className={styles.listContainer}>
       <div>
@@ -186,7 +186,7 @@ const CreateProduct = () => {
               className={styles.simbolo}
               type="number"
               id="price"
-              value={product.price.toLocaleString("en-US", {
+              value={product.price?.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
               })}
               onChange={handlerProduct}
@@ -200,36 +200,17 @@ const CreateProduct = () => {
             src="https://www.bosch-professional.com/ar/es/ocsmedia/60785-54/product-image/265x265/taladro-gbm-10-re-060113e5h0.png"
             alt="Taladro GBM 10 RE"
           />
-          {/* <div>
-            <label htmlFor="image">Imagen del producto:</label>
-            <select
-              name="image"
-              id="image"
-              
-              value={product.image}
-            >
-              <option value="">Selecciona una imagen</option>
-              {imageOptions.map((option) => (
-                <option key={option.id} value={option.url}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <span>{error.image}</span>  */}
-          <div>
-            <label htmlFor="image">Imagen: </label>
-            <input
-              type="text"
-              id="image"
-              value={product.image}
-              onChange={handlerProduct}
-              name="image"
-              placeholder="Nombre del imagen"
-              required
-            />
-          </div>
+           
 
+          //!lo unico que he movido para implementar cloudinary(junto con la carpeta de CloudinaryUploadWidget)(eliminar comentario antes de subir)
+          <div style={{ display: 'flex', flexDirection: 'column'}}>
+          <label htmlFor="image">Image:</label>
+          <input type="text" id="image" name="image" onChange={handlerProduct} value={product.image} hidden />
+          
+          <CloudinaryUploadWidget imageUrl={setProduct} inputs={product}/>
+          <img id="uploadedimage" src="" ref={imageRef}></img>
+        </div> 
+          
           <div>
             <label htmlFor="category">Categoría:</label>
             <input
@@ -246,10 +227,8 @@ const CreateProduct = () => {
               value={product.category}
               onChange={handlerSelect}
             >
-              {categoria.map((e) => (
-                <option key={e.id} value={e.id}>
-                  {e.name}
-                </option>
+              {categoria.map((e)=> (
+                <option key={e.id} value={e.id}>{e.name}</option>
               ))}
             </select>
             <span>{error.category}</span>
