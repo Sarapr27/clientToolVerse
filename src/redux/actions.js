@@ -487,9 +487,9 @@ export const getUserById = (id) => async (dispatch) => {
   }
 };
 
-export const updateUser = (id, user) => async (dispatch) => {
+export const updateUser = (id, userData) => async (dispatch) => {
   try {
-    const response = await axios.put(`/user/${id}`, user);
+    const response = await axios.put(`/user/${id}`, userData);
     dispatch({
       type: UPDATE_USER_SUCCESS,
       payload: response.data,
@@ -500,4 +500,17 @@ export const updateUser = (id, user) => async (dispatch) => {
       payload: error.response.data.error,
     });
   }
+};
+
+export const getAllUsers = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`/user`);
+      if (response) {
+        dispatch({ type: GET_USER, payload: response.data });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
