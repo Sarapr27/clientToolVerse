@@ -61,7 +61,6 @@ const MyProfile = ({ user }) => {
     <div>
       {!active ? (
         <div>
-          <h2>Id: {user.id}</h2>
           <h2>Nombre: {user.firstName}</h2>
           <h2>Apellido: {user.lastName}</h2>
           <h2>Teléfono: {user.phone}</h2>
