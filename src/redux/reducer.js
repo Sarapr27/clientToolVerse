@@ -269,11 +269,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
             ...state,
             lastVisitedRoute: payload,
           };
-    case SET_IS_AUTHENTICATED:
-      return {
-        ...state,
-        isAuthenticated: payload,
-      };
     case ERROR_LOGIN:
       return {
         ...state,
