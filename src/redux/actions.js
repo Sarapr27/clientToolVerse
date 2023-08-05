@@ -470,24 +470,9 @@ export const updateShippingAddress = (id) => async (dispatch) => {
   }
 };
 
-// export const updateUser = (id) => async (dispatch) => {
-//   try {
-//     const response = await axios.put(`/user/${id}`);
-//     dispatch({
-//       type: UPDATE_USER_SUCCESS,
-//       payload: response.data,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: UPDATE_USER_ERROR,
-//       payload: error.response.data.error,
-//     });
-//   }
-// };
-
-export const updateUser = (id, userData) => async (dispatch) => {
+export const updateUser = (id) => async (dispatch) => {
   try {
-    const response = await axios.put(`/user/${id}`, userData);
+    const response = await axios.put(`/user/${id}`);
     dispatch({
       type: UPDATE_USER_SUCCESS,
       payload: response.data,

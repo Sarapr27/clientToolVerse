@@ -7,7 +7,7 @@ import Pagination from "../../../Pagination/Pagination";
 import SearchBar from "../SearchBarAdmin/searchBar";
 import Filters from '../../../Filters/Filters';
 import swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content"
+// import withReactContent from "sweetalert2-react-content"
 
 
 const EditProducts = () => {
@@ -18,7 +18,7 @@ const EditProducts = () => {
   const itemsPerPage = 12;
 
   const [editData, setEditData] = useState({});
-  const mySwal = withReactContent(swal)
+  // const mySwal = withReactContent(swal)
 
   useEffect(() => {
     try {
