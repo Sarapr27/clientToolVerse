@@ -45,6 +45,8 @@ import {
   UPDATE_USER_ERROR,
   UPDATE_SHIPPING_ADDRESS_SUCCESS,
   UPDATE_SHIPPING_ADDRESS_ERROR,
+  GET_USER_ID,
+  GET_USER_ID_ERROR,
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -125,11 +127,11 @@ export const login = (character) => {
       });
       if (data) {
         const token = data.token;
-        console.log('action token:', data.token);
+        console.log("action token:", data.token);
 
         window.localStorage.setItem("token", token);
         //window.localStorage.setItem("islogged", true);
-        console.log('Set token en action Login:', token); 
+        console.log("Set token en action Login:", token);
 
         dispatch({ type: LOGIN, payload: data });
         dispatch(isAuthenticated());
@@ -165,14 +167,14 @@ export const cerrarSesion = (tokenCookie) => {
   return async (dispatch) => {
     try {
       //const { data } = await axios.post(
-      await axios.post("http://localhost:3001/logout", tokenCookie, {
+      await axios.post("/logout", tokenCookie, {
         withCredentials: true,
       });
       const { data } = await axios.post("/logout", tokenCookie, {
         withCredentials: true,
       });
       if (data) {
-        window.localStorage.removeItem('token');
+        window.localStorage.removeItem("token");
         return dispatch({ type: CERRAR_SESION });
       }
     } catch (error) {
@@ -455,9 +457,9 @@ export const deleteShippingAddress = (id) => async (dispatch) => {
   }
 };
 
-export const updateShippingAddress = (id) => async (dispatch) => {
+export const updateShippingAddress = (id, address) => async (dispatch) => {
   try {
-    const response = await axios.put(`/shippingAddress/${id}`);
+    const response = await axios.put(`/shippingAddress/${id}`, address);
     dispatch({
       type: UPDATE_SHIPPING_ADDRESS_SUCCESS,
       payload: response.data,
@@ -470,20 +472,20 @@ export const updateShippingAddress = (id) => async (dispatch) => {
   }
 };
 
-// export const updateUser = (id) => async (dispatch) => {
-//   try {
-//     const response = await axios.put(`/user/${id}`);
-//     dispatch({
-//       type: UPDATE_USER_SUCCESS,
-//       payload: response.data,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: UPDATE_USER_ERROR,
-//       payload: error.response.data.error,
-//     });
-//   }
-// };
+export const getUserById = (id) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/user/${id}`);
+    dispatch({
+      type: GET_USER_ID,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_ID_ERROR,
+      payload: error.response.data.error,
+    });
+  }
+};
 
 export const updateUser = (id, userData) => async (dispatch) => {
   try {
@@ -503,7 +505,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
 export const getAllUsers = () => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`/user`); // Reemplaza "/users" con la ruta correcta hacia la API que obtiene todos los usuarios en tu backend
+      const response = await axios.get(`/user`);
       if (response) {
         dispatch({ type: GET_USER, payload: response.data });
       }
