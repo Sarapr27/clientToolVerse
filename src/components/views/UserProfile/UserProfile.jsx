@@ -8,19 +8,14 @@ import MyShopping from "./MyShopping/MyShopping";
 import { useNavigate } from "react-router-dom";
 import { getUserById } from "../../../redux/actions";
 
-
-const UserProfile = () => {
-  const login = useSelector((state) => state.login);
-  const isAuthenticated = useSelector((state) => state.isAuthenticated);
-  const [active, setActive] = useState(null);
-  const navigate = useNavigate();
-
-
 const UserProfile = () => {
   const { id, firstName, lastName } = useSelector((state) => state.login);
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
   const user = useSelector((state) => state.user);
   const [active, setActive] = useState("MiPerfil");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
     const fetchUserData = async () => {
