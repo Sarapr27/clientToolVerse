@@ -1,3 +1,4 @@
+//!Casi perfecto, solo falta hacer post de la imagen
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./CreateProduct.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,17 +53,18 @@ const CreateProduct = () => {
     alert("Enviando. . . . .");
     // Si product.image es un objeto, utiliza product.image.url, que es la URL de la imagen desde Cloudinary.
     const imageUrl = typeof product.image === 'object' ? product.image.url : product.image;
+    console.log("URL generada por Cloudinary:", imageUrl);
     // Crea una copia del producto con el campo 'image' reemplazado por la URL de la imagen.
     const productDataToSend = { ...product, image: imageUrl };
   
     axios
       .post(`/products`, productDataToSend)
       .then((res) => {
-        console.log(axios
-          .post(`/products`, productDataToSend))
+        console.log(res)
         alert("Producto Creado Correctamente");
         // Limpia los campos del formulario después de enviar.
         setProduct({
+          ...product,
           brand: "",
           name: "",
           model: "",
