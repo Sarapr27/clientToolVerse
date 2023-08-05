@@ -34,7 +34,9 @@ export default function UserLogin() {
     if (!isAuthenticated) {
       navigate("/login");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
+
+  console.log ('userLogin, se envio cierre de sesion, autenticacion es:',isAuthenticated)
 
   return (
     <div

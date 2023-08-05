@@ -31,6 +31,7 @@ import {
   // DELETE_TROLLEY,
   SET_IS_AUTHENTICATED,
   GET_SHIPPING_ADDRESS_SUCCESS,
+  SET_LAST_VISITED_ROUTE
 } from "./type";
 
 const initialState = {
@@ -56,6 +57,7 @@ const initialState = {
   cartError: true,
   category: [],
   reviews: [],
+  lastVisitedRoute: "/",
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -266,6 +268,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
           ...state,
           isAuthenticated: payload,
         };
+        case SET_LAST_VISITED_ROUTE:
+          return {
+            ...state,
+            lastVisitedRoute: payload,
+          };
     case ERROR_LOGIN:
       return {
         ...state,

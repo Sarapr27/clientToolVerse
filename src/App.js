@@ -1,6 +1,6 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "./App.css";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import About from "./components/views/Footer/About/About";
 import ContactUs from "./components/views/Footer/ContactUs/ContactUs";
 import Detail from "./components/views/Detail/detail";
@@ -23,18 +23,23 @@ import PurchaseOrder from "./components/views/PurchaseOrder/purchaseOrder";
 import CreateProduct from "./components/views/Admin/CreateProduct/CreateProduct";
 
 import MPFeedback from "./components/MPFeedback/MPFeedback";
-import { useDispatch} from "react-redux";
-import { setIsAuthenticated } from "./redux/actions";
+import { useDispatch, useSelector} from "react-redux";
+import { setIsAuthenticated, setLastVisitedRoute } from "./redux/actions";
 import {persistor} from './redux/store';
 
 
 function App() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+  const lastVisitedRoute = useSelector((state) => state.setLastVisitedRoute);
+
+  const [isLoginFormSubmitted, setIsLoginFormSubmitted] = useState(false); // Estado para rastrear si el formulario de inicio de sesión se envió
 
   useEffect(() => {
     // Verificar si hay un token almacenado en el Local Storage
-    const storedToken = window.localStorage.getItem('token');
+    const storedToken = window.localStorage.getItem("token");
     if (storedToken) {
       dispatch(setIsAuthenticated(true));
     }
@@ -42,6 +47,14 @@ function App() {
     // Configura Redux Persist para mantener el estado global después de un reinicio
     persistor.persist();
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      // Si no hay token, redirige al usuario a la última ruta visitada antes de iniciar sesión o a la página de inicio del perfil si se autenticó mediante el formulario
+      const destination = isLoginFormSubmitted ? "/userprofile" : lastVisitedRoute;
+      navigate(destination);
+    }
+  }, [isAuthenticated, isLoginFormSubmitted, lastVisitedRoute, navigate]);
 
   return (
     <div className="App">

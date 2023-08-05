@@ -5,10 +5,13 @@ import MyData from "./MyData/MyData";
 import MyProfile from "./MyProfile/MyProfile";
 import MyReviews from "./MyReviews/MyReviews";
 import MyShopping from "./MyShopping/MyShopping";
+import { useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const login = useSelector((state) => state.login);
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
   const [active, setActive] = useState(null);
+  const navigate = useNavigate();
 
   const handleMiPerfilClick = () => {
     setActive("MiPerfil");
@@ -25,6 +28,12 @@ const UserProfile = () => {
   const handleMisReviewsClick = () => {
     setActive("MisReviews");
   };
+
+  if (!isAuthenticated) {
+    // Si no está autenticado, redirige a la página de inicio de sesión
+    navigate("/login");
+    return null;
+  }
 
   return (
     <div className={style.userProfileContainer}>
