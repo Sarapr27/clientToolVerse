@@ -29,11 +29,11 @@ export default function CartForm() {
         lastName: login.lastName,
         email: login.email,
         phone: login.phone,
-        country: address.country,
-        state: address.state,
-        city: address.city,
-        address: address.address,
-        postalCode: address.postalCode,
+        country: '',
+        state: '',
+        city: '',
+        address: '',
+        postalCode: '',
     });
 
     const [cartErrors, setCartErrors] = useState({
@@ -52,11 +52,22 @@ export default function CartForm() {
             if (!address) {
                 dispatch(actions.getShippingAddressByUserId(login.id));
             }
-
+            // Leer los datos de domicilio del usuario desde localStorage
+            const savedAddress = JSON.parse(window.localStorage.getItem("userAddress"));
+            if (savedAddress) {
+                setUser((prevUser) => ({
+                    ...prevUser,
+                    country: savedAddress.country,
+                    state: savedAddress.state,
+                    city: savedAddress.city,
+                    address: savedAddress.address,
+                    postalCode: savedAddress.postalCode,
+                }));
+            }
         } catch (error) {
             console.log("No hay dirección postal", error);
         }
-    });
+    }, [address, dispatch, login.id]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -71,8 +82,9 @@ export default function CartForm() {
                 userId: login.id
             }
             // country, state, city, address, postalCode, userId
-            dispatch(actions.createShippingAddress(dirPostal))
-            dispatch(actions.actualUser(user))
+            dispatch(actions.createShippingAddress(dirPostal));
+            dispatch(actions.actualUser(user));
+            window.localStorage.setItem("userAddress", JSON.stringify(dirPostal));
             alert('Información guardada con éxito')
         }
         else {

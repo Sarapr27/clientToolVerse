@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import * as actions from "../../../redux/actions";
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'
+import { useNavigate } from 'react-router-dom';
 
 export default function PurchaseOrder() {
     var doc = new jsPDF('p', 'pt');
@@ -16,6 +17,8 @@ export default function PurchaseOrder() {
     const actualUser = useSelector((state) => state.actualUser);
     const [total, setTotal] = useState("");
     const [pagos, setPagos] = useState(false)
+    const navigate = useNavigate();
+    const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
 
     const calculateTotal = () => {
@@ -96,13 +99,19 @@ export default function PurchaseOrder() {
 
 
     const confirm = () => {
-        // control de stock -> esto se va a mover en el futuro al punto en el que el pago esté hecho
+        //comentario: control de stock -> esto se va a mover en el futuro al punto en el que el pago esté hecho
         exitStock();
 
-        // crea un Detalle de Compra que va a ser asociado al carrito creada antes
+        //comentario: crea un Detalle de Compra que va a ser asociado al carrito creada antes
 
-        // para renderizar las plataformas de pago -> debería ver si la(s) PurchaseDetail están asociadas al carrito -> eso ocurre una vez que hemos confirmado la compra
+        //Comentario: para renderizar las plataformas de pago -> debería ver si la(s) PurchaseDetail están asociadas al carrito -> eso ocurre una vez que hemos confirmado la compra
         setPagos(true)
+    }
+
+       // Verificamos si el usuario está autenticado, si no lo está, lo redirigimos a /login
+       if (!isAuthenticated) {
+        navigate("/login");
+        return null;
     }
 
     return (
