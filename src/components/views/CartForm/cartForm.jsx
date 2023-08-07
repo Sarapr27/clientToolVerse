@@ -22,6 +22,8 @@ export default function CartForm() {
     const dispatch = useDispatch();
     const login = useSelector(state => state.login)
     const address = useSelector(state => state.address)
+    console.log('useSelector address', address);
+    console.log('userSelector address.country', address && address.country)
 
     const [user, setUser] = useState({
         id: login.id,
@@ -36,6 +38,8 @@ export default function CartForm() {
         postalCode: '',
     });
 
+    console.log('user',user)
+
     const [cartErrors, setCartErrors] = useState({
         firstName: '',
         lastName: '',
@@ -45,55 +49,33 @@ export default function CartForm() {
         city: '',
         address: '',
         postalCode: ''
-    })
+    });
+
+    console.log('address antes de use', address)
 
     useEffect(() => {
-        try {
-            if (!address) {
-                dispatch(actions.getShippingAddressByUserId(login.id));
-            }
-            // Leer los datos de domicilio del usuario desde localStorage
-            const savedAddress = JSON.parse(window.localStorage.getItem("userAddress"));
-            if (savedAddress) {
-                setUser((prevUser) => ({
-                    ...prevUser,
-                    country: savedAddress.country,
-                    state: savedAddress.state,
-                    city: savedAddress.city,
-                    address: savedAddress.address,
-                    postalCode: savedAddress.postalCode,
-                }));
-            }
-        } catch (error) {
-            console.log("No hay dirección postal", error);
+         if (login.id) {
+          dispatch(actions.getShippingAddressByUserId(login.id));
         }
-    }, [address, dispatch, login.id]);
+      }, [login.id, dispatch]);
+    
+      useEffect(() => {
+        if (address && address.length > 0) {
+          setUser((prevUser) => ({
+            ...prevUser,
+            country: address[0].country || "",
+            state: address[0].state || "",
+            city: address[0].city || "",
+            address: address[0].address || "",
+            postalCode: address[0].postalCode || "",
+          }));
+        }
+        dispatch(actions.actualUser(user));
+      }, [address]);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const errors = validate(user);
-        if (Object.values(errors).length === 0) {
-            let dirPostal = {
-                country: user.country,
-                state: user.state,
-                city: user.city,
-                address: user.address,
-                postalCode: user.postalCode,
-                userId: login.id
-            }
-            // country, state, city, address, postalCode, userId
-            dispatch(actions.createShippingAddress(dirPostal));
-            dispatch(actions.actualUser(user));
-            window.localStorage.setItem("userAddress", JSON.stringify(dirPostal));
-            alert('Información guardada con éxito')
-        }
-        else {
-            setCartErrors(errors);
-            alert('Por favor verifica que toda la información sea correcta')
-        }
-    }
+      console.log('address despues de los useEffect', address);
 
-    const handleInputChange = (event) => {
+      const handleInputChange = (event) => {
         const { value, name } = event.target;
         setUser({
             ...user,
@@ -106,6 +88,30 @@ export default function CartForm() {
             })
         )
     };
+
+    
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const errors = validate(user);
+        if (Object.values(errors).length === 0) {
+            let dirPostal = {
+                country: user.country,
+                state: user.state,
+                city: user.city,
+                address: user.address,
+                postalCode: user.postalCode,
+                userId: login.id
+            }
+            dispatch(actions.createShippingAddress(dirPostal));
+            dispatch(actions.actualUser(user));
+            alert('Información guardada con éxito')
+        }
+        else {
+            setCartErrors(errors);
+            alert('Por favor verifica que toda la información sea correcta')
+        }
+    }
+
 
     return (
         <div className={style.cartForm}>
