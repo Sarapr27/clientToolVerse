@@ -59,6 +59,8 @@ function Form() {
     }
   };
 
+  const showRoleSelect = formData.role !== "client";
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>Registro</div>
@@ -125,17 +127,14 @@ function Form() {
                 onChange={handleChange}
               />
             </div>
-            <div className={styles["input-box"]}>
-              <span className={styles.details}>Rol</span>
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-              >
-                <option value="admin">Admin</option>
-                <option value="client">Cliente</option>
-              </select>
-            </div>
+            {showRoleSelect && (
+              <div className={`${styles.hidden}`}>
+                <span className={`${styles.hidden}`}>Rol</span>
+                <select name="role" value={formData.role} onChange={handleChange}>
+                  <option value="client">Cliente</option>
+                </select>
+              </div>
+            )}
           </div>
 
           <div className={styles.button}>

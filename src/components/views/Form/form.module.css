@@ -161,4 +161,8 @@ input[type="radio"] {
   .container {
     max-width: 80%;
   }
+
+  .hidden {
+    display: none;
+  }
 }
