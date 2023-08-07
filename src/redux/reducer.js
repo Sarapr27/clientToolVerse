@@ -253,6 +253,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isAuthenticated: false,
+        actualUser: {},
+        itemCart: [],
       };
     case ISAUTHENTICATED:
       return {
@@ -299,6 +301,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         reviews: state.reviews.filter((review) => review.id !== reviewId),
       };
     case GET_SHIPPING_ADDRESS_SUCCESS:
+     // console.log('Datos recibidos en GET_SHIPPING_ADDRESS_SUCCESS:', payload);
       return {
         ...state,
         address: payload,

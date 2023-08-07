@@ -20,6 +20,13 @@ export default function PurchaseOrder() {
     const navigate = useNavigate();
     const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
+    // useEffect para escuchar los cambios en actualUser
+  useEffect(() => {
+    if (!actualUser.country || !actualUser.state || !actualUser.city || !actualUser.address || !actualUser.postalCode) {
+      dispatch(actions.getShippingAddressByUserId(actualUser.id));
+    }
+  }, [actualUser, dispatch]);
+
 
     const calculateTotal = () => {
         let suma = 0;

@@ -24,7 +24,7 @@ import CreateProduct from "./components/views/Admin/CreateProduct/CreateProduct"
 
 import MPFeedback from "./components/MPFeedback/MPFeedback";
 import { useDispatch, useSelector} from "react-redux";
-import { setIsAuthenticated, setLastVisitedRoute } from "./redux/actions";
+import { setIsAuthenticated, setLastVisitedRoute, getShippingAddressByUserId } from "./redux/actions";
 import {persistor} from './redux/store';
 import Order from "./components/views/Admin/Order/Order";
 
@@ -36,22 +36,28 @@ function App() {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
   const lastVisitedRoute = useSelector((state) => state.setLastVisitedRoute);
 
-  const [isLoginFormSubmitted, setIsLoginFormSubmitted] = useState(false); // Estado para rastrear si el formulario de inicio de sesión se envió
+  const [isLoginFormSubmitted, setIsLoginFormSubmitted] = useState(false); 
+  
+  const login = useSelector(state => state.login)
 
+  console.log('APP,js id login antes del useEffect', login.id)
   useEffect(() => {
-    // Verificar si hay un token almacenado en el Local Storage
     const storedToken = window.localStorage.getItem("token");
     if (storedToken) {
       dispatch(setIsAuthenticated(true));
     }
-
-    // Configura Redux Persist para mantener el estado global después de un reinicio
     persistor.persist();
   }, [dispatch]);
 
   useEffect(() => {
+    if (isAuthenticated && login.id) {
+      dispatch(getShippingAddressByUserId(login.id));
+    }
+  }, [dispatch, isAuthenticated, login.id]);
+
+
+  useEffect(() => {
     if (!isAuthenticated) {
-      // Si no hay token, redirige al usuario a la última ruta visitada antes de iniciar sesión o a la página de inicio del perfil si se autenticó mediante el formulario
       const destination = isLoginFormSubmitted ? "/userprofile" : lastVisitedRoute;
       navigate(destination);
     }
