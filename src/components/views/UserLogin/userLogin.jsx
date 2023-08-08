@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, /*useEffect*/ } from "react";
 import { CSSTransition } from "react-transition-group";
 import styles from "./userLogin.module.css";
 import userIcon from "./userLogin.png";
@@ -30,11 +30,11 @@ export default function UserLogin() {
     dispatch(cerrarSesion());
   };
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [isAuthenticated, navigate]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     navigate("/login");
+  //   }
+  // }, [isAuthenticated, navigate]);
 
   console.log ('userLogin, se envio cierre de sesion, autenticacion es:',isAuthenticated)
 
