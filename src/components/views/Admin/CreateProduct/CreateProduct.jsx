@@ -97,14 +97,14 @@ const CreateProduct = () => {
   const categoryMap = product.category?.map((e) => buscaId(e)) || [];
   
   return (
-    <div className={styles.listContainer}>
+    <div className={styles.divColor}>
       <div>
-        <form onSubmit={handlerSubmit}>
+        <form onSubmit={handlerSubmit} className={styles.formContainer}>
           <hr />
           <h1>Agrega los Datos del Producto</h1>
           <div>
-            <label htmlFor="name">Nombre: </label>
-            <input
+            <label className={styles.formLabel} htmlFor="name">Nombre: </label>
+            <input className={styles.formInput}
               type="text"
               id="name"
               value={product.name}
@@ -116,7 +116,7 @@ const CreateProduct = () => {
           </div>
           <span>{error.name ? error.name : " "}</span>
           <div>
-            <label htmlFor="brand">Marca: </label>
+            <label className={styles.formLabel} htmlFor="brand">Marca: </label>
             <select
               name="brand"
               id="brand"
@@ -135,8 +135,8 @@ const CreateProduct = () => {
             <span>{error.brand}</span>
           </div>
           <div>
-            <label htmlFor="model">Modelo: </label>
-            <input
+            <label className={styles.formLabel} htmlFor="model">Modelo: </label>
+            <input className={styles.formInput}
               type="text"
               id="model"
               value={product.model}
@@ -148,8 +148,8 @@ const CreateProduct = () => {
           </div>
           <span>{error.model}</span>
           <div>
-            <label htmlFor="feature">Características: </label>
-            <textarea
+            <label className={styles.formLabel} htmlFor="feature">Características: </label>
+            <input className={styles.formInput}
               id="feature"
               value={product.feature}
               onChange={handlerProduct}
@@ -161,8 +161,8 @@ const CreateProduct = () => {
           </div>
           <span>{error.feature}</span>
           <div>
-            <label htmlFor="detail">Detalle: </label>
-            <input
+            <label className={styles.formLabel} htmlFor="detail">Detalle: </label>
+            <input className={styles.formInput}
               type="text"
               id="detail"
               value={product.detail}
@@ -173,9 +173,9 @@ const CreateProduct = () => {
           </div>
           <span>{error.detail}</span>
           <div>
-            <label htmlFor="price">Precio: </label>
-            <input
-              className={styles.simbolo}
+            <label className={styles.formLabel} htmlFor="price">Precio: </label>
+            <input className={styles.formInput}
+          
               type="number"
               id="price"
               value={product.price?.toLocaleString("en-US", {
@@ -189,18 +189,17 @@ const CreateProduct = () => {
           </div>
           <span>{error.price}</span>
           
-          <h2>Sube tu imagen desde donde quieras </h2>
           <div style={{ display: 'flex', flexDirection: 'column'}}>
-          <label htmlFor="image">Image:</label>
-          <input type="text" id="image" name="image" onChange={handlerProduct} value={product.image} hidden />
+          <label className={styles.formLabel} htmlFor="image">Sube tu imagen desde donde quieras</label>
+          <input className={styles.formInput} type="text" id="image" name="image" onChange={handlerProduct} value={product.image} hidden />
           
           <CloudinaryUploadWidget imageUrl={setProduct} inputs={product}/>
           <img id="uploadedimage" src="" ref={imageRef}></img>
         </div> 
           
           <div>
-            <label htmlFor="category">Categoría:</label>
-            <input
+            <label className={styles.formLabel} htmlFor="category">Categoría:</label>
+            <input className={styles.formInput}
               type="text"
               id="categoryInput"
               value={categoryMap.join(", ")}
@@ -221,9 +220,9 @@ const CreateProduct = () => {
             <span>{error.category}</span>
           </div>
           <div>
-            <label htmlFor="stock">Stock Inicial: </label>
-            <input
-              className={styles.simbolo}
+            <label className={styles.formLabel} htmlFor="stock">Stock Inicial: </label>
+            <input className={styles.formInput}
+          
               type="number"
               id="stock"
               value={product.stock}
@@ -233,7 +232,7 @@ const CreateProduct = () => {
             />
           </div>
           <span>{error.stock}</span>
-          <button type="submit">Crear Producto</button>
+          <button className={styles.formSubmit} type="submit">Crear Producto</button>
           <hr />
         </form>
       </div>
