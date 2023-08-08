@@ -29,7 +29,7 @@ import {
   SET_IS_AUTHENTICATED,
   GET_SHIPPING_ADDRESS_SUCCESS,
   SET_LAST_VISITED_ROUTE,
-  GET_USER_ID,  
+  GET_USER_ID,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
 } from "./type";
@@ -261,16 +261,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         isAuthenticated: true,
       };
-      case SET_IS_AUTHENTICATED:
-        return {
-          ...state,
-          isAuthenticated: payload,
-        };
-        case SET_LAST_VISITED_ROUTE:
-          return {
-            ...state,
-            lastVisitedRoute: payload,
-          };
+    case SET_IS_AUTHENTICATED:
+      return {
+        ...state,
+        isAuthenticated: payload,
+      };
+    case SET_LAST_VISITED_ROUTE:
+      return {
+        ...state,
+        lastVisitedRoute: payload,
+      };
     case ERROR_LOGIN:
       return {
         ...state,
@@ -306,7 +306,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         address: payload,
       };
-      case UPDATE_USER_SUCCESS:
+    case UPDATE_USER_SUCCESS:
       return {
         ...state,
         actualUser: payload, // ACA actualizamos los datos del usuario actualizado
