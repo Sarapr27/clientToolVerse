@@ -32,6 +32,9 @@ import {
   GET_USER_ID,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  CREATE_CART_BDD,
+  ADD_TO_CART_SUCCESS,
+  SELECT_ADDRESS
 } from "./type";
 
 const initialState = {
@@ -52,6 +55,7 @@ const initialState = {
   lastVisitedRoute: "/",
   user: {},
   updateUserError: null,
+  addressSelected: ''
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -152,6 +156,21 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         itemCart: [],
       };
+
+    case CREATE_CART_BDD:
+      let cartCreated = {
+        purchaseCartId: payload,
+      }
+      return {
+        ...state,
+        cartBDD: cartCreated
+      }
+
+    case ADD_TO_CART_SUCCESS:
+      return {
+        ...state,
+        cartBDD: { ...state.cartBDD, details: payload }
+      }
 
     case SET_CURRRENT_PAGE:
       return {
@@ -301,11 +320,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         reviews: state.reviews.filter((review) => review.id !== reviewId),
       };
     case GET_SHIPPING_ADDRESS_SUCCESS:
-     // console.log('Datos recibidos en GET_SHIPPING_ADDRESS_SUCCESS:', payload);
+      // console.log('Datos recibidos en GET_SHIPPING_ADDRESS_SUCCESS:', payload);
       return {
         ...state,
         address: payload,
       };
+
     case UPDATE_USER_SUCCESS:
       return {
         ...state,

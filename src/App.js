@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
 import About from "./components/views/Footer/About/About";
@@ -17,7 +17,8 @@ import Dashboard from "./components/views/Admin/Dashboard/Dashboard";
 import ProductsList from "./components/views/Admin/ProductsList/ProductsList";
 import UserProfile from "./components/views/UserProfile/UserProfile"
 import EditProducts from "./components/views/Admin/EditProducts/EditProducts";
-import PurchaseOrder from "./components/views/PurchaseOrder/purchaseOrder";
+import PurchaseCartDisplay from "./components/views/PurchaseCartDisplay/purchaseCartDisplay";
+// import PurchaseOrder from "./components/views/PurchaseOrder/purchaseOrder";
 import User from "./components/views/Admin/User/User"
 import CreateProduct from "./components/views/Admin/CreateProduct/CreateProduct";
 import { Navigate } from "react-router-dom";
@@ -36,7 +37,9 @@ function App() {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
+
   const login = useSelector(state => state.login);
+
 
   useEffect(() => {
     const storedToken = window.localStorage.getItem("token");
@@ -72,7 +75,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/contactus" element={<ContactUs/>}/>
+        <Route path="/contactus" element={<ContactUs />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/form" element={<Form />} />
         <Route path="/login" element={<Login />} />
@@ -80,8 +83,16 @@ function App() {
         <Route path="/tools" element={<ProductCards />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="*" element={<Error404 />} />
-        <Route path="/purchaseOrder" element={<PurchaseOrder />} />
-        <Route path="/feedback" element={isAuthenticated ? <MPFeedback/> : <Navigate to='/login'/>}/>
+
+        <Route path="/purchaseCartDisplay" element={<PurchaseCartDisplay />} />
+        <Route path="/feedback" element={<MPFeedback />} />
+        <Route path="/admin" element={<Dashboard />} />
+        <Route path="/admin/productsList" element={<ProductsList />} />
+        <Route path="/userprofile" element={<UserProfile />} />
+        <Route path="/createProduct" element={<CreateProduct />} />
+        <Route path="/admin/user" element={<User />} />
+        <Route path="/admin/order" element={<Order />} />
+
 
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/admin/productsList" element={<ProductsList />} />
@@ -89,6 +100,7 @@ function App() {
           <Route path="/createProduct" element={<CreateProduct />} />
           <Route path="/admin/user" element={<User />} />
           <Route path="/admin/order" element={<Order />} />
+
 
         <Route path="/admin/editproducts" element={<EditProducts />} />
 

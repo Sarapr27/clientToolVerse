@@ -38,7 +38,7 @@ export default function CartForm() {
         postalCode: '',
     });
 
-    console.log('user',user)
+    console.log('user', user)
 
     const [cartErrors, setCartErrors] = useState({
         firstName: '',
@@ -82,7 +82,7 @@ export default function CartForm() {
         )
     };    
 
-    
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const errors = validate(user);
