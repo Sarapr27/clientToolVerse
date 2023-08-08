@@ -326,11 +326,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         address: payload,
       };
 
-    case SELECT_ADDRESS:
-      return {
-        ...state,
-        addressSelected: payload
-      }
     case UPDATE_USER_SUCCESS:
       return {
         ...state,

@@ -54,14 +54,8 @@ export default function CartForm() {
     console.log('address antes de use', address)
 
     useEffect(() => {
-        if (login.id) {
-            dispatch(actions.getShippingAddressByUserId(login.id));
-        }
-    }, [login.id, dispatch]);
-
-    useEffect(() => {
-        if (address && address.length > 0) {
-            setUser((prevUser) => ({
+        if (login.id && address && address.length > 0) {
+            setUser(prevUser => ({
                 ...prevUser,
                 country: address[0].country || "",
                 state: address[0].state || "",
@@ -70,25 +64,23 @@ export default function CartForm() {
                 postalCode: address[0].postalCode || "",
             }));
         }
-        dispatch(actions.actualUser(user));
+    }, [login.id, address]);
 
-    }, [address]);
-
-    console.log('address despues de los useEffect', address);
-
+     
     const handleInputChange = (event) => {
         const { value, name } = event.target;
-        setUser({
-            ...user,
-            [name]: value
-        })
+        setUser(prevUser => ({
+            ...prevUser,
+            [name]: value,
+        }));
+
         setCartErrors(
             validate({
                 ...user,
                 [name]: value
             })
         )
-    };
+    };    
 
 
     const handleSubmit = (event) => {

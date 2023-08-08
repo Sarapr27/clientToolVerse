@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import styles from "./CloudinaryUploadWidget.module.css";
-//!aqui se toco para cloudinary para subir cambios(eliminar comentario antes de subir)
 
 class CloudinaryUploadWidget extends Component {
   componentDidMount() {
-    const cloudName = "dddjx7x45"; 
-    const uploadPreset = "upload_toolverse";
+    const cloudName = "du5ppvnxp"; 
+    const uploadPreset = "my_upload";
 
     var myWidget = window.cloudinary.createUploadWidget(
       {
