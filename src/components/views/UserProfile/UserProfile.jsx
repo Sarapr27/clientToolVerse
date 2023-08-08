@@ -15,9 +15,13 @@ const UserProfile = () => {
   const [active, setActive] = useState("MiPerfil");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+
     const fetchUserData = async () => {
       try {
         await dispatch(getUserById(id));
@@ -25,8 +29,9 @@ const UserProfile = () => {
         console.log("No se puede obtener el usuario", error);
       }
     };
+
     fetchUserData();
-  }, [dispatch, id]);
+  }, [dispatch, id, isAuthenticated, navigate]);
 
   if (!user) {
     return <div>Cargando...</div>;
@@ -35,12 +40,6 @@ const UserProfile = () => {
   const handleButtonClick = (activeValue) => {
     setActive(activeValue);
   };
-
-  if (!isAuthenticated) {
-    // Si no está autenticado, redirige a la página de inicio de sesión
-    navigate("/login");
-    return null;
-  }
 
   return (
     <div className={style.userProfileContainer}>
@@ -84,11 +83,10 @@ const UserProfile = () => {
         {active === "MiPerfil" && <MyProfile user={user} />}
         {active === "MisDatos" && <MyAddress user={user} />}
         {active === "MisCompras" && <MyShopping />}
-        {active === "MisReviews" && <MyReviews />}
+        {active === "MisReviews" && <MyReviews user={user} />}
       </div>
     </div>
   );
 };
-
 
 export default UserProfile;

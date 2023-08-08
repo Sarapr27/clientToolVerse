@@ -13,16 +13,16 @@ const About = () => {
       linkedin: 'https://www.linkedin.com/in/antonio-flores-developer/'
     },
     {
-        name: "Alejandro Camacho",
-        position: "ejemplo 2",
-        education: "",
-        previousEmployment: "",
-        image: "https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2022/03/avatar-facebook-2632445.jpg?tf=3840x",
-        linkedinUrl:"",
+        name: "Nicolás Gerardo Palma",
+        position: "Full Stack Developer",
+        education: "Colegio San Ramón Nonato; Academia Henry",
+        previousEmployment: "Soporte técnico y vendedor autónomo",
+        image: "https://ca.slack-edge.com/TPRS7H4PN-U03UA0HP41Z-5ef929594b0f-512",
+        linkedin:"https://www.linkedin.com/in/nicolas-gerardo-palma/",
     },
     {
         name: "",
-        position: "ejemplo 3",
+        position: "",
         education: "",
         previousEmployment: "",
         image: "",
