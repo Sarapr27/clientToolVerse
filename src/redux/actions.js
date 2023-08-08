@@ -48,8 +48,7 @@ import {
   SET_LAST_VISITED_ROUTE,
   GET_USER_ID,
   GET_USER_ID_ERROR,
-  CREATE_CART_BDD,
-  SELECT_ADDRESS
+  CREATE_CART_BDD
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -504,17 +503,6 @@ export const getShippingAddressByUserId = (userId) => async (dispatch) => {
     });
   }
 };
-
-export const selectAddress = (address) => {
-  try {
-    return {
-      type: SELECT_ADDRESS,
-      payload: address
-    }
-  } catch (error) {
-    console.log('Error al elegir la shipping address', error)
-  }
-}
 
 //Actions Reviews
 export const addReview = (review) => ({
