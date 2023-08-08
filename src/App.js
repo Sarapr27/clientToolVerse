@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import About from "./components/views/Footer/About/About";
@@ -18,14 +18,14 @@ import ProductsList from "./components/views/Admin/ProductsList/ProductsList";
 //import Protected from "./Protection";
 import UserProfile from "./components/views/UserProfile/UserProfile"
 import EditProducts from "./components/views/Admin/EditProducts/EditProducts";
-import PurchaseOrder from "./components/views/PurchaseOrder/purchaseOrder";
+import PurchaseCartDisplay from "./components/views/PurchaseCartDisplay/purchaseCartDisplay";
+// import PurchaseOrder from "./components/views/PurchaseOrder/purchaseOrder";
 import User from "./components/views/Admin/User/User"
 import CreateProduct from "./components/views/Admin/CreateProduct/CreateProduct";
-
 import MPFeedback from "./components/MPFeedback/MPFeedback";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setIsAuthenticated, setLastVisitedRoute, getShippingAddressByUserId } from "./redux/actions";
-import {persistor} from './redux/store';
+import { persistor } from './redux/store';
 import Order from "./components/views/Admin/Order/Order";
 
 
@@ -36,8 +36,8 @@ function App() {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
   const lastVisitedRoute = useSelector((state) => state.setLastVisitedRoute);
 
-  const [isLoginFormSubmitted, setIsLoginFormSubmitted] = useState(false); 
-  
+  const [isLoginFormSubmitted, setIsLoginFormSubmitted] = useState(false);
+
   const login = useSelector(state => state.login)
 
   console.log('APP,js id login antes del useEffect', login.id)
@@ -71,7 +71,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/contactus" element={<ContactUs/>}/>
+        <Route path="/contactus" element={<ContactUs />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/form" element={<Form />} />
         <Route path="/login" element={<Login />} />
@@ -79,17 +79,18 @@ function App() {
         <Route path="/tools" element={<ProductCards />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="*" element={<Error404 />} />
-        <Route path="/purchaseOrder" element={<PurchaseOrder />} />
+        <Route path="/purchaseCartDisplay" element={<PurchaseCartDisplay />} />
         <Route path="/feedback" element={<MPFeedback />} />
+        {/* <Route path="/purchaseOrder" element={<PurchaseOrder />} /> */}
 
         {/* Rutas para Admin */}
         {/* <Route element={<Protected />}> */}
-          <Route path="/admin" element={<Dashboard />} />
-          <Route path="/admin/productsList" element={<ProductsList />} />
-          <Route path="/userprofile" element={<UserProfile />} />
-          <Route path="/createProduct" element={<CreateProduct />} />
-          <Route path="/admin/user" element={<User />} />
-          <Route path="/admin/order" element={<Order />} />
+        <Route path="/admin" element={<Dashboard />} />
+        <Route path="/admin/productsList" element={<ProductsList />} />
+        <Route path="/userprofile" element={<UserProfile />} />
+        <Route path="/createProduct" element={<CreateProduct />} />
+        <Route path="/admin/user" element={<User />} />
+        <Route path="/admin/order" element={<Order />} />
         {/* </Route> */}
 
 

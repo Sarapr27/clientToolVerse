@@ -38,7 +38,7 @@ export default function CartForm() {
         postalCode: '',
     });
 
-    console.log('user',user)
+    console.log('user', user)
 
     const [cartErrors, setCartErrors] = useState({
         firstName: '',
@@ -54,28 +54,29 @@ export default function CartForm() {
     console.log('address antes de use', address)
 
     useEffect(() => {
-         if (login.id) {
-          dispatch(actions.getShippingAddressByUserId(login.id));
+        if (login.id) {
+            dispatch(actions.getShippingAddressByUserId(login.id));
         }
-      }, [login.id, dispatch]);
-    
-      useEffect(() => {
+    }, [login.id, dispatch]);
+
+    useEffect(() => {
         if (address && address.length > 0) {
-          setUser((prevUser) => ({
-            ...prevUser,
-            country: address[0].country || "",
-            state: address[0].state || "",
-            city: address[0].city || "",
-            address: address[0].address || "",
-            postalCode: address[0].postalCode || "",
-          }));
+            setUser((prevUser) => ({
+                ...prevUser,
+                country: address[0].country || "",
+                state: address[0].state || "",
+                city: address[0].city || "",
+                address: address[0].address || "",
+                postalCode: address[0].postalCode || "",
+            }));
         }
         dispatch(actions.actualUser(user));
-      }, [address]);
 
-      console.log('address despues de los useEffect', address);
+    }, [address]);
 
-      const handleInputChange = (event) => {
+    console.log('address despues de los useEffect', address);
+
+    const handleInputChange = (event) => {
         const { value, name } = event.target;
         setUser({
             ...user,
@@ -89,7 +90,7 @@ export default function CartForm() {
         )
     };
 
-    
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const errors = validate(user);
