@@ -13,12 +13,10 @@ import swal from "sweetalert2";
 const EditProducts = () => {
   const allProducts = useSelector((state) => state.toolsShown);
   const currentPage = useSelector((state) => state.currentPage)
-  //console.log(allProducts);
   const dispatch = useDispatch();
   const itemsPerPage = 12;
 
   const [editData, setEditData] = useState({});
-  // const mySwal = withReactContent(swal)
 
   useEffect(() => {
     try {
