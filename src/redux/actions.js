@@ -48,7 +48,9 @@ import {
   SET_LAST_VISITED_ROUTE,
   GET_USER_ID,
   GET_USER_ID_ERROR,
-  CREATE_CART_BDD
+  CREATE_CART_BDD,
+  ORDERS,
+  DELETE_ORDER
 } from "./type";
 
 export const getToolsByName = (tool) => {
@@ -415,6 +417,7 @@ export const getLastPuchasteCart = (userId) => {
   return async function () {
     try {
       const user = await axios.get(`/user/${userId}`)
+      console.log(user);
       const carts = user.data.purchaseCarts
 
       // Encontrar el objeto cart con el id más grande
@@ -592,3 +595,33 @@ export const getAllUsers = () => {
     }
   };
 };
+export const getOrders = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`/purchaseOrder`);
+      if (response.data) {
+        const orders = response.data; // Actualiza esto según la estructura de tu respuesta
+        dispatch({
+          type: ORDERS,
+          payload: orders,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export const deleteOrder = (orderId) => {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/purchaseOrder/${orderId}`);
+      dispatch({
+        type: DELETE_ORDER,
+        payload: orderId,
+      });
+      dispatch(getOrders()); // Actualiza la lista después de eliminar
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
