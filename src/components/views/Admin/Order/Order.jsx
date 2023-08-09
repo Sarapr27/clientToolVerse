@@ -13,7 +13,7 @@ const Order = () => {
   }, [dispatch]);
 
   const handleDeleteOrder = (orderId) => {
-    dispatch(deleteOrder(orderId)); // Llama a la acción para eliminar
+    dispatch(deleteOrder(orderId)); 
   };
 
   return (
