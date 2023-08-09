@@ -8,26 +8,23 @@ import axios from "axios";
 const User = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.usersCreated);
-  const [editMode, setEditMode] = useState({}); // Estado local para controlar el modo de edición de cada usuario
-  const [editedUsers, setEditedUsers] = useState({}); // Estado local para almacenar los usuarios editados
+  
+  const [editMode, setEditMode] = useState({});
+  const [editedUsers, setEditedUsers] = useState({});
 
   useEffect(() => {
-    dispatch(getAllUsers());
+    try {
+      dispatch(getAllUsers());
+    } catch (error) {
+      console.log("Error al obtener los usuarios:", error);
+    }
   }, [dispatch]);
 
-  const handleEditUser = (id, lastName, firstName, email, phone, role) => {
-    // Cambiar el estado para activar el modo de edición del usuario con el id dado
-    setEditMode((prev) => ({ ...prev, [id]: {
-      id, 
-      lastName,
-      firstName,
-      email,
-      phone,
-      role
-    } }));
+  const handleEditUser = (id, firstName, active) => {
+    setEditMode((prev) => ({ ...prev, [id]: { firstName, active } }));
   };
+
   const handleInputChange = (id, field, value) => {
-    // Almacena los cambios realizados en los usuarios editados
     setEditedUsers((prev) => ({
       ...prev,
       [id]: {
@@ -42,23 +39,18 @@ const User = () => {
       const editedUser = editMode[id];
       console.log("Editing User ID:", id, editedUser);
       if (editedUser) {
-        const { lastName, firstName, email, phone, role } = editedUser;
+        const { firstName, active } = editedUser;
         console.log("Sending PUT request to update user:", id);
         await axios.put(`/user/${id}`, {
-          lastName,
           firstName,
-          email,
-          phone,
-          role,
+          active,
         });
         setEditedUsers((prev) => ({
           ...prev,
-          [id]: false, // Limpia el estado local para este usuario editado
+          [id]: false,
         }));
-        //La unica linea que puse para que los inputs se actualizen simultaneamente :)
         await dispatch(getAllUsers());
         console.log("User data after dispatch:", users);
-
 
         setEditMode((prevEditData) => {
           const updatedEditData = { ...prevEditData };
@@ -78,6 +70,7 @@ const User = () => {
       console.log("Error updating", error);
     }
   };
+
   const handleCancel = (id) => {
     setEditMode((prevEditData) => {
       const updatedEditData = { ...prevEditData };
@@ -85,6 +78,7 @@ const User = () => {
       return updatedEditData;
     });
   };
+
   return (
     <div>
       <h2>Usuarios</h2>
@@ -99,6 +93,7 @@ const User = () => {
               <th>Email</th>
               <th>Teléfono</th>
               <th>Rol</th>
+              <th>Activo</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -118,60 +113,21 @@ const User = () => {
                     user.firstName
                   )}
                 </td>
-                {/* Resto de las celdas */}
+                <td>{user.lastName}</td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
+                <td>{user.role}</td>
                 <td>
                   {editMode[user.id] ? (
                     <input
-                      type="text"
-                      value={editedUsers[user.id]?.lastName || user.lastName}
-                      onChange={(e) => {
-                        handleInputChange(user.id, "lastName", e.target.value);
-                      }}
+                      type="checkbox"
+                      checked={editedUsers[user.id]?.active || user.active}
+                      onChange={(e) =>
+                        handleInputChange(user.id, "active", e.target.checked)
+                      }
                     />
                   ) : (
-                    user.lastName
-                  )}
-                </td>
-                {/* Resto de las celdas */}
-                <td>
-                  {editMode[user.id] ? (
-                    <input
-                      type="text"
-                      value={editedUsers[user.id]?.email || user.email}
-                      onChange={(e) => {
-                        handleInputChange(user.id, "email", e.target.value);
-                      }}
-                    />
-                  ) : (
-                    user.email
-                  )}
-                </td>
-                {/* Resto de las celdas */}
-                <td>
-                  {editMode[user.id] ? (
-                    <input
-                      type="text"
-                      value={editedUsers[user.id]?.phone || user.phone}
-                      onChange={(e) => {
-                        handleInputChange(user.id, "phone", e.target.value);
-                      }}
-                    />
-                  ) : (
-                    user.phone
-                  )}
-                </td>
-                {/* Resto de las celdas */}
-                <td>
-                  {editMode[user.id] ? (
-                    <input
-                      type="text"
-                      value={editedUsers[user.id]?.role || user.role}
-                      onChange={(e) => {
-                        handleInputChange(user.id, "role", e.target.value);
-                      }}
-                    />
-                  ) : (
-                    user.role
+                    user.active ? "Si" : "No"
                   )}
                 </td>
                 <td>
@@ -185,7 +141,7 @@ const User = () => {
                       </button>
                     </>
                   ) : (
-                    <button onClick={() => handleEditUser(user.id)}>
+                    <button onClick={() => handleEditUser(user.id, user.firstName, user.active)}>
                       Editar
                     </button>
                   )}
@@ -200,3 +156,8 @@ const User = () => {
 };
 
 export default User;
+
+
+
+
+
