@@ -28,7 +28,6 @@ const itemsPerPage = 12;
 
     return (
         <div>
-            <h1 className={styles.title}>LISTADO DE PRODUCTOS</h1>
             <SearchBar/>
             <Filters/>
             <div className={styles.button}>

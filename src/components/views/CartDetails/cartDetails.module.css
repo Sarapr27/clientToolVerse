@@ -9,17 +9,17 @@
 }
 
 .goShopping {
+    padding: 1rem;
     background-color: var(--primary);
     cursor: pointer;
     text-transform: uppercase;
     border-radius: 1rem;
-    height: 4rem;
     width: 15rem;
     border: 0.1rem solid var(--secondary);
 }
 
 .goShopping:hover {
-    border: 0.2rem solid var(--buttons);
+    border: 0.2rem solid var(--onhover);
 }
 
 .calculate {
@@ -85,6 +85,18 @@
 .summingTotal {
     display: flex;
     flex-direction: column;
+}
+
+.cartError {
+    margin-top: 2rem;
+    font-weight: bold;
+    font-size: small;
+}
+
+.errorAddress {
+    margin-top: 2rem;
+    font-weight: bold;
+    font-size: small;
 }
 
 @media (max-width: 770px) {

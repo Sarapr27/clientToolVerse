@@ -1,11 +1,10 @@
-//!Casi perfecto, solo falta hacer post de la imagen
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./CreateProduct.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory, getTools } from "../../../../redux/actions";
 import axios from "axios";
 import CloudinaryUploadWidget from "../../CloudinaryUploadWidget/CloudinaryUploadWidget";
-//!aqui se toco para cloudinary para subir cambios(eliminar comentario antes de subir)
+
 const CreateProduct = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -39,7 +38,6 @@ const CreateProduct = () => {
     stock: "",
   });
 
-  //!punto de arranque para la sengunda modificacion, si no funciona deshacer hasta aca
   const handlerProduct = (e) => {
 
     if(e.target.name !== "image"){
@@ -51,10 +49,8 @@ const CreateProduct = () => {
   const handlerSubmit = (e) => {
     e.preventDefault();
     alert("Enviando. . . . .");
-    // Si product.image es un objeto, utiliza product.image.url, que es la URL de la imagen desde Cloudinary.
     const imageUrl = typeof product.image === 'object' ? product.image.url : product.image;
     console.log("URL generada por Cloudinary:", imageUrl);
-    // Crea una copia del producto con el campo 'image' reemplazado por la URL de la imagen.
     const productDataToSend = { ...product, image: imageUrl };
   
     axios
@@ -62,7 +58,6 @@ const CreateProduct = () => {
       .then((res) => {
         console.log(res)
         alert("Producto Creado Correctamente");
-        // Limpia los campos del formulario después de enviar.
         setProduct({
           ...product,
           brand: "",
@@ -71,7 +66,7 @@ const CreateProduct = () => {
           feature: "",
           detail: "",
           price: "",
-          image: "", // Cambiar a null para que no haya datos residuales en el campo de la imagen.
+          image: "",
           category: [],
           stock: "",
         });
@@ -100,21 +95,15 @@ const CreateProduct = () => {
     return buscaCategory ? buscaCategory.name : ""
   };
   const categoryMap = product.category?.map((e) => buscaId(e)) || [];
-
-  //ya no creo que me sirva
-  /* const handleImageUrl = (imageUrl) => {
-    setProduct({...product, image: imageUrl})
-  } */
   
   return (
-    <div className={styles.listContainer}>
+    <div className={styles.divColor}>
       <div>
-        <form onSubmit={handlerSubmit}>
+        <form onSubmit={handlerSubmit} className={styles.formContainer}>
           <hr />
-          <h1>Agrega los Datos del Producto</h1>
           <div>
-            <label htmlFor="name">Nombre: </label>
-            <input
+            <label className={styles.formLabel} htmlFor="name">Nombre: </label>
+            <input className={styles.formInput}
               type="text"
               id="name"
               value={product.name}
@@ -126,7 +115,7 @@ const CreateProduct = () => {
           </div>
           <span>{error.name ? error.name : " "}</span>
           <div>
-            <label htmlFor="brand">Marca: </label>
+            <label className={styles.formLabel} htmlFor="brand">Marca: </label>
             <select
               name="brand"
               id="brand"
@@ -145,8 +134,8 @@ const CreateProduct = () => {
             <span>{error.brand}</span>
           </div>
           <div>
-            <label htmlFor="model">Modelo: </label>
-            <input
+            <label className={styles.formLabel} htmlFor="model">Modelo: </label>
+            <input className={styles.formInput}
               type="text"
               id="model"
               value={product.model}
@@ -158,8 +147,8 @@ const CreateProduct = () => {
           </div>
           <span>{error.model}</span>
           <div>
-            <label htmlFor="feature">Características: </label>
-            <textarea
+            <label className={styles.formLabel} htmlFor="feature">Características: </label>
+            <input className={styles.formInput}
               id="feature"
               value={product.feature}
               onChange={handlerProduct}
@@ -171,8 +160,8 @@ const CreateProduct = () => {
           </div>
           <span>{error.feature}</span>
           <div>
-            <label htmlFor="detail">Detalle: </label>
-            <input
+            <label className={styles.formLabel} htmlFor="detail">Detalle: </label>
+            <input className={styles.formInput}
               type="text"
               id="detail"
               value={product.detail}
@@ -183,9 +172,9 @@ const CreateProduct = () => {
           </div>
           <span>{error.detail}</span>
           <div>
-            <label htmlFor="price">Precio: </label>
-            <input
-              className={styles.simbolo}
+            <label className={styles.formLabel} htmlFor="price">Precio: </label>
+            <input className={styles.formInput}
+          
               type="number"
               id="price"
               value={product.price?.toLocaleString("en-US", {
@@ -198,24 +187,18 @@ const CreateProduct = () => {
             <span>$</span>
           </div>
           <span>{error.price}</span>
-          <img
-            src="https://www.bosch-professional.com/ar/es/ocsmedia/60785-54/product-image/265x265/taladro-gbm-10-re-060113e5h0.png"
-            alt="Taladro GBM 10 RE"
-          />
-           
-
-          //!lo unico que he movido para implementar cloudinary(junto con la carpeta de CloudinaryUploadWidget)(eliminar comentario antes de subir)
+          
           <div style={{ display: 'flex', flexDirection: 'column'}}>
-          <label htmlFor="image">Image:</label>
-          <input type="text" id="image" name="image" onChange={handlerProduct} value={product.image} hidden />
+          <label className={styles.formLabel} htmlFor="image">Sube tu imagen desde donde quieras</label>
+          <input className={styles.formInput} type="text" id="image" name="image" onChange={handlerProduct} value={product.image} hidden />
           
           <CloudinaryUploadWidget imageUrl={setProduct} inputs={product}/>
           <img id="uploadedimage" src="" ref={imageRef}></img>
         </div> 
           
           <div>
-            <label htmlFor="category">Categoría:</label>
-            <input
+            <label className={styles.formLabel} htmlFor="category">Categoría:</label>
+            <input className={styles.formInput}
               type="text"
               id="categoryInput"
               value={categoryMap.join(", ")}
@@ -236,9 +219,9 @@ const CreateProduct = () => {
             <span>{error.category}</span>
           </div>
           <div>
-            <label htmlFor="stock">Stock Inicial: </label>
-            <input
-              className={styles.simbolo}
+            <label className={styles.formLabel} htmlFor="stock">Stock Inicial: </label>
+            <input className={styles.formInput}
+          
               type="number"
               id="stock"
               value={product.stock}
@@ -248,7 +231,7 @@ const CreateProduct = () => {
             />
           </div>
           <span>{error.stock}</span>
-          <button type="submit">Crear Producto</button>
+          <button className={styles.formSubmit} type="submit">Crear Producto</button>
           <hr />
         </form>
       </div>

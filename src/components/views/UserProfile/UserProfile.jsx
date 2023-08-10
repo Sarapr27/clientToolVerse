@@ -9,15 +9,19 @@ import { useNavigate } from "react-router-dom";
 import { getUserById } from "../../../redux/actions";
 
 const UserProfile = () => {
-  const { id, firstName, lastName } = useSelector((state) => state.login);
+  const { id } = useSelector((state) => state.login);
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
   const user = useSelector((state) => state.user);
   const [active, setActive] = useState("MiPerfil");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+
     const fetchUserData = async () => {
       try {
         await dispatch(getUserById(id));
@@ -25,8 +29,9 @@ const UserProfile = () => {
         console.log("No se puede obtener el usuario", error);
       }
     };
+
     fetchUserData();
-  }, [dispatch, id]);
+  }, [dispatch, id, isAuthenticated, navigate]);
 
   if (!user) {
     return <div>Cargando...</div>;
@@ -36,18 +41,12 @@ const UserProfile = () => {
     setActive(activeValue);
   };
 
-  if (!isAuthenticated) {
-    // Si no está autenticado, redirige a la página de inicio de sesión
-    navigate("/login");
-    return null;
-  }
-
   return (
     <div className={style.userProfileContainer}>
       <div className={style.secondaryContainer}>
         <div className={style.nameContainer}> 
           <h1>
-            Hola {firstName} {lastName}
+            Hola {user.firstName} {user.lastName}
           </h1>
           <br></br>
         </div>
@@ -86,7 +85,7 @@ const UserProfile = () => {
         {active === "MiPerfil" && <MyProfile user={user} />}
         {active === "MisDatos" && <MyAddress user={user} />}
         {active === "MisCompras" && <MyShopping />}
-        {active === "MisReviews" && <MyReviews />}
+        {active === "MisReviews" && <MyReviews user={user} />}
       </div>
     </div>
   );

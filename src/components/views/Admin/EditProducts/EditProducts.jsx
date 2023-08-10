@@ -7,18 +7,15 @@ import Pagination from "../../../Pagination/Pagination";
 import SearchBar from "../SearchBarAdmin/searchBar";
 import Filters from '../../../Filters/Filters';
 import swal from "sweetalert2";
-// import withReactContent from "sweetalert2-react-content"
 
 
 const EditProducts = () => {
   const allProducts = useSelector((state) => state.toolsShown);
   const currentPage = useSelector((state) => state.currentPage)
-  //console.log(allProducts);
   const dispatch = useDispatch();
   const itemsPerPage = 12;
 
   const [editData, setEditData] = useState({});
-  // const mySwal = withReactContent(swal)
 
   useEffect(() => {
     try {
@@ -90,10 +87,9 @@ const EditProducts = () => {
   const toolsShown = allProducts.slice(startIndex, endIndex);
 
   return (
-    <div>
-      <h1 className={styles.title}>EDITAR PRODUCTOS</h1>
-      <SearchBar/>
-      <Filters/>
+    <div >
+      <SearchBar />
+      <Filters />
       <div className={styles.button}>
                     <input type="submit" value="Restablecer filtros" onClick={() => {
                         dispatch(getTools());
