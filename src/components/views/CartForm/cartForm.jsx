@@ -174,10 +174,10 @@ export default function CartForm({ cartError, setCartError }) {
                     ) : (
                         <div>
                             <select
-                                name="address"
+                                name="address" className={style.inputGral}
                                 onChange={(e) => handleSelect(e.target.value)}
                             >
-                                <option value="" key="first" hidden>
+                                <option value="" key="first" hidden >
                                     Seleccione una dirección
                                 </option>
                                 {address.map((a, i) => (
