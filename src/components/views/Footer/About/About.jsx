@@ -27,29 +27,21 @@ const About = () => {
       flag: arFlag
     },
     {
-      name: "Cecilia Moroni",
+        name: "Sara Maria Pinzón",
+        position: "Full Stack Developer",
+        education: "EAN - Profesional en Lenguas Modernas; Academia Henry",
+        previousEmployment: "Tutor de Abeka Academy",
+        image: "https://ca.slack-edge.com/TPRS7H4PN-U04J87CDNUE-3600b0f3484a-192",
+        linkedinUrl:"https://www.linkedin.com/in/sara-pinzon-01548192/",
+    },
+    {
+name: "Cecilia Moroni",
       position: "Full Stack Developer",
       education: "Facultad de Ciencias Químicas, UCC; Academia Henry",
       previousEmployment: "Bioquímicaw",
       image: "https://ca.slack-edge.com/TPRS7H4PN-U04AVPPM86L-a19469d765bd-512",
       linkedinUrl: "https://www.linkedin.com/in/cecilia-moroni/",
       flag: auFlag
-    },
-    {
-      name: "",
-      position: "",
-      education: "",
-      previousEmployment: "",
-      image: "",
-      linkedinUrl: "",
-    },
-    {
-      name: "",
-      position: "",
-      education: "",
-      previousEmployment: "",
-      image: "",
-      linkedinUrl: "",
     },
     {
       name: "",
