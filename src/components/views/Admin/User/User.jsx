@@ -81,7 +81,6 @@ const User = () => {
 
   return (
     <div>
-      <h2>Usuarios</h2>
       {users.length === 0 ? (
         <p>No se tienen usuarios registrados.</p>
       ) : (
