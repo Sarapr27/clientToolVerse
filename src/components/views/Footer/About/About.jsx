@@ -5,6 +5,7 @@ import arFlag from "./banderasTeam/ar.png";
 import auFlag from "./banderasTeam/au.png";
 import mxFlag from "./banderasTeam/mx.png";
 import peFlag from "./banderasTeam/pe.png";
+import colFlag from "./banderasTeam/col.png"
 
 const About = () => {
   const teamMembers = [
@@ -33,6 +34,7 @@ const About = () => {
         previousEmployment: "Tutor de Abeka Academy",
         image: "https://ca.slack-edge.com/TPRS7H4PN-U04J87CDNUE-3600b0f3484a-192",
         linkedinUrl:"https://www.linkedin.com/in/sara-pinzon-01548192/",
+        flag: colFlag
     },
     {
         name: "",
