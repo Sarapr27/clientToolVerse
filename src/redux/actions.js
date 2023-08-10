@@ -151,6 +151,29 @@ export const login = (character) => {
   };
 };
 
+export const resGoogle =  (response) => {
+  return async function (dispatch) {
+  try {
+    const googleToken = response.tokenId; // Obtener el token de Google
+    console.log (`google token action`, googleToken)
+    const { data } = await axios.post('/login/google', { googleToken }, {
+      withCredentials: true,
+    });
+
+    console.log('google Token', googleToken)
+
+    if (data) {
+      
+      dispatch({ type: LOGIN, payload: data });
+      dispatch(isAuthenticated());
+    }
+  } catch (error) {
+    console.log("Error al autenticar con Google:", error);
+  }
+ }
+};
+
+
 export const errorLogin = (error) => {
   return {
     type: ERROR_LOGIN,
