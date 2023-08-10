@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import MyProfileForm from "./MyProfileForm";
 import { validateForm } from "./Validation";
 import { updateUser } from "../../../../redux/actions";
+import styles from "./MyProfile.module.css"
 
 const MyProfile = ({ user }) => {
   const dispatch = useDispatch();
@@ -61,11 +62,16 @@ const MyProfile = ({ user }) => {
     <div>
       {!active ? (
         <div>
+        <div className={styles.title}>
+          <h1>Mis Datos</h1>
+          </div>
+          <div className={styles.profilecontainer}>
           <h2>Nombre: {user.firstName}</h2>
           <h2>Apellido: {user.lastName}</h2>
           <h2>Teléfono: {user.phone}</h2>
           <h2>Correo: {user.email}</h2>
-          <button onClick={handleModify}>Modificar</button>
+          </div>
+          <button className={styles.boton} onClick={handleModify}>Modificar</button>
         </div>
       ) : (
         <MyProfileForm
