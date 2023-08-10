@@ -52,6 +52,7 @@ import {
   ORDERS,
   DELETE_ORDER,
   SELECT_ADDRESS,
+  INTERSECT,
   // YES_CART_ERROR,
   // NO_CART_ERROR
 } from "./type";
@@ -313,6 +314,20 @@ export const changeFilterBrand = (brand) => {
     payload: brand,
   };
 };
+
+export const intersect = () => async dispatch => {
+  try {
+      return dispatch(
+          {
+              type: INTERSECT,
+          }
+      )
+  }
+  catch (error) {
+      return error
+  }
+}
+
 //Accion que me actualiza el Stock global
 export const updateProductStock = (productId, newStock) => {
   return {
