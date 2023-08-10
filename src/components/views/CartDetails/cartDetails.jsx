@@ -7,7 +7,8 @@ import MiniProduct from "../MiniProduct/miniProduct";
 import { useDispatch } from "react-redux";
 import * as actions from "../../../redux/actions";
 import React, { useEffect, useState } from "react";
-import loadingGear from "../img/Spin-1s-200px.gif"
+import loadingGear from "../img/Spin-1s-200px.gif";
+import Swal from "sweetalert2";
 
 export default function CartDetails({ cartError, setCartError }) {
   const trolley = useSelector((state) => state.itemCart);
@@ -86,12 +87,22 @@ export default function CartDetails({ cartError, setCartError }) {
   };
 
   const deleteTrolley = () => {
-    let answer = window.confirm("Esto eliminará TODOS los productos en el carrito. Deseas continuar?")
-    if (answer) {
-      dispatch(actions.deleteTrolley());
-    }
-    else return
-  }
+    Swal.fire({
+      title: "Eliminar productos",
+      text: "Esto eliminará TODOS los productos en el carrito. ¿Deseas continuar?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(actions.deleteTrolley());
+        Swal.fire("Eliminado", "Los productos han sido eliminados del carrito.", "success");
+      }
+    });
+  };
 
   return (
     <div className={style.overallDetail}>
