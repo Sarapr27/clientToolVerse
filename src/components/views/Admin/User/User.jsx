@@ -8,9 +8,8 @@ import axios from "axios";
 const User = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.usersCreated);
-  
-  const [editMode, setEditMode] = useState({});
-  const [editedUsers, setEditedUsers] = useState({});
+
+  const [editData, setEditData] = useState({});
 
   useEffect(() => {
     try {
@@ -20,59 +19,53 @@ const User = () => {
     }
   }, [dispatch]);
 
+//!Quedan rastros para editar a firstName pero no afecta en nada para activar o desactivar al usuario
   const handleEditUser = (id, firstName, active) => {
-    setEditMode((prev) => ({ ...prev, [id]: { firstName, active } }));
-  };
-
-  const handleInputChange = (id, field, value) => {
-    setEditedUsers((prev) => ({
+    setEditData((prev) => ({
       ...prev,
-      [id]: {
-        ...prev[id],
-        [field]: value,
-      },
+      [id]: { firstName, active },
     }));
   };
 
   const handleSaveUser = async (id) => {
     try {
-      const editedUser = editMode[id];
-      console.log("Editing User ID:", id, editedUser);
+      const editedUser = editData[id];
+
       if (editedUser) {
         const { firstName, active } = editedUser;
-        console.log("Sending PUT request to update user:", id);
-        await axios.put(`/user/${id}`, {
+        await axios.put(`http://localhost:3001/user/${id}`, {
           firstName,
           active,
         });
-        setEditedUsers((prev) => ({
-          ...prev,
-          [id]: false,
-        }));
         await dispatch(getAllUsers());
-        console.log("User data after dispatch:", users);
 
-        setEditMode((prevEditData) => {
+        setEditData((prevEditData) => {
           const updatedEditData = { ...prevEditData };
           delete updatedEditData[id];
           return updatedEditData;
         });
+
+        new Swal({
+          title: "Success",
+          text: "Acción exitosa",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 2000,
+        });
       }
-      console.log(`PUT request http://localhost:3001/user/${id}`);
-      return new Swal({
-        title: "Success",
-        text: "Edicion exitosa",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 2000,
-      });
     } catch (error) {
       console.log("Error updating", error);
+      new Swal({
+        title: "Error",
+        text: "Hubo un error al actualizar el usuario",
+        icon: "error",
+        showConfirmButton: true,
+      });
     }
   };
 
   const handleCancel = (id) => {
-    setEditMode((prevEditData) => {
+    setEditData((prevEditData) => {
       const updatedEditData = { ...prevEditData };
       delete updatedEditData[id];
       return updatedEditData;
@@ -81,75 +74,73 @@ const User = () => {
 
   return (
     <div>
-      {users.length === 0 ? (
-        <p>No se tienen usuarios registrados.</p>
-      ) : (
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Email</th>
-              <th>Teléfono</th>
-              <th>Rol</th>
-              <th>Activo</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>
-                  {editMode[user.id] ? (
-                    <input
-                      type="text"
-                      value={editedUsers[user.id]?.firstName || user.firstName}
-                      onChange={(e) =>
-                        handleInputChange(user.id, "firstName", e.target.value)
-                      }
-                    />
-                  ) : (
-                    user.firstName
-                  )}
-                </td>
-                <td>{user.lastName}</td>
-                <td>{user.email}</td>
-                <td>{user.phone}</td>
-                <td>{user.role}</td>
-                <td>
-                  {editMode[user.id] ? (
-                    <input
-                      type="checkbox"
-                      checked={editedUsers[user.id]?.active || user.active}
-                      onChange={(e) =>
-                        handleInputChange(user.id, "active", e.target.checked)
-                      }
-                    />
-                  ) : (
-                    user.active ? "Si" : "No"
-                  )}
-                </td>
-                <td>
-                  {editMode[user.id] ? (
-                    <>
-                      <button onClick={() => handleSaveUser(user.id)}>
-                        Guardar
-                      </button>
-                      <button onClick={() => handleCancel(user.id)}>
-                        Cancelar
-                      </button>
-                    </>
-                  ) : (
-                    <button onClick={() => handleEditUser(user.id, user.firstName, user.active)}>
-                      Editar
+      <h2>Usuarios</h2>
+
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Rol</th>
+            <th>Activo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.firstName}</td>
+              <td>{user.lastName}</td>
+              <td>{user.email}</td>
+              <td>{user.phone}</td>
+              <td>{user.role}</td>
+              <td>
+                {editData[user.id] ? (
+                  <input
+                    type="checkbox"
+                    checked={editData[user.id].active}
+                    onChange={() => {
+                      setEditData((prevEditData) => ({
+                        ...prevEditData,
+                        [user.id]: {
+                          ...prevEditData[user.id],
+                          active: !prevEditData[user.id].active,
+                        },
+                      }));
+                    }}
+                  />
+                ) : (
+                  user.active ? "Si" : "No"
+                )}
+              </td>
+              <td>
+                {editData[user.id] ? (
+                  <>
+                    <button onClick={() => handleSaveUser(user.id)}>
+                      Guardar
                     </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+                    <button onClick={() => handleCancel(user.id)}>
+                      Cancelar
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() =>
+                      handleEditUser(user.id, user.firstName, user.active)
+                    }
+                  >
+                    {user.active ? "Bloquear" : "Desbloquear"}
+                  </button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
