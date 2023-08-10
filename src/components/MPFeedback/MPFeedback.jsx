@@ -17,7 +17,7 @@ const MPFeedback = () => {
   const shippingAddress = useSelector((state) => state.addressSelected)
   const shippingAddressId = shippingAddress.id
 
-  const paymentMethodId = 1 // de momento queda en 1 porque este componente se renderiza desde MercadoPago -> al implementar PayPal tendremos que ver qué implementamos;
+  const paymentMethodId = 1 // queda en 1 porque este componente se renderiza desde MercadoPago 
   const [loading, setLoading] = useState(true)
 
   const queryParams = new URLSearchParams(location.search);
