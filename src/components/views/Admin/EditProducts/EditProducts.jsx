@@ -99,7 +99,7 @@ const EditProducts = () => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>SKU</th>
+            <th>ID</th>
             <th>Producto</th>
             <th>Modelo</th>
             <th>Marca</th>
