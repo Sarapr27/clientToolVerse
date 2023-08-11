@@ -4,8 +4,9 @@ import { useDispatch } from "react-redux";
 import { createUser } from "../../../redux/actions";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin } from "react-google-login";
 import { validateForm } from "./validation";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 function Form() {
   const dispatch = useDispatch();
@@ -71,14 +72,14 @@ function Form() {
     }
   };
 
-  const responseGoogleSuccess = (response) => {
-    const { email, givenName, familyName } = response.profileObj;
+  const responseGoogleSuccess = (credentialResponse) => {
+    var decoded = jwt_decode(credentialResponse.credential);
     // Llena automáticamente el email, nombre y apellido obtenidos de Google en el formulario
     setFormData({
       ...formData,
-      email,
-      firstName: givenName,
-      lastName: familyName,
+      email: decoded.email,
+      firstName: decoded.given_name,
+      lastName: decoded.family_name,
     });
   };
 
@@ -104,7 +105,9 @@ function Form() {
                 value={formData.firstName}
                 onChange={handleChange}
               />
-              {error.firstName && <div className={styles.error}>{error.firstName}</div>}
+              {error.firstName && (
+                <div className={styles.error}>{error.firstName}</div>
+              )}
             </div>
             <div className={styles["input-box"]}>
               <span className={styles.details}>Apellido</span>
@@ -115,7 +118,9 @@ function Form() {
                 value={formData.lastName}
                 onChange={handleChange}
               />
-              {error.lastName && <div className={styles.error}>{error.lastName}</div>}
+              {error.lastName && (
+                <div className={styles.error}>{error.lastName}</div>
+              )}
             </div>
             <div className={styles["input-box"]}>
               <span className={styles.details}>Email</span>
@@ -148,7 +153,9 @@ function Form() {
                 value={formData.password}
                 onChange={handleChange}
               />
-              {error.password && <div className={styles.error}>{error.password}</div>}
+              {error.password && (
+                <div className={styles.error}>{error.password}</div>
+              )}
             </div>
             <div className={styles["input-box"]}>
               <span className={styles.details}>Confirmar Contraseña</span>
@@ -159,12 +166,18 @@ function Form() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
               />
-              {error.confirmPassword && <div className={styles.error}>{error.confirmPassword}</div>}
+              {error.confirmPassword && (
+                <div className={styles.error}>{error.confirmPassword}</div>
+              )}
             </div>
             {showRoleSelect && (
               <div className={`${styles.hidden}`}>
                 <span className={`${styles.hidden}`}>Rol</span>
-                <select name="role" value={formData.role} onChange={handleChange}>
+                <select
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                >
                   <option value="client">Cliente</option>
                   {/* Otras opciones de roles podrían agregarse aquí */}
                 </select>
@@ -178,24 +191,23 @@ function Form() {
         </form>
 
         <div className={styles["google-button"]}>
-        <GoogleLogin
-            clientId="770412625356-vul6o4cnqq4bj7j3klkh3qf69bbom7lv.apps.googleusercontent.com"
-            buttonText="Regístrate con Google"
-            onSuccess={responseGoogleSuccess}
-            onFailure={responseGoogleFailure}
-            cookiePolicy={"single_host_origin"}
-          />
+          <GoogleOAuthProvider clientId="125350630479-iq7tadqmu4uqgt7fs30jq9e7e3arpooh.apps.googleusercontent.com">
+            <GoogleLogin
+              onSuccess={responseGoogleSuccess}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
+          </GoogleOAuthProvider>
+          ;
         </div>
         {error.general && <div className={styles.error}>{error.general}</div>}
-
-    
       </div>
     </div>
   );
 }
 
 export default Form;
-
 
 // import React, { useState } from "react";
 // import styles from "../Form/form.module.css";
@@ -259,7 +271,7 @@ export default Form;
 //             icon: "success",
 //             confirmButtonText: "Ok",
 //           }).then(() => {
-          
+
 //             navigate("/login");
 //           });
 //         })
