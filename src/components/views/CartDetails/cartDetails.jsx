@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 
 export default function CartDetails({ cartError, setCartError }) {
   const trolley = useSelector((state) => state.itemCart);
-  const userId = useSelector((state) => state.login.id)
+  const userId = useSelector((state) => state.user.id)
   const address = useSelector((state) => state.address)
   const selectedAddress = useSelector((state) => state.addressSelected)
   console.log('la address seleccionada en el cartDetail', selectedAddress)
