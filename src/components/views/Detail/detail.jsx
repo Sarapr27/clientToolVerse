@@ -72,39 +72,11 @@ const Detail = () => {
       }
     };
 
-
     userDidBuyProd();
   }, [])
 
-
-
   if (!products) return <div>Esperando carga del producto...</div>;
 
-
-
-
-  //   userCarts.forEach(async (cart) => {
-  //     console.log('el id del cart', cart.id)
-  //     let productos = await dispatch(actions.getProductsInCart(cart.id))
-  //     console.log('los productos en el cart. es un array!!!!!', productos)
-  //     productos.forEach((prod) => {
-  //       console.log('recorriendo el array de productos y devolviendo el id de cada uno', prod)
-  //       console.log('el id del prod', prod.productId)
-  //       productosPorId.push(prod.productId)
-  //     })
-  //   })
-
-  //   console.log('el array productosPorId', productosPorId)
-
-  //   productosPorId?.forEach((prod) => {
-  //     console.log('el tipo de dato del id de producto en el carrito. es un NUMBER', typeof prod, prod)
-  //   })
-  //   console.log('el tipo de dato del id del producto. es un STRING', typeof id, id)
-
-  //   // cambio un estado local para permitir le review si el id está en el array productosPorID
-  //   console.log('el producto está en el array o no: true si está false si no:', productosPorId.includes(id))
-
-  // }
 
   return (
     <div className={style.datailReview}>
