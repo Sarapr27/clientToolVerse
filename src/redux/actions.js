@@ -151,26 +151,26 @@ export const login = (character) => {
   };
 };
 
-export const resGoogle =  (response) => {
+export const resGoogle = (response) => {
   return async function (dispatch) {
-  try {
-    const googleToken = response.tokenId; // Obtener el token de Google
-    console.log (`google token action`, googleToken)
-    const { data } = await axios.post('/login/google', { googleToken }, {
-      withCredentials: true,
-    });
+    try {
+      const googleToken = response.tokenId; // Obtener el token de Google
+      console.log(`google token action`, googleToken)
+      const { data } = await axios.post('/login/google', { googleToken }, {
+        withCredentials: true,
+      });
 
-    console.log('google Token', googleToken)
+      console.log('google Token', googleToken)
 
-    if (data) {
-      
-      dispatch({ type: LOGIN, payload: data });
-      dispatch(isAuthenticated());
+      if (data) {
+
+        dispatch({ type: LOGIN, payload: data });
+        dispatch(isAuthenticated());
+      }
+    } catch (error) {
+      console.log("Error al autenticar con Google:", error);
     }
-  } catch (error) {
-    console.log("Error al autenticar con Google:", error);
   }
- }
 };
 
 
@@ -229,18 +229,6 @@ export const getUser = (name) => {
     }
   };
 };
-
-// export const yesCartError = () => {
-//   return {
-//     type: YES_CART_ERROR
-//   }
-// };
-
-// export const noCartError = () => {
-//   return {
-//     type: NO_CART_ERROR
-//   }
-// };
 
 export const addToCart = (item) => {
   return {
@@ -506,27 +494,27 @@ export const getProductsInCart = (purchaseCartId) => async () => {
 // carga la orden de compra en la bdd
 export const addPurchaseOrder =
   (userId, purchaseCartId, shippingAddressId, paymentMethodId, total) =>
-  async (dispatch) => {
-    try {
-      const response = await axios.post("/purchaseOrder", {
-        userId,
-        purchaseCartId,
-        shippingAddressId,
-        paymentMethodId,
-        total,
-      });
+    async (dispatch) => {
+      try {
+        const response = await axios.post("/purchaseOrder", {
+          userId,
+          purchaseCartId,
+          shippingAddressId,
+          paymentMethodId,
+          total,
+        });
 
-      dispatch({
-        type: PURCHASE_ORDER_SUCCESS,
-        payload: response.data,
-      });
-    } catch (error) {
-      dispatch({
-        type: PURCHASE_ORDER_ERROR,
-        payload: error.response.data.error,
-      });
-    }
-  };
+        dispatch({
+          type: PURCHASE_ORDER_SUCCESS,
+          payload: response.data,
+        });
+      } catch (error) {
+        dispatch({
+          type: PURCHASE_ORDER_ERROR,
+          payload: error.response.data.error,
+        });
+      }
+    };
 
 //carga los datos de envio en la bdd
 export const createShippingAddress = (address) => async (dispatch) => {
@@ -631,6 +619,8 @@ export const getUserById = (id) => async (dispatch) => {
       type: GET_USER_ID,
       payload: response.data,
     });
+
+    return response.data
   } catch (error) {
     dispatch({
       type: GET_USER_ID_ERROR,

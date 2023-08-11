@@ -12,7 +12,7 @@ const MPFeedback = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.login);
+  const user = useSelector((state) => state.user);
   const userId = user.id
   const shippingAddress = useSelector((state) => state.addressSelected)
   const shippingAddressId = shippingAddress.id
@@ -26,7 +26,7 @@ const MPFeedback = () => {
   const [trolley, setTrolley] = useState([]);
 
   const idPago = queryParams.get("payment_id");
-  const formaPago = queryParams.get("payment_type");
+  const formaPago = 'Mercado Pago';
   const status = queryParams.get("status");
   const orderId = queryParams.get("merchant_order_id");
 
