@@ -22,6 +22,9 @@ const MyReviews = ({ user }) => {
 
   return (
     <div>
+      <div className={style.title}>
+        <h1>Mis Reviews</h1>
+      </div>
       {userReviews.map((review) => {
         const product = products.find((p) => p.id === review.productId);
         if (!product) {
@@ -29,9 +32,6 @@ const MyReviews = ({ user }) => {
         }
         return (
           <div className={style.divReview} key={review.id}>
-            <div className={style.title}>
-            <h1>Mis Reviews</h1>
-            </div>
             <div>
               <img
                 src={product.image}
