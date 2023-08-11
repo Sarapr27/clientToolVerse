@@ -32,24 +32,20 @@ function Login() {
     setIsLoginFormSubmitted(true);
   };
 
-  // const handleGoogleResponse = (response) => {
-  //   dispatch(responseGoogle(response));
-  // };
-
   const onSuccess = (response) => {
     const { email } = response.profileObj;
     setInputs((prevInputs) => ({
       ...prevInputs,
       email,
+      password: "logingoogle", 
     }));
-    dispatch(resGoogle(response));
     setIsLoginFormSubmitted(true);
-    console.log ('response en onSuccess', response)
+    console.log("response en onSuccess", response);
   };
   
+  
   const responseGoogle = (response) => {
-    // Aquí puedes enviar el token de Google al servidor para la autenticación
-    console.log("Google response:", response);
+     console.log("Google response:", response);
   };
 
 
