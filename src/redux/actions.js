@@ -667,6 +667,7 @@ export const getOrders = () => {
           payload: orders,
         });
       }
+      return response.data
     } catch (error) {
       console.log(error);
     }

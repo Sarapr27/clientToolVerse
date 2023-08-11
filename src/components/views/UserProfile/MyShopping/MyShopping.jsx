@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./MyShopping.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../../redux/actions";
 
 const MyShopping = () => {
+  const userId = useSelector((state) => state.login.id)
+  console.log('el userId', userId)
   const dispatch = useDispatch();
   const [purchaseHistory, setPurchaseHistory] = useState([]);
-
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -18,18 +19,16 @@ const MyShopping = () => {
     axios
       .get("/purchaseOrder")
       .then((response) => {
-        const ordersArr = response.data
+        const todasLasOrders = response.data
+        const ordersArr = todasLasOrders.filter((order) => order.userId === userId)
+
         const obtengoProds = async () => {
-          console.log('el ordersArr es un array', ordersArr)
           try {
             let datosTotales = []
-            // obtengo los purchaseCartId en el array de History
+            // obtengo los purchaseCartId en el array de ordersArr
             for (const order of ordersArr) {
-              console.log('la orden', order)
               let purchaseCartId = order.purchaseCartId
-              console.log('tengo el purchaseCartId', purchaseCartId)
               const productos = await dispatch(actions.getProductsInCart(purchaseCartId))
-              console.log('los productos en el cart', productos)
 
               let prodFinal = productos.map((prod) => {
                 let name = prod.product.name
@@ -41,21 +40,16 @@ const MyShopping = () => {
                 return obj
               })
 
-              console.log('el array de los objetos', prodFinal)
-
               let orderObj = {
                 orderId: order.id,
                 productos: prodFinal,
                 total: order.total,
                 fecha: formatDate(order.createdAt)
               }
-
-              console.log('el objeto para sumarlo al array', orderObj)
               datosTotales.push(orderObj)
 
             }
             setPurchaseHistory(datosTotales)
-            console.log('la purchaseCartHisrtory', purchaseHistory)
           } catch (error) {
             console.log('Error buscando los productos del user', error)
           }
