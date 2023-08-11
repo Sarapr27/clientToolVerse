@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./login.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { login, resGoogle} from "../../../redux/actions";
+import { login, resGoogle } from "../../../redux/actions";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 
@@ -37,37 +37,34 @@ function Login() {
   // };
 
   const onSuccess = (response) => {
-    const { email } = response.profileObj;
+    const { email, password } = response.profileObj;
     setInputs((prevInputs) => ({
       ...prevInputs,
       email,
+      password,
     }));
     dispatch(resGoogle(response));
     setIsLoginFormSubmitted(true);
-    console.log ('response en onSuccess', response)
+    console.log("response en onSuccess", response);
   };
-  
+
   const responseGoogle = (response) => {
     // Aquí puedes enviar el token de Google al servidor para la autenticación
     console.log("Google response:", response);
   };
 
-
   useEffect(() => {
     if (isLoginFormSubmitted) {
       dispatch(login(inputs));
-      console.log('inputs de segundo useEffect', inputs);
+      console.log("inputs de segundo useEffect", inputs);
     }
   }, [isLoginFormSubmitted, dispatch, inputs]);
-
 
   useEffect(() => {
     if (isAuthenticated && isLoginFormSubmitted) {
       navigate("/userprofile");
     }
   }, [isAuthenticated, isLoginFormSubmitted, navigate]);
-
-
 
   return (
     <div className={styles.container}>
@@ -117,7 +114,6 @@ function Login() {
 }
 
 export default Login;
-
 
 // import React, { useEffect, useState } from "react";
 // import styles from "./login.module.css";
