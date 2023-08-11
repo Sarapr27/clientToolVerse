@@ -15,7 +15,6 @@ const Detail = () => {
   const reviews = user?.reviews;
   const dispatch = useDispatch();
   const { id } = useParams();
-  console.log("reviews del user", reviews);
   const [prodInCart, setProdInCart] = useState(false)
 
   useEffect(() => {
@@ -29,7 +28,7 @@ const Detail = () => {
   const findReview = reviews.find(
     (review) => review.productId === parseInt(id)
   );
-  console.log("review encontrada", findReview);
+
 
   useEffect(() => {
     const userDidBuyProd = async () => {
@@ -37,34 +36,25 @@ const Detail = () => {
 
       // el user id
       const userId = user?.id
-      console.log('el id del user primero', userId)
 
       try {
         // obtengo los datos del user por userId
         const usuario = await dispatch(actions.getUserById(userId))
-        console.log('el usuario después del dipatch', usuario)
 
         // obtengo los cartIds que tenga
         const userCarts = usuario?.purchaseCarts
-        console.log('los purchaseCarts, debería ser un array', userCarts)
 
         let productosPorIdArray = []
         // por cada carrito busco los idProd de cada carrito -> los pusheo en un array para poder compararlos con el id de producto actual
         for (const cart of userCarts) {
-          console.log('el id del cart', cart.id);
           const productos = await dispatch(actions.getProductsInCart(cart.id));
-          console.log('los productos en el cart. es un array!!!!!', productos);
+
           productos.forEach((prod) => {
-            console.log('recorriendo el array de productos y devolviendo el id de cada uno', prod);
-            console.log('el id del prod', prod.productId);
             productosPorIdArray.push(prod.productId);
           });
         }
-        console.log('el array productosPorId', productosPorIdArray);
 
         const idNumero = Number(id)
-
-        console.log('el producto está en el array o no: true si está false si no:', productosPorIdArray.includes(idNumero))
 
         if (productosPorIdArray.includes(idNumero)) setProdInCart(true)
       } catch (error) {
